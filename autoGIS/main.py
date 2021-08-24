@@ -41,3 +41,7 @@ if __name__ == "__main__":
 
     other = addresses.apply(lambda row: enrich([row]).squeeze())
     T = pd.concat([addresses, other], axis=1)
+    
+
+    with pd.ExcelWriter("demographic_data.xlsx") as writer:
+        T.to_excel(writer)
