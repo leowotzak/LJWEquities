@@ -27,3 +27,7 @@ if __name__ == "__main__":
     load_dotenv()
 
     workbook = parser.parse_args().workbook[0]
+    # * Geocoding require arcGIS credentials and a login
+    USER, PASS = os.environ.get('USERNAME'), os.environ.get('PASSWORD')
+    my_gis = GIS("http://www.arcgis.com", username=USER, password=PASS)
+    geocoder = get_geocoders(my_gis)[0]
