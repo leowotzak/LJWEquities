@@ -34,3 +34,7 @@ if __name__ == "__main__":
     my_gis = GIS("http://www.arcgis.com", username=USER, password=PASS)
     geocoder = get_geocoders(my_gis)[0]
     logging.info(f'Signed into ArcGIS w/ username: {USER} and password: {PASS}')
+
+    addresses = pd.read_excel(
+        workbook, index_col=0, squeeze=True, dtype="string"
+    )["Full Address"]
