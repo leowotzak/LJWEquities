@@ -2,3 +2,6 @@ venv
 .env
 *.xlsx
 *.log
+*.vscode
+*.ipynb_checkpoints
+*.DS_Store
