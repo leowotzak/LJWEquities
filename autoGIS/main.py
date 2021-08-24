@@ -38,3 +38,6 @@ if __name__ == "__main__":
     addresses = pd.read_excel(
         workbook, index_col=0, squeeze=True, dtype="string"
     )["Full Address"]
+
+    other = addresses.apply(lambda row: enrich([row]).squeeze())
+    T = pd.concat([addresses, other], axis=1)
