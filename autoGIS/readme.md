@@ -64,8 +64,8 @@ The script should now be executable from anywhere!
 
 ---
 
-- arcgis
-- pandas
+### - arcgis
+### - pandas
 
 <br>
 
