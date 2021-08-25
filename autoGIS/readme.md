@@ -73,4 +73,4 @@ The script should now be executable from anywhere!
 
 ---
 
-(link to license)
+[MIT](https://github.com/leowotzak/autogis/blob/d25643c9a487513fe9f92898423e882c59109250/LICENSE)
