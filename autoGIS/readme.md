@@ -22,6 +22,10 @@ Multiple inputs are also supported
 
 `autogis excel_worksheet excel_worksheet ...`
 
+In addition, an optional output directory can be provided for the spreadsheets. The default is the home directory.
+
+`autogis excel_worksheet excel_worksheet ... -f /path/to/output/files/`
+
 <br>
 
 ## How to install
