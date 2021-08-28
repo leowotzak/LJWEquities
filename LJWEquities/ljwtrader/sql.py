@@ -65,3 +65,7 @@ if __name__ == '__main__':
 
     load_dotenv()
 
+    with Session() as session:
+        for index, row in get_data_from_alphavantage('AAPL').iterrows():
+            session.merge(convert_bar_to_sql_object(index, row))
+        session.commit()
