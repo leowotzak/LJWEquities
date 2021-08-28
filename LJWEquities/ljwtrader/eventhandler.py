@@ -1,7 +1,6 @@
 import logging
 
 logger = logging.getLogger(__name__)
-
 class EventHandler:
     """Object that serves to route events to the proper system component based on their type"""
 
@@ -18,7 +17,7 @@ class EventHandler:
             'MARKET': self._handle_market
         }
 
-        self._data_handler.get_next_bar_from_data_handler()
+        event = self._data_handler.get_next_bar_from_data_handler()
 
         while not self._queue.empty():
             event = self._queue.get()
@@ -28,4 +27,4 @@ class EventHandler:
             except Exception as e:
                 raise e
             else:
-                handler()
+                handler(event)
