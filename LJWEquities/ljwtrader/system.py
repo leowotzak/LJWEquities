@@ -21,16 +21,18 @@ class TradingSystem:
 
         logger.info(f"Start Date: {self.start_date}, End Date: {self.end_date}, Frequency: {self.frequency}, Vendor {self.vendor}")
 
-        self.event_handler = EventHandler(queue)
-        
-        self.data_handler = DataHandler(
+        self._data_handler = DataHandler(
             self._queue,
             self.start_date,
             self.end_date,
             self.frequency,
             self.vendor
-        )
+            )
 
+        self._event_handler = EventHandler(
+            self._queue,
+            self._data_handler
+            )
     def get_start_date(self):
         return self.start_date
 
