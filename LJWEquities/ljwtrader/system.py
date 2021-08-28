@@ -23,7 +23,13 @@ class TradingSystem:
 
         self.event_handler = EventHandler(queue)
         
-
+        self.data_handler = DataHandler(
+            self._queue,
+            self.start_date,
+            self.end_date,
+            self.frequency,
+            self.vendor
+        )
 
     def get_start_date(self):
         return self.start_date
