@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-from dotenv import load_dotenv
-
 from sqlalchemy import create_engine, Table, Column, Integer, String, Float, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
 
@@ -35,6 +33,10 @@ def get_data_from_alphavantage(symbol: str,
 
     import os
     from alpha_vantage.timeseries import TimeSeries
+    from dotenv import load_dotenv
+
+
+    load_dotenv()
 
     ts = TimeSeries(key=os.environ.get('AV_API_KEY'), output_format='pandas')
     data, metadata = ts.get_intraday(symbol='AAPL',
@@ -62,8 +64,6 @@ def convert_bar_to_sql_object(index, row):
 
 
 if __name__ == '__main__':
-
-    load_dotenv()
 
     with Session() as session:
         for index, row in get_data_from_alphavantage('AAPL').iterrows():
