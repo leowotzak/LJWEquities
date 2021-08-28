@@ -15,7 +15,7 @@ class EventHandler:
     def run_backtest(self):
         """Initiates and continues to execute backtest until there are no more bars in the datahandler"""
         EVENT_MAP = {
-            'MARKET': _handle_market
+            'MARKET': self._handle_market
         }
 
         self._data_handler.get_next_bar_from_data_handler()
