@@ -1,6 +1,8 @@
 import argparse
 import datetime
 
+from ljwtrader.system import TradingSystem
+
 # * File that acts as input so that I dont have to edit the base files anymore
 
 parser = argparse.ArgumentParser(description="LJWE quantitative trading system")
@@ -39,4 +41,6 @@ parser.add_argument(
     )
 
 if __name__ == '__main__':
-    pass
+    args = parser.parse_args()
+    sys = TradingSystem(args.start, args.end, args.frequency, args.vendor)
+    sys.run_backtest()
