@@ -21,6 +21,9 @@ class TradingSystem:
 
         logger.info(f"Start Date: {self.start_date}, End Date: {self.end_date}, Frequency: {self.frequency}, Vendor {self.vendor}")
 
+        self.event_handler = EventHandler(queue)
+        
+
 
     def get_start_date(self):
         return self.start_date
