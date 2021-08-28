@@ -8,6 +8,26 @@ engine = create_engine('sqlite+pysqlite:///:memory:', echo=True, future=True)
 Base = declarative_base()
 Session = sessionmaker(engine)
 
+
+class Bar(Base):
+
+    __tablename__ = 'bar_data'
+
+    timestamp = Column(DateTime, primary_key=True)
+    symbol_id = Column(Integer, primary_key=True)
+    open_price = Column(Float)
+    high_price = Column(Float)
+    low_price = Column(Float)
+    close_price = Column(Float)
+    volume = Column(Float)
+
+    def __repr__(self):
+        return f"Bar({self.timestamp}) {self.symbol_id} {self.close_price})"
+
+
+Base.metadata.create_all(engine)
+
+
 def get_data_from_alphavantage(symbol: str,
                                interval: str = '1min',
                                outputsize: str = 'pandas'):
