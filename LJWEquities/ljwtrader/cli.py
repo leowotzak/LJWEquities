@@ -38,3 +38,5 @@ parser.add_argument(
     choices=['av']
     )
 
+if __name__ == '__main__':
+    pass
