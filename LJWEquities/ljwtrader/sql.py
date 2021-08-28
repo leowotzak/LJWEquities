@@ -23,7 +23,7 @@ class Bar(Base):
         return f"Bar({self.timestamp}) {self.symbol_id} {self.close_price})"
 
 
-Base.metadata.create_all(engine)
+# Base.metadata.create_all(engine)
 
 
 def get_data_from_alphavantage(symbol: str,
