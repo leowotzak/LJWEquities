@@ -20,3 +20,16 @@ class TradingSystem:
         self._queue = Queue()
 
         logger.info(f"Start Date: {self.start_date}, End Date: {self.end_date}, Frequency: {self.frequency}, Vendor {self.vendor}")
+
+
+    def get_start_date(self):
+        return self.start_date
+
+    def get_end_date(self):
+        return self.end_date
+
+    def get_frequency(self):
+        return self.frequency
+
+    def get_vendor(self):
+        return self.vendor
