@@ -1,6 +1,7 @@
 from queue import Queue
 
 import logging
+logging.basicConfig(filename='ljwtrader.log')
 logger = logging.getLogger(__name__)
 
 
