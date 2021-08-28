@@ -49,6 +49,18 @@ def get_data_from_alphavantage(symbol: str,
             '4. close': 'close',
             '5. volume': 'volume'
         })
+
+
+def convert_bar_to_sql_object(index, row):
+    return Bar(timestamp=index,
+               symbol_id=1,
+               open_price=row['open'],
+               high_price=row['high'],
+               low_price=row['low'],
+               close_price=row['close'],
+               volume=row['volume'])
+
+
 if __name__ == '__main__':
 
     load_dotenv()
