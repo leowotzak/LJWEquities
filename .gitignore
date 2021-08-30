@@ -1,8 +1,8 @@
 __pycache__
 .DS_Store
-*.log
-
-env.yml
-.env
 venv
 
+*.log
+*.csv
+*.yml
+*.env
