@@ -1,5 +1,7 @@
 import logging
-from .sql import get_data_from_alphavantage
+import sqlite3
+
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
