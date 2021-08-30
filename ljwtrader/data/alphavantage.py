@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+from .models import (Symbols, DailyBar, WeeklyBar, MonthlyBar)
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
 from alpha_vantage.timeseries import TimeSeries
@@ -8,6 +9,8 @@ from dotenv import load_dotenv
 
 engine = create_engine('sqlite+pysqlite:///app.db', echo=True, future=True)
 Session = sessionmaker(engine)
+
+MODEL_MAP = {'1d': DailyBar, '1w': WeeklyBar, '1m': MonthlyBar}
 
 
 def get_data_from_alphavantage(symbol: str,
@@ -40,38 +43,28 @@ def get_data_from_alphavantage(symbol: str,
 
 def convert_bar_to_sql_object(index, row, interval):
 
-    if interval == '1d':
-        return DailyBar(timestamp=index,
-                symbol_id=1,
-                open_price=row['open'],
-                high_price=row['high'],
-                low_price=row['low'],
-                close_price=row['close'],
-                adj_close_price=row['adj_close_price'],
-                volume=row['volume'],
-                dividend_amount=row['dividend_amount'])
+def convert_bar_to_sql_object(index, row, interval, symbol_id):
 
-    elif interval == '1w':
-        return WeeklyBar(timestamp=index, 
-                symbol_id=1, 
+    try:
+        model = MODEL_MAP[interval]
+    except KeyError as e:
+        raise e
+    else:
+        return model(timestamp=index,
+                     symbol_id=symbol_id,
+                     open_price=row['open'],
                 open_price=row['open'], 
-                high_price=row['high'],
-                low_price=row['low'],
-                close_price=row['close'],
-                adj_close_price=row['adj_close_price'],
-                volume=row['volume'],
-                dividend_amount=row['dividend_amount'])
-
-    elif interval == '1m':
-        return MonthlyBar(timestamp=index, 
-                symbol_id=1, 
+                     open_price=row['open'],
                 open_price=row['open'], 
-                high_price=row['high'],
-                low_price=row['low'],
-                close_price=row['close'],
-                adj_close_price=row['adj_close_price'],
-                volume=row['volume'],
-                dividend_amount=row['dividend_amount'])
+                     open_price=row['open'],
+                     high_price=row['high'],
+                     low_price=row['low'],
+                     close_price=row['close'],
+                     adj_close_price=row['adj_close_price'],
+                     volume=row['volume'],
+                     dividend_amount=row['dividend_amount'],
+                     created_date=datetime.utcnow(),
+                     last_updated_date=datetime.utcnow())
 
 
 def update_database(symbol, interval):
