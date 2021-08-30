@@ -69,6 +69,9 @@ def convert_bar_to_sql_object(index, row, interval, symbol_id):
 
 def update_database(symbol, interval):
     with Session() as session:
-        for index, row in get_data_from_alphavantage('AAPL', interval).iterrows():
-            session.merge(convert_bar_to_sql_object(index, row, interval))
+        for index, row in get_data_from_alphavantage('AAPL',
+                                                     interval).iterrows():
+            sym = session.query(Symbols).filter_by(ticker='AAPL').first()
+            session.merge(
+                convert_bar_to_sql_object(index, row, interval, sym.symbol_id))
         session.commit()
