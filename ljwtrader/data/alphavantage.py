@@ -41,7 +41,6 @@ def get_data_from_alphavantage(symbol: str,
             '7. dividend amount': 'dividend_amount'
         })
 
-def convert_bar_to_sql_object(index, row, interval):
 
 def convert_bar_to_sql_object(index, row, interval, symbol_id):
 
@@ -52,10 +51,6 @@ def convert_bar_to_sql_object(index, row, interval, symbol_id):
     else:
         return model(timestamp=index,
                      symbol_id=symbol_id,
-                     open_price=row['open'],
-                open_price=row['open'], 
-                     open_price=row['open'],
-                open_price=row['open'], 
                      open_price=row['open'],
                      high_price=row['high'],
                      low_price=row['low'],
