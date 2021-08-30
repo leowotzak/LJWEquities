@@ -27,7 +27,7 @@ parser.add_argument(
     'frequency',
     type=str,
     nargs=1,
-    choices=['1min', '5min', '15min', '30min', '60min']
+    choices=['1min', '5min', '15min', '30min', '60min', '1d', '1w', '1m']
     ),
 
 # * Vendor of data 
