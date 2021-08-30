@@ -2,6 +2,7 @@ import logging
 import sqlite3
 
 import pandas as pd
+from ljwtrader.events import MarketEvent
 
 logger = logging.getLogger(__name__)
 
