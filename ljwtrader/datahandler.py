@@ -12,8 +12,4 @@ class DataHandler:
         self._frequency = frequency
         self._vendor = vendor
 
-        self.data = ( (index, row) for index, row in get_data_from_alphavantage('AAPL').iterrows() )
-
-
-    def get_next_bar_from_data_handler(self):
-        print(next(self.data))
+        self.data = ((index, row) for index, row in pd.read_sql('SELECT * FROM daily_bar_data', sqlite3.connect('app.db'), index_col='timestamp').iterrows())
