@@ -16,7 +16,7 @@ def get_data_from_alphavantage(symbol: str,
     """Retrieves data from alpha vantage for the provided ticker & interval"""
 
     load_dotenv()
-    ts = TimeSeries(key=os.environ.get('AV_API_KEY'), output_size=outputsize)
+    ts = TimeSeries(key=os.environ.get('AV_API_KEY'), output_format='pandas')
 
     if interval == '1d':
         data, metadata = ts.get_daily_adjusted(symbol=symbol, output_size=outputsize)
