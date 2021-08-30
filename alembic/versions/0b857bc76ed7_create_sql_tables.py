@@ -29,21 +29,6 @@ def upgrade():
         sa.Column('last_updated_date', sa.DateTime)
     )
 
-    # op.create_table(
-    #     'daily_bar_data',
-    #     sa.Column('timestamp', sa.DateTime, primary_key=True),
-    #     sa.Column('symbol_id', sa.Integer, sa.ForeignKey('symbols.symbol_id'), primary_key=True),
-    #     sa.Column('open', sa.Float),
-    #     sa.Column('high', sa.Float),
-    #     sa.Column('low', sa.Float),
-    #     sa.Column('close', sa.Float),
-    #     sa.Column('adj_close', sa.Float),
-    #     sa.Column('volume', sa.Float),
-    #     sa.Column('dividend_amount', sa.Float),
-    #     sa.Column('created_date', sa.DateTime, nullable=False),
-    #     sa.Column('last_updated_date', sa.DateTime, nullable=False)
-    # )
-
 
 def downgrade():
     op.drop_table('symbols')
