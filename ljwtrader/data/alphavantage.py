@@ -1,11 +1,12 @@
 import os
 from datetime import datetime
 
-from .models import (DailyBar, WeeklyBar, MonthlyBar)
+from sqlalchemy import create_engine, select
 from sqlalchemy.orm import sessionmaker
 from alpha_vantage.timeseries import TimeSeries
 from dotenv import load_dotenv
 
+engine = create_engine('sqlite+pysqlite:///app.db', echo=True, future=True)
 Session = sessionmaker(engine)
 
 
