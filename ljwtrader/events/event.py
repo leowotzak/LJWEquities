@@ -1,6 +1,9 @@
 from typing import AnyStr
 from datetime import datetime
 
+import logging
+logger = logging.getLogger(__name__)
+
 class EventBaseClass:
     """
     Event is base class providing an interface for all subsequent (inherited) events, that will trigger further
@@ -10,6 +13,7 @@ class EventBaseClass:
         self.event_type = event_type
         self.ticker     = ticker
         self.datetime   = datetime
+        logger.debug(f'Creating {self.event_type} event for ticker {self.ticker} @ {self.datetime}')
 
     def __str__(self) -> str:
         return f'  --  '.join([self.ticker, self.event_type, self.datetime])

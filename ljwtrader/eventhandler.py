@@ -12,7 +12,7 @@ class EventHandler:
         self._queue = queue
     
     def _handle_market(self, event: MarketEvent):
-        print(repr(event))
+        logger.info(f"Handling market event")
 
     def process_events(self) -> None:
         """Initiates and continues to execute backtest until there are no more bars in the datahandler"""
@@ -22,10 +22,14 @@ class EventHandler:
 
         while not self._queue.empty():
             event = self._queue.get() #? Type hint?
-    
+            logger.debug(f"Received event from queue")
+
             try:
                 handler: Callable = EVENT_MAP[event.event_type]
             except Exception as e:
+                logger.error(e)
                 raise e
             else:
                 handler(event)
+        
+        logger.debug(f"Queue is now empty")

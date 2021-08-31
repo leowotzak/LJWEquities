@@ -6,7 +6,7 @@ from .datahandler import DataHandler
 from .eventhandler import EventHandler
 
 import logging
-logging.basicConfig(filename='ljwtrader.log')
+logging.basicConfig(filename='ljwtrader.log', level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
@@ -26,7 +26,7 @@ class TradingSystem:
         self.vendor     = vendor
         self._queue     = Queue()
 
-        logger.info(f"Start Date: {self.start_date}, End Date: {self.end_date}, Frequency: {self.frequency}, Vendor {self.vendor}")
+        logger.info(f"Symbols: {self.symbols}, Start Date: {self.start_date}, End Date: {self.end_date}, Frequency: {self.frequency}, Vendor: {self.vendor}")
 
         self._event_handler = EventHandler(
         self._queue
@@ -42,6 +42,7 @@ class TradingSystem:
             )
 
     def run_backtest(self):
+        logger.info('Initiating backtest')
         self._data_handler.start_backtest()
     
     def get_start_date(self):
