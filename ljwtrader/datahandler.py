@@ -42,6 +42,8 @@ class DataHandler:
 
     
     def _get_next_bar(self) -> None:
+        """Retrieves next bar from datahandler and places it on queue"""
+
         try:
             index, row = next(self.data)
         except StopIteration:
@@ -60,7 +62,10 @@ class DataHandler:
         except KeyError as e:
             arr = []
         return np.array(arr)
+
     def start_backtest(self) -> None:
+        """Calls the datahandler and eventhandler repeatedly until datahandler is empty"""
+
         self._contine_backtest = True
         while self._contine_backtest:
             self._get_next_bar()
