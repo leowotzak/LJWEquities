@@ -2,7 +2,7 @@ import logging
 import sqlite3
 
 import pandas as pd
-from ljwtrader.events import MarketEvent
+from .events import MarketEvent
 
 logger = logging.getLogger(__name__)
 
@@ -25,5 +25,12 @@ class DataHandler:
                                           .sort_index()
                                           .iterrows())
 
+    def _get_next_bar(self):
+        try:
+            index, row = next(self.data)
+        except StopIteration:
+            self._contine_backtest = False
+        else:
+            self._queue.put(MarketEvent('AAPL', index))
             self._process_events_func()
 
