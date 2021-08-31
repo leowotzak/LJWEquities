@@ -1,3 +1,4 @@
+from abc import ABCMeta, abstractmethod
 import logging
 from typing import List
 
@@ -7,7 +8,7 @@ from indicator import Indicator
 
 logger = logging.getLogger(__name__)
 
-class Strategy(meta_class=ABCMeta):
+class Strategy(metaclass=ABCMeta):
     """
     The Strategy is simply a collection of one or more condition-position groups. 
     Buy (Sell) or Sell (Buy) what, when x, y, & z are true/false?
