@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import List, Callable
 import numpy as np
-from .indicator import Indicator, High
+from .indicator import HighFunc
 
 
 class Position(metaclass=ABCMeta):
