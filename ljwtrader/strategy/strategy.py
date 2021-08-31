@@ -4,7 +4,6 @@ from typing import List
 
 from ljwtrader.datahandler import DataHandler
 from .position import Position
-from indicator import Indicator
 
 logger = logging.getLogger(__name__)
 
