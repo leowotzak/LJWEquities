@@ -15,5 +15,6 @@ class EventBaseClass:
         return f'  --  '.join([self.ticker, self.event_type, self.datetime])
 
     def __repr__(self) -> str:
+        return ' -- '.join([
             f'{key}: {value}' for key, value in self.__dict__.items()
         ])
