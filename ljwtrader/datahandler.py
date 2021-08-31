@@ -21,6 +21,12 @@ class DataHandler:
                  start_date: datetime, end_date: datetime, frequency: AnyStr,
                  vendor: AnyStr, process_events_func: Callable[[None], None]):
         self._symbols = symbols
+        self._queue = queue_
+        self._start_date = start_date
+        self._end_date = end_date
+        self._frequency = frequency
+        self._vendor = vendor
+        self._contine_backtest = False
         self._process_events_func = process_events_func
         self.data = ( tup for tup in pd.read_sql("SELECT * FROM symbols JOIN daily_bar_data ON symbols.symbol_id=daily_bar_data.symbol_id WHERE symbols.ticker IN ('%s')" % "', '".join(self._symbols),
                                           sqlite3.connect('app.db'),
