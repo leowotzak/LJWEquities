@@ -39,7 +39,12 @@ class DataHandler:
                                           index_col='timestamp').sort_index().groupby(level=0) )
         self.latest_symbol_data = { sym: {} for sym in self._symbols }
 
-    
+        self.data = (tup for tup in pd.read_sql(
+            "SELECT * FROM symbols JOIN daily_bar_data ON symbols.symbol_id=daily_bar_data.symbol_id WHERE symbols.ticker IN ('%s')"
+            % "', '".join(self._symbols),
+            sqlite3.connect('app.db'),
+            index_col='timestamp').sort_index().groupby(level=0))
+
     def _get_next_bar(self) -> None:
         """Retrieves next bar from datahandler and places it on queue"""
 
