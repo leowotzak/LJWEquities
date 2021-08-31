@@ -6,16 +6,10 @@ from typing import AnyStr, Callable, Generator, List
 
 import pandas as pd
 import numpy as np
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from ljwtrader.data import DailyBar, Symbols
 from ljwtrader.events import MarketEvent
 
 logger = logging.getLogger(__name__)
-
-engine = create_engine('sqlite+pysqlite:///app.db', echo=True, future=True)
-Session = sessionmaker(engine)
-
 
 def convert_bar(row):
     index, data = row
