@@ -1,7 +1,9 @@
 from abc import ABCMeta, abstractmethod
 import logging
+import operator
 from typing import List
 
+import numpy as np
 from ljwtrader.datahandler import DataHandler
 from .position import Position
 

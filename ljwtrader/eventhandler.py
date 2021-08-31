@@ -2,6 +2,7 @@ import logging
 from typing import Callable
 
 from queue import Queue
+from .strategy import StrategySpec
 from .events import MarketEvent, StrategyEvent
 
 logger = logging.getLogger(__name__)
@@ -11,8 +12,10 @@ class EventHandler:
     """Object that serves to route events to the proper system component based on their type"""
     def __init__(self, queue: Queue):
         self._queue = queue
+        self.strategy: StrategySpec = None
 
     def _handle_market(self, event: MarketEvent):
+        self.strategy.check_all()
         logger.info(f"Handling market event")
 
     def _handle_strategy(self, event: StrategyEvent):

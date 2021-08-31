@@ -4,6 +4,7 @@ from typing import List, AnyStr
 
 from .datahandler import DataHandler
 from .eventhandler import EventHandler
+from .strategy import StrategySpec
 
 import logging
 
@@ -38,6 +39,11 @@ class TradingSystem:
                                          self.start_date, self.end_date,
                                          self.frequency, self.vendor,
                                          self._event_handler.process_events)
+
+        self._strategy = StrategySpec(self.symbols, self._data_handler)
+        self._event_handler.strategy = self._strategy
+
+
 
     def run_backtest(self):
         logger.info('Initiating backtest')
