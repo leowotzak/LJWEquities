@@ -2,8 +2,7 @@ import logging
 import sqlite3
 from datetime import datetime
 from queue import Queue
-from typing import AnyStr, Callable, Generator
-from pandas import Series
+from typing import AnyStr, Callable, Generator, List
 
 import pandas as pd
 from .events import MarketEvent
@@ -13,6 +12,9 @@ logger = logging.getLogger(__name__)
 
 class DataHandler:
     """Object that handles all data access for other system components"""
+    def __init__(self, symbols: List[AnyStr], queue_: Queue,
+                 start_date: datetime, end_date: datetime, frequency: AnyStr,
+                 vendor: AnyStr, process_events_func: Callable[[None], None]):
         self._symbols = symbols
         self._process_events_func = process_events_func
         self.data = ( tup for tup in pd.read_sql("SELECT * FROM symbols JOIN daily_bar_data ON symbols.symbol_id=daily_bar_data.symbol_id WHERE symbols.ticker IN ('%s')" % "', '".join(self._symbols),
