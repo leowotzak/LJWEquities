@@ -64,8 +64,27 @@ class DataHandler:
             arr = []
         return np.array(arr)
 
+    # * Convenience methods
+    # * Used as the building blocks for indicators, positions, and strategies
+
+    def get_latest_symbol_open(self, ticker: str, num_days: int) -> np.ndarray:
+        return self._get_latest_symbol_data(ticker, 'open_price', num_days)
+
     def get_latest_symbol_high(self, ticker: str, num_days: int) -> np.ndarray:
         return self._get_latest_symbol_data(ticker, 'high_price', num_days)
+
+    def get_latest_symbol_low(self, ticker: str, num_days: int) -> np.ndarray:
+        return self._get_latest_symbol_data(ticker, 'low_price', num_days)
+
+    def get_latest_symbol_close(self, ticker: str, num_days: int) -> np.ndarray:
+        return self._get_latest_symbol_data(ticker, 'close_price', num_days)
+
+    def get_latest_symbol_adj_close(self, ticker: str, num_days: int) -> np.ndarray:
+        return self._get_latest_symbol_data(ticker, 'adj_close_price', num_days)
+
+    def get_latest_symbol_volume(self, ticker: str, num_days: int) -> np.ndarray:
+        return self._get_latest_symbol_data(ticker, 'volume', num_days)
+
 
     def start_backtest(self) -> None:
         """Calls the datahandler and eventhandler repeatedly until datahandler is empty"""
