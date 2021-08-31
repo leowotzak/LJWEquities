@@ -1,6 +1,9 @@
 from abc import ABCMeta, abstractmethod
 from typing import List, Callable
 import numpy as np
+from .indicator import Indicator, High
+
+
 class Position(metaclass=ABCMeta):
 
     indicator: Indicator
@@ -13,3 +16,8 @@ class Position(metaclass=ABCMeta):
         """Called by strategy object on each tick"""
         raise NotImplementedError("""Position needs to have a condition check to know if it is active or not""")
 
+class HighPosition(Position):
+    def __init__(self, indicator: Indicator, condition, value: Any):
+        self.indicator = indicator
+        self.condition = condition
+        self.value = value
