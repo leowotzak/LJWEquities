@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+from typing import AnyStr, NoReturn
 
 from .models import (Symbols, DailyBar, WeeklyBar, MonthlyBar, SixtyMinuteBar, ThirtyMinuteBar, FifteenMinuteBar, FiveMinuteBar, OneMinuteBar)
 from sqlalchemy import create_engine
@@ -71,7 +72,7 @@ def convert_bar_to_sql_object(index, row, interval, symbol_id):
                      last_updated_date=datetime.utcnow())
 
 
-def update_database(interval):
+def update_database(interval: AnyStr) -> NoReturn:
     with Session() as session:
         for entry in session.query(Symbols).all():
             for index, row in get_data_from_alphavantage(entry.ticker,

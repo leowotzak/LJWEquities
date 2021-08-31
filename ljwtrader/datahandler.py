@@ -1,5 +1,9 @@
 import logging
 import sqlite3
+from datetime import datetime
+from queue import Queue
+from typing import AnyStr, Callable, Generator
+from pandas import Series
 
 import pandas as pd
 from .events import MarketEvent
@@ -9,16 +13,10 @@ logger = logging.getLogger(__name__)
 
 class DataHandler:
     """Object that handles all data access for other system components"""
-    def __init__(self, queue_, start_date, end_date, frequency, vendor, process_events_func):
-        self._queue = queue_
-        self._start_date = start_date
-        self._end_date = end_date
-        self._frequency = frequency
-        self._vendor = vendor
-        self._contine_backtest = False
+    def __init__(self, queue_: Queue, start_date: datetime, end_date: datetime, frequency: AnyStr, vendor: AnyStr, process_events_func: Callable[[None], None]):
         self._process_events_func = process_events_func
 
-        self.data = (
+        self.data: Generator[Series]= (
             (index, row)
             for index, row in pd.read_sql('SELECT * FROM daily_bar_data',
                                           sqlite3.connect('app.db'),
@@ -26,7 +24,7 @@ class DataHandler:
                                           .sort_index()
                                           .iterrows())
 
-    def _get_next_bar(self):
+    def _get_next_bar(self) -> None:
         try:
             index, row = next(self.data)
         except StopIteration:
@@ -34,7 +32,7 @@ class DataHandler:
         else:
             self._queue.put(MarketEvent('AAPL', index))
 
-    def start_backtest(self):
+    def start_backtest(self) -> None:
         self._contine_backtest = True
         while self._contine_backtest:
             self._get_next_bar()
