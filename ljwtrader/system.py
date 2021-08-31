@@ -1,6 +1,6 @@
 from queue import Queue
 from datetime import datetime
-from typing import List, String
+from typing import List, AnyStr
 
 from .datahandler import DataHandler
 from .eventhandler import EventHandler
@@ -17,7 +17,7 @@ class TradingSystem:
     All user input should be applied in this class, which acts as a unifier between all of the system components.
     The TradingSystem pushes data from the Data handler to the Event handler.
     """
-    def __init__(self, symbols: List[String], start_date: datetime, end_date: datetime, frequency: str, vendor: str):    
+    def __init__(self, symbols: List[AnyStr], start_date: datetime, end_date: datetime, frequency: str, vendor: str):    
 
         self.symbols    = symbols
         self.start_date = start_date
