@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 class Position(metaclass=ABCMeta):
 
     indicator: Any
+    ticker: str
     condition: Callable[[Any], bool]
     value: Any
     conditions: List[Callable]
@@ -25,5 +26,14 @@ class Position(metaclass=ABCMeta):
 
 class HighPosition(Position):
     def __init__(self, indicator: Indicator, ticker: str, N: int, condition, value: Any):
+        self.ID = 'X-DAY-HIGH'
+        self.ticker = ticker
+        self.func = indicator(ticker, N)
         self.condition = condition
         self.value = value
+
+    def check(self, data_handler: DataHandler) -> bool:
+        """Evaluates the calculated indicator against the provided condition & value"""
+
+        return self.condition(self.func(data_handler), self.value)
+        
