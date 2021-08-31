@@ -8,8 +8,8 @@ class EventBaseClass:
     """
     def __init__(self, event_type: AnyStr, ticker: AnyStr, datetime: datetime):
         self.event_type = event_type
-        self.ticker = ticker
-        self.datetime = datetime
+        self.ticker     = ticker
+        self.datetime   = datetime
 
     def __str__(self) -> str:
         return f'  --  '.join([self.ticker, self.event_type, self.datetime])

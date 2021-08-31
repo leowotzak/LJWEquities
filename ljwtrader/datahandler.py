@@ -14,6 +14,12 @@ logger = logging.getLogger(__name__)
 class DataHandler:
     """Object that handles all data access for other system components"""
     def __init__(self, queue_: Queue, start_date: datetime, end_date: datetime, frequency: AnyStr, vendor: AnyStr, process_events_func: Callable[[None], None]):
+        self._queue               = queue_
+        self._start_date          = start_date
+        self._end_date            = end_date
+        self._frequency           = frequency
+        self._vendor              = vendor
+        self._contine_backtest    = False
         self._process_events_func = process_events_func
 
         self.data: Generator[Series]= (

@@ -19,11 +19,12 @@ class TradingSystem:
     """
     def __init__(self, symbols: List[String], start_date: datetime, end_date: datetime, frequency: str, vendor: str):    
 
+        self.symbols    = symbols
         self.start_date = start_date
-        self.end_date = end_date
-        self.frequency = frequency
-        self.vendor = vendor
-        self._queue = Queue()
+        self.end_date   = end_date
+        self.frequency  = frequency
+        self.vendor     = vendor
+        self._queue     = Queue()
 
         logger.info(f"Start Date: {self.start_date}, End Date: {self.end_date}, Frequency: {self.frequency}, Vendor {self.vendor}")
 
