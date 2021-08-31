@@ -20,7 +20,7 @@ class EventHandler:
             event = self._queue.get()
     
             try:
-                handler = EVENT_MAP[event.type]
+                handler = EVENT_MAP[event.event_type]
             except Exception as e:
                 raise e
             else:
