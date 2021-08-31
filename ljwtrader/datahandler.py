@@ -5,6 +5,7 @@ from queue import Queue
 from typing import AnyStr, Callable, Generator, List
 
 import pandas as pd
+import numpy as np
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from ljwtrader.data import DailyBar, Symbols
