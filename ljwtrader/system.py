@@ -33,6 +33,7 @@ class TradingSystem:
             )
         
         self._data_handler = DataHandler(
+            self.symbols,
             self._queue,
             self.start_date,
             self.end_date,

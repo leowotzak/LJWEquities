@@ -13,31 +13,33 @@ logger = logging.getLogger(__name__)
 
 class DataHandler:
     """Object that handles all data access for other system components"""
-    def __init__(self, queue_: Queue, start_date: datetime, end_date: datetime, frequency: AnyStr, vendor: AnyStr, process_events_func: Callable[[None], None]):
-        self._queue               = queue_
-        self._start_date          = start_date
-        self._end_date            = end_date
-        self._frequency           = frequency
-        self._vendor              = vendor
-        self._contine_backtest    = False
+        self._symbols = symbols
         self._process_events_func = process_events_func
-
-        self.data: Generator[Series]= (
-            (index, row)
-            for index, row in pd.read_sql('SELECT * FROM daily_bar_data',
+        self.data = ( tup for tup in pd.read_sql("SELECT * FROM symbols JOIN daily_bar_data ON symbols.symbol_id=daily_bar_data.symbol_id WHERE symbols.ticker IN ('%s')" % "', '".join(self._symbols),
                                           sqlite3.connect('app.db'),
-                                          index_col='timestamp')
-                                          .sort_index()
-                                          .iterrows())
+                                          index_col='timestamp').sort_index().groupby(level=0) )
+        self.latest_symbol_data = { sym: {} for sym in self._symbols }
 
+    
     def _get_next_bar(self) -> None:
         try:
             index, row = next(self.data)
         except StopIteration:
             self._contine_backtest = False
         else:
-            self._queue.put(MarketEvent('AAPL', index))
+            for bar in map(convert_bar, row.iterrows()):
+                self._queue.put(MarketEvent(bar['ticker'], bar['timestamp']))
+                self.latest_symbol_data[bar['ticker']][index]= bar
 
+    def get_latest_symbol_data(self, ticker: str, category: str, num_days: int) -> np.ndarray:
+        """Retrieves the bars for a given ticker's category over the # of specified days"""
+
+        latest_data = self.latest_symbol_data[ticker].copy()
+        try:
+            arr = [ latest_data.popitem()[1][category] for _ in range(num_days) ]
+        except KeyError as e:
+            arr = []
+        return np.array(arr)
     def start_backtest(self) -> None:
         self._contine_backtest = True
         while self._contine_backtest:
