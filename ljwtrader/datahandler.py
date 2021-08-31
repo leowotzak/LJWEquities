@@ -16,6 +16,12 @@ logger = logging.getLogger(__name__)
 engine = create_engine('sqlite+pysqlite:///app.db', echo=True, future=True)
 Session = sessionmaker(engine)
 
+def convert_bar(row):
+    index, data = row
+    output_dict = dict( (k, v) for k, v in data.to_dict().items() if k in ['ticker', 'adj_close_price'] )
+    output_dict['timestamp'] = index
+    return output_dict
+
 class DataHandler:
     """Object that handles all data access for other system components"""
     def __init__(self, symbols: List[AnyStr], queue_: Queue,
