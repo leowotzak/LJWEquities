@@ -2,7 +2,9 @@ import os
 from datetime import datetime
 from typing import AnyStr, NoReturn
 
-from .models import (Symbols, DailyBar, WeeklyBar, MonthlyBar, SixtyMinuteBar, ThirtyMinuteBar, FifteenMinuteBar, FiveMinuteBar, OneMinuteBar)
+from .models import (Symbols, DailyBar, WeeklyBar, MonthlyBar, SixtyMinuteBar,
+                     ThirtyMinuteBar, FifteenMinuteBar, FiveMinuteBar,
+                     OneMinuteBar)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from alpha_vantage.timeseries import TimeSeries
@@ -12,15 +14,15 @@ engine = create_engine('sqlite+pysqlite:///app.db', echo=True, future=True)
 Session = sessionmaker(engine)
 
 MODEL_MAP = {
-    '1min' : OneMinuteBar,
-    '5min' : FiveMinuteBar,
+    '1min': OneMinuteBar,
+    '5min': FiveMinuteBar,
     '15min': FifteenMinuteBar,
     '30min': ThirtyMinuteBar,
     '60min': SixtyMinuteBar,
-    '1d'   : DailyBar,
-    '1w'   : WeeklyBar,
-    '1m'   : MonthlyBar
-    }
+    '1d': DailyBar,
+    '1w': WeeklyBar,
+    '1m': MonthlyBar
+}
 
 
 def get_data_from_alphavantage(symbol: str,
@@ -32,7 +34,8 @@ def get_data_from_alphavantage(symbol: str,
     ts = TimeSeries(key=os.environ.get('AV_API_KEY'), output_format='pandas')
 
     if interval == '1d':
-        data, metadata = ts.get_daily_adjusted(symbol=symbol, outputsize=outputsize)
+        data, metadata = ts.get_daily_adjusted(symbol=symbol,
+                                               outputsize=outputsize)
     elif interval == '1w':
         data, metadata = ts.get_weekly_adjusted(symbol=symbol)
     elif interval == '1m':
@@ -75,9 +78,10 @@ def convert_bar_to_sql_object(index, row, interval, symbol_id):
 def update_database(interval: AnyStr) -> NoReturn:
     with Session() as session:
         for entry in session.query(Symbols).all():
-            for index, row in get_data_from_alphavantage(entry.ticker,
-                                                        interval).iterrows():
+            for index, row in get_data_from_alphavantage(
+                    entry.ticker, interval).iterrows():
                 session.merge(
-                    convert_bar_to_sql_object(index, row, interval, entry.symbol_id))
+                    convert_bar_to_sql_object(index, row, interval,
+                                              entry.symbol_id))
             session.commit()
             print(f"commited entry: {entry.ticker}")

@@ -6,6 +6,7 @@ from ljwtrader.datahandler import DataHandler
 from .position import Position
 from indicator import Indicator
 
+
 class Strategy(meta_class=ABCMeta):
     """
     The Strategy is simply a collection of one or more condition-position groups. 
@@ -21,6 +22,8 @@ class Strategy(meta_class=ABCMeta):
         """Evaluate the status of each conditional position in strategy"""
         return NotImplementedError("Strategy must have a check_all() function")
 
+
 class HighStrategy(Strategy):
-    def __init__(self, conditional_positions: List[Position], data_handler: DataHandler):
+    def __init__(self, conditional_positions: List[Position],
+                 data_handler: DataHandler):
         self.id = 'HIGH_STRATEGY'

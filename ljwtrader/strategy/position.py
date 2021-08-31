@@ -14,7 +14,10 @@ class Position(metaclass=ABCMeta):
     @abstractmethod
     def check(self, arr: np.ndarray) -> bool:
         """Called by strategy object on each tick"""
-        raise NotImplementedError("""Position needs to have a condition check to know if it is active or not""")
+        raise NotImplementedError(
+            """Position needs to have a condition check to know if it is active or not"""
+        )
+
 
 class HighPosition(Position):
     def __init__(self, indicator: Indicator, condition, value: Any):

@@ -4,14 +4,15 @@ from abc import ABCMeta, abstractmethod
 
 
 class Indicator(metaclass=ABCMeta):
-    
+
     id: str
     N: int
 
     @abstractmethod
     def calc(self, arr: np.ndarray) -> Any:
         """Calculation that the indicator will perform"""
-        raise NotImplementedError("An indicator must have a calculation implementation")
+        raise NotImplementedError(
+            "An indicator must have a calculation implementation")
 
 
 class High(Indicator):
@@ -22,5 +23,3 @@ class High(Indicator):
     def calc(self, arr: np.ndarray) -> Any:
         """Calculates high of high-price for N days"""
         return np.max(arr)
-
-
