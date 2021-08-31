@@ -16,17 +16,21 @@ logger = logging.getLogger(__name__)
 engine = create_engine('sqlite+pysqlite:///app.db', echo=True, future=True)
 Session = sessionmaker(engine)
 
+
 def convert_bar(row):
     index, data = row
-    output_dict = dict( (k, v) for k, v in data.to_dict().items() if k in ['ticker', 'adj_close_price'] )
+    output_dict = dict((k, v) for k, v in data.to_dict().items()
+                       if k in ['ticker', 'adj_close_price'])
     output_dict['timestamp'] = index
     return output_dict
+
 
 class DataHandler:
     """Object that handles all data access for other system components"""
     def __init__(self, symbols: List[AnyStr], queue_: Queue,
                  start_date: datetime, end_date: datetime, frequency: AnyStr,
                  vendor: AnyStr, process_events_func: Callable[[None], None]):
+
         self._symbols = symbols
         self._queue = queue_
         self._start_date = start_date
@@ -36,8 +40,6 @@ class DataHandler:
         self._contine_backtest = False
         self._process_events_func = process_events_func
         self.latest_symbol_data = {sym: {} for sym in self._symbols}
-                                          index_col='timestamp').sort_index().groupby(level=0) )
-        self.latest_symbol_data = { sym: {} for sym in self._symbols }
 
         self.data = (tup for tup in pd.read_sql(
             "SELECT * FROM symbols JOIN daily_bar_data ON symbols.symbol_id=daily_bar_data.symbol_id WHERE symbols.ticker IN ('%s')"
