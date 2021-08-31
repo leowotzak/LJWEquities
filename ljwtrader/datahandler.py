@@ -5,10 +5,13 @@ from queue import Queue
 from typing import AnyStr, Callable, Generator, List
 
 import pandas as pd
-from .events import MarketEvent
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 logger = logging.getLogger(__name__)
 
+engine = create_engine('sqlite+pysqlite:///app.db', echo=True, future=True)
+Session = sessionmaker(engine)
 
 class DataHandler:
     """Object that handles all data access for other system components"""
