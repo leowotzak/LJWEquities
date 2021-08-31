@@ -1,6 +1,11 @@
 import argparse
 import datetime
+import operator
 
+from ljwtrader.strategy.indicator import HighFunc
+from ljwtrader.strategy.position import HighPosition
+from ljwtrader.strategy.strategy import Strategy
+from ljwtrader.system import TradingSystem
 
 parser = argparse.ArgumentParser(
     description="LJWE quantitative trading system",
@@ -57,15 +62,6 @@ parser.add_argument('-b',
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    from ljwtrader.system import TradingSystem
-    from ljwtrader.strategy.position import HighPosition
-    from ljwtrader.strategy.indicator import HighFunc
-    from ljwtrader.strategy.strategy import Strategy
-
-    import operator
-
-
     pos1 = HighPosition(HighFunc, 'AAPL', 10, operator.gt, 5.0)
-
     sys = TradingSystem([pos1], args.start, args.end, args.frequency, args.vendor)
     sys.run_backtest()
