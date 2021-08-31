@@ -16,7 +16,7 @@ class EventBaseClass:
         logger.debug(f'Creating {self.event_type} event for ticker {self.ticker} @ {self.datetime}')
 
     def __str__(self) -> str:
-        return f'  --  '.join([self.ticker, self.event_type, self.datetime])
+        return f'  --  '.join([self.ticker, self.event_type, str(self.datetime)])
 
     def __repr__(self) -> str:
         return ' -- '.join([
