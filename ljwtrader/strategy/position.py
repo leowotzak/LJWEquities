@@ -2,6 +2,8 @@ from abc import ABCMeta, abstractmethod
 from typing import List, Callable
 import numpy as np
 from .indicator import HighFunc
+import logging
+logger = logging.getLogger(__name__)
 
 
 class Position(metaclass=ABCMeta):

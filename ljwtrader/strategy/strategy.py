@@ -1,11 +1,11 @@
-from collections.abc import ABCMeta, abstractmethod
-from operator import operator
+import logging
 from typing import List
 
 from ljwtrader.datahandler import DataHandler
 from .position import Position
 from indicator import Indicator
 
+logger = logging.getLogger(__name__)
 
 class Strategy(meta_class=ABCMeta):
     """
