@@ -39,7 +39,7 @@ class TradingSystem:
             )
 
     def run_backtest(self):
-        self._event_handler.run_backtest()
+        self._data_handler.start_backtest()
     
     def get_start_date(self):
         return self.start_date
