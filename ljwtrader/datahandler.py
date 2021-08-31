@@ -63,6 +63,9 @@ class DataHandler:
             arr = []
         return np.array(arr)
 
+    def get_latest_symbol_high(self, ticker: str, num_days: int) -> np.ndarray:
+        return self._get_latest_symbol_data(ticker, 'high_price', num_days)
+
     def start_backtest(self) -> None:
         """Calls the datahandler and eventhandler repeatedly until datahandler is empty"""
 
