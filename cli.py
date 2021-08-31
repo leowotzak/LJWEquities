@@ -3,44 +3,60 @@ import datetime
 
 from ljwtrader.system import TradingSystem
 
-# * File that acts as input so that I dont have to edit the base files anymore
+parser = argparse.ArgumentParser(
+    description="LJWE quantitative trading system",
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-parser = argparse.ArgumentParser(description="LJWE quantitative trading system")
+parser.add_argument('symbols',
+                    type=str,
+                    nargs='+',
+                    help='Symbols for system to analyze')
 
+parser.add_argument('-l',
+                    '--lookup',
+                    nargs='?',
+                    const=print,
+                    help='Display summary statistics')
 
-# * First day of analysis
+parser.add_argument('-s',
+                    '--start',
+                    type=lambda s: datetime.datetime.strptime(s, '%Y-%m-%d'),
+                    nargs='?',
+                    default='2021-01-01',
+                    help='First day of analysis'),
+
+parser.add_argument('-e',
+                    '--end',
+                    type=lambda s: datetime.datetime.strptime(s, '%Y-%m-%d'),
+                    nargs='?',
+                    default='2020-01-01',
+                    help='Last day of analysis'),
+
 parser.add_argument(
-    'start',
-    type=lambda s: datetime.datetime.strptime(s, '%Y-%m-%d'),
-    nargs=1,
-    ),
-
-# * Last day of analysis
-parser.add_argument(
-    'end',
-    type=lambda s: datetime.datetime.strptime(s, '%Y-%m-%d'),
-    nargs=1,
-    ),
-
-# * Frequency of the data (i.e. 5min 5day etc...)
-parser.add_argument(
-    'frequency',
+    '-f',
+    '--frequency',
     type=str,
-    nargs=1,
-    choices=['1min', '5min', '15min', '30min', '60min', '1d', '1w', '1m']
-    ),
+    nargs='?',
+    choices=['1min', '5min', '15min', '30min', '60min', '1d', '1w', '1m'],
+    default='1d',
+    help='Frequency of the data'),
 
-# * Vendor of data 
-# ? Is this necessary
-# ? Or should be be determined later?
-parser.add_argument(
-    'vendor',
-    type=str,
-    nargs=1,
-    choices=['av']
-    )
+parser.add_argument('-v',
+                    '--vendor',
+                    type=str,
+                    nargs='?',
+                    choices=['av'],
+                    default='av',
+                    help='Data vendor')
+
+parser.add_argument('-b',
+                    '--backtest',
+                    nargs='?',
+                    const=True,
+                    default=False,
+                    help='Initiate a backtest')
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    sys = TradingSystem(args.start, args.end, args.frequency, args.vendor)
+    sys = TradingSystem(args.symbols, args.start, args.end, args.frequency, args.vendor)
     sys.run_backtest()
