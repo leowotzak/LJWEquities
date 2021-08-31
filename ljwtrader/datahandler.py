@@ -15,6 +15,7 @@ class DataHandler:
         self._end_date = end_date
         self._frequency = frequency
         self._vendor = vendor
+        self._contine_backtest = False
         self._process_events_func = process_events_func
 
         self.data = (
@@ -32,5 +33,10 @@ class DataHandler:
             self._contine_backtest = False
         else:
             self._queue.put(MarketEvent('AAPL', index))
+
+    def start_backtest(self):
+        self._contine_backtest = True
+        while self._contine_backtest:
+            self._get_next_bar()
             self._process_events_func()
 
