@@ -23,7 +23,18 @@ class Strategy(meta_class=ABCMeta):
         return NotImplementedError("Strategy must have a check_all() function")
 
 
-class HighStrategy(Strategy):
+class StrategySpec(Strategy):
     def __init__(self, conditional_positions: List[Position],
                  data_handler: DataHandler):
-        self.id = 'HIGH_STRATEGY'
+
+        self.positions = conditional_positions
+        self.data_handler = data_handler
+
+    def check_all(self):
+        results = []
+        for position in self.positions:
+            calc_value = position.check(self.data_handler)
+            results.append(calc_value)
+            logger.debug(f'Ticker: {position.ticker} Check: {calc_value}')
+        print(results)
+
