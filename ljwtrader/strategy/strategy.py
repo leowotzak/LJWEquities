@@ -17,7 +17,6 @@ class Strategy(metaclass=ABCMeta):
     """
 
     id: str
-    conditional_positions: List[Position]
     data_handler: DataHandler
 
     @abstractmethod
