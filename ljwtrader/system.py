@@ -8,7 +8,7 @@ from .strategy import StrategySpec
 
 import logging
 
-logging.basicConfig(filename='ljwtrader.log', level=logging.DEBUG)
+logging.basicConfig(filename='ljwtrader.log', level=logging.DEBUG, format="[%(module)s:%(lineno)3s]%(funcName)12s() -- %(message)s")
 logger = logging.getLogger(__name__)
 
 
