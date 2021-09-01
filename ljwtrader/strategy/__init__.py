@@ -1,3 +1,2 @@
-from .indicator import HighFunc
-from .position import HighPosition
+from .indicator import XDayHigh
 from .strategy import StrategySpec

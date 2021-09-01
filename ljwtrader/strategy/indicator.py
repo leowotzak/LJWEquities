@@ -1,36 +1,26 @@
-from ljwtrader.datahandler import DataHandler
-import numpy as np
-from abc import ABCMeta, abstractmethod
-
 import logging
+from typing import Any, Callable, NewType
+
+import numpy as np
+from ljwtrader.datahandler import DataHandler
+from ljwtrader.strategy import StrategySpec
+
+Indicator = NewType('Indicator', Callable[[DataHandler], float])
+
 logger = logging.getLogger(__name__)
 
-def HighFunc(ticker: str, N: int):
-    """Takes inputs and returns a function that calculates the metric"""
+def XDayHigh(ticker: str, N: int, condition: Callable[[Any], Any], value: float) -> Indicator:
+    """Returns the maximum of the high prices over past N days"""
 
-    def calc(data_handler: DataHandler):
-        """calculation function that is provided to parent"""
-        high = data_handler.get_latest_symbol_high(ticker, N)
-        return np.max(high) if len(high) != 0 else np.nan
 
-    return calc
+    def XDayHigh(data_handler: DataHandler) -> float:
+        high: np.ndarray = data_handler.get_latest_symbol_high(ticker, N)
+        max_: float = np.max(high) if len(high) != 0 else np.nan
+        logger.debug(high)
+        logger.info(max_)
+        return max_
 
-def XDayHigh(ticker: str, N: int):
-    """Takes inputs and returns a function that calculates the metric"""
+    cond = condition
 
-    def calc(data_handler: DataHandler):
-        """calculation function that is provided to parent"""
-        high = data_handler.get_latest_symbol_high(ticker, N)
-        return np.max(high) if len(high) != 0 else np.nan
 
-    return calc
-
-def XDayLow(ticker: str, N: int):
-    """Takes inputs and returns a function that calculates the metric"""
-
-    def calc(data_handler: DataHandler):
-        """calculation function that is provided to parent"""
-        high = data_handler.get_latest_symbol_low(ticker, N)
-        return np.min(high) if len(high) != 0 else np.nan
-
-    return calc
+    return condition(XDayHigh, value)
