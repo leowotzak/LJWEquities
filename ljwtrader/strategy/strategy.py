@@ -26,8 +26,7 @@ class Strategy(metaclass=ABCMeta):
         return NotImplementedError("Strategy must have a check_all() function")
 
 
-class StrategySpec(Strategy):
-    def __init__(self, conditional_positions: List[Position],
+class Strategy(Strategy):
                  data_handler: DataHandler):
 
         self.conditional_positions = conditional_positions

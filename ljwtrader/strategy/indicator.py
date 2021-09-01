@@ -3,7 +3,6 @@ from typing import Any, Callable, NewType
 
 import numpy as np
 from ljwtrader.datahandler import DataHandler
-from ljwtrader.strategy import StrategySpec
 
 Indicator = NewType('Indicator', Callable[[DataHandler], float])
 
