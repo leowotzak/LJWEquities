@@ -26,10 +26,7 @@ class DataHandler:
                  start_date: datetime, end_date: datetime, frequency: AnyStr,
                  vendor: AnyStr, process_events_func: Callable[[None], None]):
 
-        self._positions = symbols
-        self._symbols = []
-        for pos in self._positions:
-            self._symbols.append(pos.ticker)
+        self._symbols = symbols
         self._queue = queue_
         self._start_date = start_date
         self._end_date = end_date

@@ -61,6 +61,5 @@ parser.add_argument('-b',
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    pos1 = XDayHigh('AAPL', 10, operator.gt, 5.0)
-    sys = TradingSystem([pos1], args.start, args.end, args.frequency, args.vendor)
+    sys = TradingSystem(['AAPL'], args.start, args.end, args.frequency, args.vendor)
     sys.run_backtest()

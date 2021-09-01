@@ -1,10 +1,11 @@
 from queue import Queue
+import operator
 from datetime import datetime
 from typing import List, AnyStr
 
 from .datahandler import DataHandler
 from .eventhandler import EventHandler
-from .strategy import StrategySpec
+from .strategy import Strategy
 
 import logging
 
@@ -43,7 +44,7 @@ class TradingSystem:
                                          self.frequency, self.vendor,
                                          self._event_handler.process_events)
 
-        self._strategy = StrategySpec(self.symbols, self._data_handler)
+        self._strategy = Strategy(self.symbols, 10, operator.gt, 5.0, self._data_handler)
         self._event_handler.strategy = self._strategy
 
     def run_backtest(self):
