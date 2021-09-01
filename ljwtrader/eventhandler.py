@@ -16,7 +16,6 @@ class EventHandler:
 
     def _handle_market(self, event: MarketEvent):
         self.strategy.check_all()
-        logger.info(f"Handling market event")
 
     def _handle_strategy(self, event: StrategyEvent):
         logger.info(f"Handling strategy event")
@@ -30,7 +29,6 @@ class EventHandler:
 
         while not self._queue.empty():
             event = self._queue.get()  #? Type hint?
-            logger.debug(f"Received event from queue")
 
             try:
                 handler: Callable = EVENT_MAP[event.event_type]
@@ -39,5 +37,3 @@ class EventHandler:
                 raise e
             else:
                 handler(event)
-
-        logger.debug(f"Queue is now empty")

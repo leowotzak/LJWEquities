@@ -52,6 +52,7 @@ class DataHandler:
         except StopIteration:
             self._contine_backtest = False
         else:
+            logger.debug(index, row.to_string())
             for bar in map(convert_bar, row.iterrows()):
                 self._queue.put(MarketEvent(bar['ticker'], bar['timestamp']))
                 self.latest_symbol_data[bar['ticker']][index] = bar
