@@ -11,10 +11,11 @@ from ljwtrader.events import MarketEvent
 
 logger = logging.getLogger(__name__)
 
+
 def convert_bar(row):
-    index, data = row   #* These are the fields the system watches
+    index, data = row  #* These are the fields the system watches
     output_dict = dict((k, v) for k, v in data.to_dict().items()
-                       if k in ['ticker', 'adj_close_price', 'high_price'])       
+                       if k in ['ticker', 'adj_close_price', 'high_price'])
     output_dict['timestamp'] = index
     return output_dict
 
@@ -80,15 +81,18 @@ class DataHandler:
     def get_latest_symbol_low(self, ticker: str, num_days: int) -> np.ndarray:
         return self._get_latest_symbol_data(ticker, 'low_price', num_days)
 
-    def get_latest_symbol_close(self, ticker: str, num_days: int) -> np.ndarray:
+    def get_latest_symbol_close(self, ticker: str,
+                                num_days: int) -> np.ndarray:
         return self._get_latest_symbol_data(ticker, 'close_price', num_days)
 
-    def get_latest_symbol_adj_close(self, ticker: str, num_days: int) -> np.ndarray:
-        return self._get_latest_symbol_data(ticker, 'adj_close_price', num_days)
+    def get_latest_symbol_adj_close(self, ticker: str,
+                                    num_days: int) -> np.ndarray:
+        return self._get_latest_symbol_data(ticker, 'adj_close_price',
+                                            num_days)
 
-    def get_latest_symbol_volume(self, ticker: str, num_days: int) -> np.ndarray:
+    def get_latest_symbol_volume(self, ticker: str,
+                                 num_days: int) -> np.ndarray:
         return self._get_latest_symbol_data(ticker, 'volume', num_days)
-
 
     def start_backtest(self) -> None:
         """Calls the datahandler and eventhandler repeatedly until datahandler is empty"""

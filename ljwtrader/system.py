@@ -8,7 +8,10 @@ from .strategy import StrategySpec
 
 import logging
 
-logging.basicConfig(filename='ljwtrader.log', level=logging.DEBUG, format="[%(module)s:%(lineno)3s]%(funcName)12s() -- %(message)s")
+logging.basicConfig(
+    filename='ljwtrader.log',
+    level=logging.DEBUG,
+    format="[%(module)s:%(lineno)3s]%(funcName)12s() -- %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -42,8 +45,6 @@ class TradingSystem:
 
         self._strategy = StrategySpec(self.symbols, self._data_handler)
         self._event_handler.strategy = self._strategy
-
-
 
     def run_backtest(self):
         logger.info('Initiating backtest')

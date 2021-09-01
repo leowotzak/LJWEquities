@@ -9,6 +9,7 @@ from .position import Position
 
 logger = logging.getLogger(__name__)
 
+
 class Strategy(metaclass=ABCMeta):
     """
     The Strategy is simply a collection of one or more condition-position groups. 
@@ -38,4 +39,3 @@ class StrategySpec(Strategy):
             calc_value = position(self.data_handler)
             results.append(calc_value)
             logger.debug(f'Ticker: {position.ticker} Check: {calc_value}')
-

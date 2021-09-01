@@ -4,6 +4,7 @@ import numpy as np
 from ljwtrader.datahandler import DataHandler
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 
