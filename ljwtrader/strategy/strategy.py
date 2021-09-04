@@ -40,8 +40,8 @@ class XDayHighStrategy(Strategy):
 
         self.conditional_positions = []
         for symbol in self.symbols:
-            self.conditional_positions.append(XDayHigh(symbol, self.N, self.operator, self.value))
-
+            self.conditional_positions.append(
+                XDayHigh(symbol, self.N, self.operator, self.value))
 
     def check_all(self):
         results = []

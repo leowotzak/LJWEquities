@@ -36,8 +36,7 @@ class EventHandler:
         }
 
         while not self._queue.empty():
-            event = self._queue.get()  #? Type hint?
-
+            event = self._queue.get()
             try:
                 handler: Callable = EVENT_MAP[event.event_type]
             except Exception as e:
