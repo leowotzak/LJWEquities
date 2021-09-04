@@ -22,3 +22,14 @@ class Portfolio:
         Returns:
             NoReturn: 
         """
+
+    def update_holdings_from_fill(self, event: Event) -> NoReturn:
+        """Takes an FillEvent and updates the share/contract amounts & dollar amounts of the portfolio
+
+        Args:
+            event (Event): FillEvent containing all the details of the completed transaction
+
+        Returns:
+            NoReturn: 
+        """
+
