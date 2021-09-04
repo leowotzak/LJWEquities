@@ -1,11 +1,10 @@
 from typing import AnyStr
 from datetime import datetime
 
-from .event import EventBaseClass
+from .event import Event
 
 
-class MarketEvent(EventBaseClass):
-    """Created in response to price changes in underlying assets"""
+class MarketEvent(Event):
     def __init__(self, ticker: AnyStr, time: datetime):
         """Created in response to price changes in underlying assets
 

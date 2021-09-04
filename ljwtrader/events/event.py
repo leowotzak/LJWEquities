@@ -6,9 +6,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class EventBaseClass:
-    """
-    Event is base class providing an interface for all subsequent (inherited) events, that will trigger further
+class Event:
+    """Event is base class providing an interface for all subsequent (inherited) events, that will trigger further
     events in the trading infrastructure.
     """
     def __init__(self, event_type: AnyStr, ticker: AnyStr, datetime: datetime):
