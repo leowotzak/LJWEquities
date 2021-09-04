@@ -3,7 +3,7 @@ from typing import Callable
 
 from queue import Queue
 from .strategy import Strategy
-from .events import MarketEvent, StrategyEvent
+from .events import Event, MarketEvent, StrategyEvent
 
 logger = logging.getLogger(__name__)
 
@@ -38,8 +38,7 @@ class EventHandler:
         while not self._queue.empty():
             event = self._queue.get()
             try:
-                handler: Callable = EVENT_MAP[event.event_type]
-            except Exception as e:
+                event_handler = EVENT_MAP[event.event_type]
                 logger.error(e)
                 raise e
             else:

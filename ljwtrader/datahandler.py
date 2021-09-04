@@ -6,7 +6,7 @@ from typing import AnyStr, Callable, Generator, List, NoReturn, Sequence
 import pandas as pd
 import numpy as np
 from ljwtrader.data import DailyBar, Symbols
-from ljwtrader.events import MarketEvent
+from ljwtrader.events import MarketEvent, Event
 
 logger = logging.getLogger(__name__)
 
