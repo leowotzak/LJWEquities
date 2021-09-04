@@ -13,3 +13,12 @@ class Portfolio:
     ignore them in favor of some other over-arching portfolio strategy. The portfolio should also 
     keep track of any rebalancing and issue orders to achieve certain targets.
     """
+    def place_order(self, event: Event) -> NoReturn:
+        """Generates an OrderEvent and places it on the queue
+
+        Args:
+            event (Event): Contains details regarding what to purchase #? and how much?
+
+        Returns:
+            NoReturn: 
+        """
