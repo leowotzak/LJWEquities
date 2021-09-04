@@ -1,3 +1,10 @@
+import logging
+from typing import NoReturn
+
+from ljwtrader.events import Event
+
+logger = logging.getLogger(__name__)
+
 class Portfolio:
     """
     Responsible for handling and implementing all portfolio logic for the trading system. 
