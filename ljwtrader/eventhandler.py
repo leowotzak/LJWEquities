@@ -1,7 +1,6 @@
 import logging
-from typing import Callable
+from typing import Callable, NoReturn, Mapping, Sequence
 
-from queue import Queue
 from .strategy import Strategy
 from .events import Event, MarketEvent, StrategyEvent
 
@@ -42,4 +41,5 @@ class EventHandler:
             except KeyError as e:
                 logger.error(e)
             else:
-                handler(event)
+                logger.info(f"Handling {event.event_type} event")
+                event_handler(event)

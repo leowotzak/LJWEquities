@@ -44,14 +44,13 @@ class DataHandler:
     def _get_next_bar(self) -> NoReturn:
         # * Retrieves next bar from datahandler and places it on queue
         try:
-            index, row = next(self.data)
+            timestamp, bar_data = next(self.data)
         except StopIteration:
             self._contine_backtest = False
         else:
-            logger.debug(index, row.to_string())
-            for bar in map(convert_bar, row.iterrows()):
+            for bar in map(convert_bar, bar_data.iterrows()):
                 self._queue.put(MarketEvent(bar['ticker'], bar['timestamp']))
-                self.latest_symbol_data[bar['ticker']][index] = bar
+                self.latest_symbol_data[bar['ticker']][timestamp] = bar
 
     def _get_latest_symbol_data(self, ticker: str, category: str,
                                 num_days: int) -> np.ndarray:
