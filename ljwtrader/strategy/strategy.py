@@ -16,9 +16,6 @@ class Strategy(metaclass=ABCMeta):
     Buy (Sell) or Sell (Buy) what, when x, y, & z are true/false?
     """
 
-    id: str
-    data_handler: DataHandler
-
     @abstractmethod
     def check_all(self):
         """Evaluate the status of each conditional position in strategy"""
