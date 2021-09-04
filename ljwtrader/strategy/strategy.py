@@ -17,9 +17,15 @@ class Strategy(metaclass=ABCMeta):
     """
 
     @abstractmethod
-    def check_all(self):
-        """Evaluate the status of each conditional position in strategy"""
-        return NotImplementedError("Strategy must have a check_all() function")
+    def check_all(self) -> bool:
+        """Evaluate the status of each conditional position in strategy
+
+        Returns:
+            bool: Returns True if all conditions are true, False otherwise. This is used to determine when a strategy is 'in' or 'out'.
+        """
+        return NotImplementedError(
+            "Each strategy is required to implement a check_all() method"
+            )
 
 
 class XDayHighStrategy(Strategy):

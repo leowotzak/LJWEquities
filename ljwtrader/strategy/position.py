@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import List, Callable, Any
+from typing import List, Callable, Any, AnyStr
 import numpy as np
 from ljwtrader.datahandler import DataHandler
 

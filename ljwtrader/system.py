@@ -18,13 +18,20 @@ logger = logging.getLogger(__name__)
 
 class TradingSystem:
     """
-    Object that serves to govern the entire trading logic process
-
-    All user input should be applied in this class, which acts as a unifier between all of the system components.
-    The TradingSystem pushes data from the Data handler to the Event handler.
+    Object that serves to govern the entire trading logic process. All user input should be 
+    applied in this class, which acts as a unifier between all of the system components.
     """
     def __init__(self, symbols: List[AnyStr], start_date: datetime,
-                 end_date: datetime, frequency: str, vendor: str):
+                 end_date: datetime, frequency: AnyStr, vendor: AnyStr):
+        """Arguments supplied to the TradingSystem constructor by interface
+
+        Args:
+            symbols (List[AnyStr]): Collection of symbols that the system should track
+            start_date (datetime): Beginning date of analysis       # ? This is backtest specific
+            end_date (datetime): End date of analysis               # ? This is backtest specific
+            frequency (str): Frequency of the bar data
+            vendor (str): Data vendor to be used for the backtest   # ? This is backtest specific
+        """
 
         self.symbols = symbols
         self.start_date = start_date

@@ -1,8 +1,7 @@
 import logging
 import sqlite3
 from datetime import datetime
-from queue import Queue
-from typing import AnyStr, Callable, Generator, List
+from typing import AnyStr, Callable, Generator, List, NoReturn, Sequence
 
 import pandas as pd
 import numpy as np
@@ -22,7 +21,7 @@ def convert_bar(row):
 
 class DataHandler:
     """Object that handles all data access for other system components"""
-    def __init__(self, symbols: List[AnyStr], queue_: Queue,
+    def __init__(self, positions: List[AnyStr], queue_: Sequence[Event],
                  start_date: datetime, end_date: datetime, frequency: AnyStr,
                  vendor: AnyStr, process_events_func: Callable[[None], None]):
 
@@ -42,9 +41,8 @@ class DataHandler:
             sqlite3.connect('app.db'),
             index_col='timestamp').sort_index().groupby(level=0))
 
-    def _get_next_bar(self) -> None:
-        """Retrieves next bar from datahandler and places it on queue"""
-
+    def _get_next_bar(self) -> NoReturn:
+        # * Retrieves next bar from datahandler and places it on queue
         try:
             index, row = next(self.data)
         except StopIteration:
@@ -57,8 +55,7 @@ class DataHandler:
 
     def _get_latest_symbol_data(self, ticker: str, category: str,
                                 num_days: int) -> np.ndarray:
-        """Retrieves the bars for a given ticker's category over the # of specified days"""
-
+        # * Retrieves the bars for a given ticker's category over the # of specified days
         latest_data = self.latest_symbol_data[ticker].copy()
         try:
             arr = [latest_data.popitem()[1][category] for _ in range(num_days)]
@@ -91,9 +88,12 @@ class DataHandler:
                                  num_days: int) -> np.ndarray:
         return self._get_latest_symbol_data(ticker, 'volume', num_days)
 
-    def start_backtest(self) -> None:
-        """Calls the datahandler and eventhandler repeatedly until datahandler is empty"""
+    def start_backtest(self) -> NoReturn:
+        """Calls the datahandler and eventhandler repeatedly until datahandler is empty
 
+        Returns:
+            NoReturn: 
+        """
         self._contine_backtest = True
         while self._contine_backtest:
             self._get_next_bar()
