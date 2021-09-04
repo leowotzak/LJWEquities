@@ -22,7 +22,7 @@ class Strategy(metaclass=ABCMeta):
         return NotImplementedError("Strategy must have a check_all() function")
 
 
-class Strategy(Strategy):
+class XDayHighStrategy(Strategy):
     def __init__(self, symbols: List[AnyStr], N: int, operator_, value: float,
                  data_handler: DataHandler):
 

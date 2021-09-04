@@ -3,7 +3,8 @@ import datetime
 import operator
 
 from ljwtrader.strategy.indicator import XDayHigh
-from ljwtrader.strategy.strategy import Strategy
+from ljwtrader.strategy.position import Position
+from ljwtrader.strategy.strategy import XDayHighStrategy
 from ljwtrader.system import TradingSystem
 
 parser = argparse.ArgumentParser(
@@ -61,5 +62,7 @@ parser.add_argument('-b',
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    sys = TradingSystem(['AAPL'], args.start, args.end, args.frequency, args.vendor)
+    from ljwtrader.strategy.indicator import XDayHigh
+
+    sys = TradingSystem([Position(XDayHigh, 'AAPL', 10, operator.gt, 10.0)], args.start, args.end, args.frequency, args.vendor)
     sys.run_backtest()

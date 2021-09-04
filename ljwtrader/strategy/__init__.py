@@ -1,2 +1,2 @@
 from .indicator import XDayHigh
-from .strategy import Strategy
+from .strategy import XDayHighStrategy, Strategy
