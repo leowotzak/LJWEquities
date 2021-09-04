@@ -39,7 +39,7 @@ class EventHandler:
             event = self._queue.get()
             try:
                 event_handler = EVENT_MAP[event.event_type]
+            except KeyError as e:
                 logger.error(e)
-                raise e
             else:
                 handler(event)
