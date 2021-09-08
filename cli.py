@@ -60,7 +60,7 @@ parser.add_argument('-b',
 
 if __name__ == '__main__':
     args = parser.parse_args()
-    from ljwtrader.strategy.indicator import XDayHigh
-
-    sys = TradingSystem([Position(XDayHigh, 'AAPL', 10, operator.gt, 10.0)], args.start, args.end, args.frequency, args.vendor)
+    strat = XDayHigh('AAPL', 10, operator.lt, 130.0)
+    sys = TradingSystem(args.start, args.end, args.frequency, args.vendor, long=[('AAPL', strat)])
     sys.run_backtest()
+
