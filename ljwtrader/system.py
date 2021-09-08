@@ -1,7 +1,7 @@
 from queue import Queue
 import operator
 from datetime import datetime
-from typing import List, AnyStr
+from typing import Sequence, List, AnyStr
 
 from .datahandler import DataHandler
 from .eventhandler import EventHandler
