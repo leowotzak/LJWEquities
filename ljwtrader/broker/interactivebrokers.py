@@ -20,3 +20,18 @@ class InteractiveBrokers(Brokerage):
     def calculate_slippage(self, order_event: OrderEvent, fill_event) -> float:
         pass
 
+    def calculate_commission(self, order_event: OrderEvent) -> float:
+        """Calculates the commission for the order using the Interactive Brokers commission structure as a reference
+
+        Args:
+            order_event (OrderEvent): Event to calculate commission for
+
+        Returns:
+            float: Total commissions and fees for the given order
+        """
+        per_share_commission = order_event.quantity * self.COMMISSION_PER_SHARE_FEE
+        trade_value = order_event.quantity * order_event.price
+
+        broker_fees = min(max(self.MIN_TRADE_VALUE, per_share_commission), self.MAX_TRADE_VALUE * trade_value)
+        other_fees = self.TXN_FEE * trade_value + min(order_event.quantity * self.FINRA_PER_SHARE_FEE, MAX_FINRA_FEE)
+        return broker_fees + other_fees
