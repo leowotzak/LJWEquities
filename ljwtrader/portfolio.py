@@ -41,6 +41,9 @@ class Portfolio:
         Returns:
             NoReturn: 
         """
+        new_event = OrderEvent(event.ticker, event.datetime, event.strategy_id, 1.0, 1)
+        self._queue.put(new_event)
+
 
     def update_holdings_from_fill(self, event: Event) -> NoReturn:
         """Takes an FillEvent and updates the share/contract amounts & dollar amounts of the portfolio
