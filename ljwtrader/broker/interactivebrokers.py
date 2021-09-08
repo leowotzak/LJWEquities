@@ -39,5 +39,6 @@ class InteractiveBrokers(Brokerage):
         trade_value = order_event.quantity * order_event.price
 
         broker_fees = min(max(self.MIN_TRADE_VALUE, per_share_commission), self.MAX_TRADE_VALUE * trade_value)
+        other_fees = self.TXN_FEE * trade_value + min(order_event.quantity * self.FINRA_PER_SHARE_FEE, self.MAX_FINRA_FEE)
         logger.info("Broker commission: %f, Other fees: %f", broker_fees, other_fees)
         return broker_fees + other_fees
