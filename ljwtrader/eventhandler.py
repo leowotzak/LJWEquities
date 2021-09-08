@@ -22,7 +22,7 @@ class EventHandler:
         self.strategy.check_all(event)
 
     def _handle_strategy(self, event: StrategyEvent) -> NoReturn:
-        pass
+        self.portfolio.trigger_order(event)
 
     def _handle_order(self, event: OrderEvent) -> NoReturn:
         pass
@@ -41,6 +41,7 @@ class EventHandler:
         EVENT_MAP: Mapping[Event, Callable] = {
             'MARKET': self._handle_market,
             'STRATEGY': self._handle_strategy,
+            'ORDER': self._handle_order,
         }
 
         while not self._queue.empty():
