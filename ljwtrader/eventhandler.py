@@ -2,6 +2,7 @@ import logging
 from typing import Callable, NoReturn, Mapping, Sequence
 
 from .strategy import Strategy
+from .portfolio import Portfolio
 from .events import Event, MarketEvent, StrategyEvent, OrderEvent, FillEvent
 
 logger = logging.getLogger(__name__)
@@ -14,6 +15,8 @@ class EventHandler:
     def __init__(self, queue: Sequence[Event]):
         self._queue = queue
         self.strategy: Strategy = None
+        self.portfolio: Portfolio = None
+
 
     def _handle_market(self, event: MarketEvent) -> NoReturn:
         self.strategy.check_all()
