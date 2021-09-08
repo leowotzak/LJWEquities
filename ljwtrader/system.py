@@ -5,7 +5,7 @@ from typing import List, AnyStr
 
 from .datahandler import DataHandler
 from .eventhandler import EventHandler
-from .strategy import XDayHighStrategy
+from .strategy import Strategy
 
 import logging
 
@@ -59,7 +59,7 @@ class TradingSystem:
                                          self.frequency, self.vendor,
                                          self._event_handler.process_events)
 
-        self._strategy = XDayHighStrategy(self.symbols, 10, operator.gt, 5.0, self._data_handler)
+        self._strategy = Strategy(self._queue, self._data_handler, long=long, short=short)
         self._event_handler.strategy = self._strategy
 
     def run_backtest(self):
