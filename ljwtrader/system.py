@@ -57,15 +57,3 @@ class TradingSystem:
     def run_backtest(self):
         logger.info('Initiating backtest')
         self._data_handler.start_backtest()
-
-    def get_start_date(self):
-        return self.start_date
-
-    def get_end_date(self):
-        return self.end_date
-
-    def get_frequency(self):
-        return self.frequency
-
-    def get_vendor(self):
-        return self.vendor
