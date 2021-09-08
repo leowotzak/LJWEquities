@@ -42,6 +42,7 @@ class EventHandler:
             'MARKET': self._handle_market,
             'STRATEGY': self._handle_strategy,
             'ORDER': self._handle_order,
+            'FILL': self._handle_fill,
         }
 
         while not self._queue.empty():
