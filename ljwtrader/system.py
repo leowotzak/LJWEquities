@@ -5,6 +5,7 @@ from typing import List, AnyStr
 
 from .datahandler import DataHandler
 from .eventhandler import EventHandler
+from .portfolio import Portfolio
 from .strategy import Strategy
 
 import logging
@@ -60,7 +61,13 @@ class TradingSystem:
                                          self._event_handler.process_events)
 
         self._strategy = Strategy(self._queue, self._data_handler, long=long, short=short)
+
+        self._portfolio = Portfolio(self._queue)
+
+        # TODO: This seems kinda sloppy tbh, goes along with how long and shorts are issued from strategy
         self._event_handler.strategy = self._strategy
+        self._event_handler.portfolio = self._portfolio
+
 
     def run_backtest(self):
         logger.info('Initiating backtest')
