@@ -1,7 +1,7 @@
 import logging
 from typing import NoReturn
 
-from ljwtrader.events import Event
+from ljwtrader.events import Event, StrategyEvent, OrderEvent
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ class Portfolio:
         #? Is the status of each strategy (in or out...) decided here?
         pass
 
-    def place_order(self, event: Event) -> NoReturn:
+    def place_order(self, event: StrategyEvent) -> NoReturn:
         """Generates an OrderEvent and places it on the queue
 
         Args:
