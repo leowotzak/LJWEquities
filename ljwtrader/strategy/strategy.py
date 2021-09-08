@@ -1,51 +1,66 @@
-from abc import ABCMeta, abstractmethod
 import logging
-import operator
-from typing import List, AnyStr
+from typing import Callable, Any, List, Sequence
 
-import numpy as np
+from ljwtrader.events import Event, StrategyEvent, MarketEvent
 from ljwtrader.datahandler import DataHandler
-from ljwtrader.strategy.indicator import XDayHigh
 
 logger = logging.getLogger(__name__)
 
 
-class Strategy(metaclass=ABCMeta):
-    """
-    The Strategy is simply a collection of one or more condition-position groups. 
-    Buy (Sell) or Sell (Buy) what, when x, y, & z are true/false?
-    """
-
-    @abstractmethod
-    def check_all(self) -> bool:
-        """Evaluate the status of each conditional position in strategy
-
-        Returns:
-            bool: Returns True if all conditions are true, False otherwise. This is used to determine when a strategy is 'in' or 'out'.
-        """
-        return NotImplementedError(
-            "Each strategy is required to implement a check_all() method"
-            )
-
-
-class XDayHighStrategy(Strategy):
-    def __init__(self, symbols: List[AnyStr], N: int, operator_, value: float,
-                 data_handler: DataHandler):
-
-        self.symbols = symbols
-        self.N = N
-        self.operator = operator_
+class Strategy:
+    def __init__(self,
+                 queue: Sequence[Event],
+                 data_handler: DataHandler,
+                 long=None,
+                 short=None):
+        self.queue = queue
         self.data_handler = data_handler
-        self.value = value
+        self.positions = {'long': {}, 'short': {}}
 
-        self.conditional_positions = []
-        for symbol in self.symbols:
-            self.conditional_positions.append(
-                XDayHigh(symbol, self.N, self.operator, self.value))
+        for tup in long:
+            self.positions['long'].update({tup[0]: []})
 
-    def check_all(self):
-        results = []
-        for position in self.conditional_positions:
-            calc_value = position(self.data_handler)
-            results.append(calc_value)
-            logger.debug(f'Check: {calc_value}')
+        if short is not None:
+            for tup in short:
+                self.positions['short'].update({tup[0]: []})
+
+        for tup in long:
+            self.positions['long'][tup[0]].append(tup[1])
+
+        if short is not None:
+            for tup in short:
+                self.positions['short'][tup[0]].append(tup[1])
+
+        self.directions = {}
+
+    def add_strategy_event_to_queue(self, ticker, direction,
+                                    event: MarketEvent):
+        new_event = StrategyEvent(ticker, event.datetime, 'deez', direction)
+        self.queue.put(new_event)
+
+    def check_all(self, event: MarketEvent):
+
+        for ticker, indicators in self.positions['long'].items():
+
+            result = all(map(lambda func: func(self.data_handler), indicators))
+            prev_state = self.directions.get(ticker, False)
+
+            if result and not prev_state:
+                self.directions[ticker] = True
+                self.add_strategy_event_to_queue(ticker, 'BUY', event)
+            elif not result and prev_state:
+                self.directions[ticker] = False
+                self.add_strategy_event_to_queue(ticker, 'SELL', event)
+
+        for ticker, indicators in self.positions['short'].items():
+
+            result = all(map(lambda func: func(self.data_handler), indicators))
+            prev_state = self.directions.get(ticker, False)
+
+            if result and not prev_state:
+                prev_state = True
+                self.directions[ticker] = True
+                self.add_strategy_event_to_queue(ticker, 'SELL', event)
+            elif not result and prev_state:
+                self.directions[ticker] = False
+                self.add_strategy_event_to_queue(ticker, 'BUY', event)
