@@ -5,6 +5,7 @@ from typing import Sequence, List, AnyStr
 
 from .datahandler import DataHandler
 from .eventhandler import EventHandler
+from .broker import InteractiveBrokers
 from .portfolio import Portfolio
 from .strategy import Strategy
 
@@ -53,6 +54,8 @@ class TradingSystem:
             f"Symbols: {self.symbols}, Start Date: {self.start_date}, End Date: {self.end_date}, Frequency: {self.frequency}, Vendor: {self.vendor}"
         )
 
+        self._broker = InteractiveBrokers(self._queue)
+        
         self._event_handler = EventHandler(self._queue)
 
         self._data_handler = DataHandler(self.symbols, self._queue,
@@ -67,6 +70,7 @@ class TradingSystem:
         # TODO: This seems kinda sloppy tbh, goes along with how long and shorts are issued from strategy
         self._event_handler.strategy = self._strategy
         self._event_handler.portfolio = self._portfolio
+        self._event_handler.broker = self._broker
 
 
     def run_backtest(self):
