@@ -12,3 +12,5 @@ class FillEvent(Event):
         self.direction = direction
         self.price = price
         self.quantity = quantity
+        self.commission = commission
+        self.slippage = slippage
