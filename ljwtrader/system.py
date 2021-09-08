@@ -32,8 +32,16 @@ class TradingSystem:
             frequency (str): Frequency of the bar data
             vendor (str): Data vendor to be used for the backtest   # ? This is backtest specific
         """
+        self.symbols = []
 
-        self.symbols = symbols
+        for _, indicator in long:
+            self.symbols.append(indicator.args[0])
+
+        if short is not None:
+            for _, indicator in short:
+                self.symbols.append(indicator.args[0])
+
+
         self.start_date = start_date
         self.end_date = end_date
         self.frequency = frequency
