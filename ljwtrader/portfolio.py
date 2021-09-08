@@ -15,8 +15,20 @@ class Portfolio:
     """
     def __init__(self):
         #? Is the status of each strategy (in or out...) decided here?
-        pass
 
+    def trigger_order(self, event: StrategyEvent) -> NoReturn:
+        """Takes a signal event and applies portfolio logic
+
+        Args:
+            event (Event): SignalEvent containing information on trades to place
+
+        Returns:
+            NoReturn:
+        """
+        self.place_order(event)
+
+
+    
     def place_order(self, event: StrategyEvent) -> NoReturn:
         """Generates an OrderEvent and places it on the queue
 
