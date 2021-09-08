@@ -30,7 +30,7 @@ class EventHandler:
         self.broker.generate_fill_order(event)
 
     def _handle_fill(self, event: FillEvent) -> NoReturn:
-        pass
+        self.portfolio.update_holdings_from_fill(event)
 
     def process_events(self) -> NoReturn:
         """Pops each event in the queue and assigns it to the proper handler
