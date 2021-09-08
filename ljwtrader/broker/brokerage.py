@@ -1,7 +1,7 @@
 import logging
 from abc import ABC, abstractmethod
 
-from ljwtrader.events import Event
+from ljwtrader.events import Event, OrderEvent
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +24,7 @@ class Brokerage(ABC):
         raise NotImplementedError(
             f"{self.__class__} must have a generate_fill_order() method")
 
-    def calculate_slippage(self, order_event: Event,
+    def calculate_slippage(self, order_event: OrderEvent,
                            fill_event: Event) -> float:
         """Compares an OrderEvent and a FillEvent and compares the prices to determine slippage
 
@@ -38,7 +38,7 @@ class Brokerage(ABC):
         raise NotImplementedError(
             f"{self.__class__} must have a calculate_slippage() method")
 
-    def calculate_commission(self, order_event: Event) -> float:
+    def calculate_commission(self, order_event: OrderEvent) -> float:
         """Takes an OrderEvent and calculates the proper fees & commission
 
         Args:

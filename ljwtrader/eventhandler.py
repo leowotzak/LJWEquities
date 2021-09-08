@@ -2,7 +2,7 @@ import logging
 from typing import Callable, NoReturn, Mapping, Sequence
 
 from .strategy import Strategy
-from .events import Event, MarketEvent, StrategyEvent
+from .events import Event, MarketEvent, StrategyEvent, OrderEvent, FillEvent
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +19,12 @@ class EventHandler:
         self.strategy.check_all()
 
     def _handle_strategy(self, event: StrategyEvent) -> NoReturn:
+        pass
+
+    def _handle_order(self, event: OrderEvent) -> NoReturn:
+        pass
+
+    def _handle_fill(self, event: FillEvent) -> NoReturn:
         pass
 
     def process_events(self) -> NoReturn:
