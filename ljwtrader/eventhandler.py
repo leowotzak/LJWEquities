@@ -19,7 +19,7 @@ class EventHandler:
 
 
     def _handle_market(self, event: MarketEvent) -> NoReturn:
-        self.strategy.check_all()
+        self.strategy.check_all(event)
 
     def _handle_strategy(self, event: StrategyEvent) -> NoReturn:
         pass
@@ -40,7 +40,7 @@ class EventHandler:
         """
         EVENT_MAP: Mapping[Event, Callable] = {
             'MARKET': self._handle_market,
-            'STRATEGY': self._handle_strategy
+            'STRATEGY': self._handle_strategy,
         }
 
         while not self._queue.empty():
