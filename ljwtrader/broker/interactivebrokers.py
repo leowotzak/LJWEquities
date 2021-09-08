@@ -19,8 +19,12 @@ class InteractiveBrokers(Brokerage):
         new_event.slippage = self.calculate_slippage(order_event, new_event)
         self._queue.put(new_event)
 
-    def calculate_slippage(self, order_event: OrderEvent, fill_event) -> float:
-        pass
+    def calculate_slippage(self, order_event: OrderEvent, fill_event: FillEvent) -> float:
+        order_value = order_event.quantity * order_event.price
+        fill_value = fill_event.quantity * fill_event.price
+        slippage = fill_value - order_value
+        logger.info("Slippage: %f", slippage)
+        return slippage
 
     def calculate_commission(self, order_event: OrderEvent) -> float:
         """Calculates the commission for the order using the Interactive Brokers commission structure as a reference
