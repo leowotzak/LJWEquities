@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class Strategy:
+
     def __init__(self,
                  queue: Sequence[Event],
                  data_handler: DataHandler,

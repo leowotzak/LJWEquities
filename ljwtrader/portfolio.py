@@ -5,6 +5,7 @@ from ljwtrader.events import Event, StrategyEvent, OrderEvent, FillEvent
 
 logger = logging.getLogger(__name__)
 
+
 class Portfolio:
     """
     Responsible for handling and implementing all portfolio logic for the trading system. 
@@ -13,6 +14,7 @@ class Portfolio:
     ignore them in favor of some other over-arching portfolio strategy. The portfolio should also 
     keep track of any rebalancing and issue orders to achieve certain targets.
     """
+
     def __init__(self, queue):
         self._queue = queue
         self._quantities = {}
@@ -40,7 +42,8 @@ class Portfolio:
         Returns:
             NoReturn: 
         """
-        new_event = OrderEvent(event.ticker, event.datetime, event.strategy_id, event.direction, 50.0, 1)
+        new_event = OrderEvent(event.ticker, event.datetime, event.strategy_id,
+                               event.direction, 50.0, 1)
         self._queue.put(new_event)
 
     def update_holdings_from_fill(self, event: FillEvent) -> NoReturn:
@@ -87,4 +90,3 @@ class Portfolio:
         Returns:
             NoReturn: 
         """
-

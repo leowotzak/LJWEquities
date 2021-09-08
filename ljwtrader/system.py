@@ -23,8 +23,14 @@ class TradingSystem:
     Object that serves to govern the entire trading logic process. All user input should be 
     applied in this class, which acts as a unifier between all of the system components.
     """
-    def __init__(self, start_date: datetime,
-                 end_date: datetime, frequency: AnyStr, vendor: AnyStr, long: Sequence[tuple] = None, short: Sequence[tuple] = None):
+
+    def __init__(self,
+                 start_date: datetime,
+                 end_date: datetime,
+                 frequency: AnyStr,
+                 vendor: AnyStr,
+                 long: Sequence[tuple] = None,
+                 short: Sequence[tuple] = None):
         """Arguments supplied to the TradingSystem constructor by interface
 
         Args:
@@ -43,7 +49,6 @@ class TradingSystem:
             for _, indicator in short:
                 self.symbols.append(indicator.args[0])
 
-
         self.start_date = start_date
         self.end_date = end_date
         self.frequency = frequency
@@ -55,7 +60,7 @@ class TradingSystem:
         )
 
         self._broker = InteractiveBrokers(self._queue)
-        
+
         self._event_handler = EventHandler(self._queue)
 
         self._data_handler = DataHandler(self.symbols, self._queue,
@@ -63,7 +68,10 @@ class TradingSystem:
                                          self.frequency, self.vendor,
                                          self._event_handler.process_events)
 
-        self._strategy = Strategy(self._queue, self._data_handler, long=long, short=short)
+        self._strategy = Strategy(self._queue,
+                                  self._data_handler,
+                                  long=long,
+                                  short=short)
 
         self._portfolio = Portfolio(self._queue)
 
@@ -71,7 +79,6 @@ class TradingSystem:
         self._event_handler.strategy = self._strategy
         self._event_handler.portfolio = self._portfolio
         self._event_handler.broker = self._broker
-
 
     def run_backtest(self):
         logger.info('Initiating backtest')

@@ -12,6 +12,7 @@ class Brokerage(ABC):
     is able to transact through. Brokerages need to handle commission, fee, and slippage
     calculations and generate FillOrders that contain these calculations 
     """
+
     def generate_fill_order(self, event: Event) -> Event:
         """Takes an OrderEvent and creates a FillEvent from its details
 

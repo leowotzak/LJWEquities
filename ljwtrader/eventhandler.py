@@ -13,12 +13,12 @@ class EventHandler:
     """
     Object that serves to route events to the proper system component based on their type
     """
+
     def __init__(self, queue: Sequence[Event]):
         self._queue = queue
         self.strategy: Strategy = None
         self.portfolio: Portfolio = None
         self.broker: InteractiveBrokers = None
-
 
     def _handle_market(self, event: MarketEvent) -> NoReturn:
         self.strategy.check_all(event)
