@@ -13,6 +13,10 @@ class Portfolio:
     ignore them in favor of some other over-arching portfolio strategy. The portfolio should also 
     keep track of any rebalancing and issue orders to achieve certain targets.
     """
+    def __init__(self):
+        #? Is the status of each strategy (in or out...) decided here?
+        pass
+
     def place_order(self, event: Event) -> NoReturn:
         """Generates an OrderEvent and places it on the queue
 
