@@ -13,3 +13,6 @@ class InteractiveBrokers(Brokerage):
         self.TXN_FEE = .0000051 # Transaction fees
         self.FINRA_PER_SHARE_FEE = .000119 # FINRA fees
         self.MAX_FINRA_FEE = 5.95
+
+    def generate_fill_order(self, order_event: OrderEvent) -> NoReturn:
+        pass
