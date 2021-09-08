@@ -15,7 +15,9 @@ class InteractiveBrokers(Brokerage):
         self.MAX_FINRA_FEE = 5.95
 
     def generate_fill_order(self, order_event: OrderEvent) -> NoReturn:
-        pass
+        new_event = FillEvent(order_event.ticker, order_event.datetime, order_event.strategy_id, order_event.direction, order_event.price, order_event.quantity, commission=self.calculate_commission(order_event))
+        new_event.slippage = self.calculate_slippage(order_event, new_event)
+        self._queue.put(new_event)
 
     def calculate_slippage(self, order_event: OrderEvent, fill_event) -> float:
         pass
