@@ -16,3 +16,7 @@ class InteractiveBrokers(Brokerage):
 
     def generate_fill_order(self, order_event: OrderEvent) -> NoReturn:
         pass
+
+    def calculate_slippage(self, order_event: OrderEvent, fill_event) -> float:
+        pass
+
