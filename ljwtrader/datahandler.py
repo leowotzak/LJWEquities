@@ -21,11 +21,11 @@ def convert_bar(row):
 
 class DataHandler:
     """Object that handles all data access for other system components"""
-    def __init__(self, positions: List[AnyStr], queue_: Sequence[Event],
+    def __init__(self, symbols: List[AnyStr], queue_: Sequence[Event],
                  start_date: datetime, end_date: datetime, frequency: AnyStr,
                  vendor: AnyStr, process_events_func: Callable[[None], None]):
 
-        self._symbols = symbols
+        self._positions = symbols
         self._queue = queue_
         self._start_date = start_date
         self._end_date = end_date
@@ -33,11 +33,11 @@ class DataHandler:
         self._vendor = vendor
         self._contine_backtest = False
         self._process_events_func = process_events_func
-        self.latest_symbol_data = {sym: {} for sym in self._symbols}
+        self.latest_symbol_data = {sym: {} for sym in self._positions}
 
         self.data = (tup for tup in pd.read_sql(
             "SELECT * FROM symbols JOIN daily_bar_data ON symbols.symbol_id=daily_bar_data.symbol_id WHERE symbols.ticker IN ('%s')"
-            % "', '".join(self._symbols),
+            % "', '".join(self._positions),
             sqlite3.connect('app.db'),
             index_col='timestamp').sort_index().groupby(level=0))
 
