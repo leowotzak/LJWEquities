@@ -21,8 +21,8 @@ class TradingSystem:
     Object that serves to govern the entire trading logic process. All user input should be 
     applied in this class, which acts as a unifier between all of the system components.
     """
-    def __init__(self, symbols: List[AnyStr], start_date: datetime,
-                 end_date: datetime, frequency: AnyStr, vendor: AnyStr):
+    def __init__(self, start_date: datetime,
+                 end_date: datetime, frequency: AnyStr, vendor: AnyStr, long: Sequence[tuple] = None, short: Sequence[tuple] = None):
         """Arguments supplied to the TradingSystem constructor by interface
 
         Args:
