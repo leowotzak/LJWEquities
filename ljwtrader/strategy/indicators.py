@@ -21,3 +21,12 @@ def indicator(func: Callable) -> Callable:
         return partial(func, ticker, N, operator, value)
 
     return wrapper
+
+
+@indicator
+def XDayHigh(ticker: str, N: int, operator: Callable, value: Any,
+             data_handler: DataHandler) -> bool:
+    high: np.ndarray = data_handler.get_latest_symbol_high(ticker, N)
+    max_ = np.max(high) if len(high) != 0 else np.nan
+    logger.info(f"{ticker}: {max_} {operator} {value}")
+    return operator(max_, value)
