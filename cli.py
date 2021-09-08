@@ -2,9 +2,7 @@ import argparse
 import datetime
 import operator
 
-from ljwtrader.strategy.indicator import XDayHigh
-from ljwtrader.strategy.position import Position
-from ljwtrader.strategy.strategy import XDayHighStrategy
+from ljwtrader.strategy import XDayHigh
 from ljwtrader.system import TradingSystem
 
 parser = argparse.ArgumentParser(
