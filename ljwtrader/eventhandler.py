@@ -4,6 +4,7 @@ from typing import Callable, NoReturn, Mapping, Sequence
 from .strategy import Strategy
 from .portfolio import Portfolio
 from .events import Event, MarketEvent, StrategyEvent, OrderEvent, FillEvent
+from ljwtrader.broker import InteractiveBrokers
 
 logger = logging.getLogger(__name__)
 
@@ -16,6 +17,7 @@ class EventHandler:
         self._queue = queue
         self.strategy: Strategy = None
         self.portfolio: Portfolio = None
+        self.broker: InteractiveBrokers = None
 
 
     def _handle_market(self, event: MarketEvent) -> NoReturn:
@@ -25,7 +27,7 @@ class EventHandler:
         self.portfolio.trigger_order(event)
 
     def _handle_order(self, event: OrderEvent) -> NoReturn:
-        pass
+        self.broker.generate_fill_order(event)
 
     def _handle_fill(self, event: FillEvent) -> NoReturn:
         pass
