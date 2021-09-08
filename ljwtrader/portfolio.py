@@ -13,7 +13,10 @@ class Portfolio:
     ignore them in favor of some other over-arching portfolio strategy. The portfolio should also 
     keep track of any rebalancing and issue orders to achieve certain targets.
     """
-    def __init__(self):
+    def __init__(self, queue):
+        self._queue = queue
+        self._holdings = {'cash': 100000, 'commission': 0, 'fill_cost': 0}
+
         #? Is the status of each strategy (in or out...) decided here?
 
     def trigger_order(self, event: StrategyEvent) -> NoReturn:
