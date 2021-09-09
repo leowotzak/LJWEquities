@@ -73,7 +73,7 @@ class TradingSystem:
                                   long=long,
                                   short=short)
 
-        self._portfolio = Portfolio(self._queue)
+        self._portfolio = Portfolio(self._queue, self._data_handler)
 
         # TODO: This seems kinda sloppy tbh, goes along with how long and shorts are issued from strategy
         self._event_handler.strategy = self._strategy
