@@ -87,6 +87,10 @@ class DataHandler:
                                  num_days: int) -> np.ndarray:
         return self._get_latest_symbol_data(ticker, 'volume', num_days)
 
+    def get_latest_pct_change(self, ticker: str, num_days: int) -> np.ndarray:
+        arr = self._get_latest_symbol_data(ticker, 'adj_close_price', num_days) 
+        return np.diff(arr) / arr[1:]
+
     def start_backtest(self) -> NoReturn:
         """Calls the datahandler and eventhandler repeatedly until datahandler is empty
 
