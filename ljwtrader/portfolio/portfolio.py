@@ -15,12 +15,24 @@ class Portfolio:
     keep track of any rebalancing and issue orders to achieve certain targets.
     """
 
-    def __init__(self, queue):
+    # TODO: Need to make historical positions and holdings, just make a current dict and copy it into a historical list
+
+    def __init__(self, queue, data_handler):
         self._queue = queue
-        self._quantities = {}
+        self.data_handler = data_handler
+        self._positions = {}
         self._holdings = {'cash': 100000, 'commission': 0, 'slippage': 0}
 
-        #? Is the status of each strategy (in or out...) decided here?
+    def get_percent_of_cash_holdings(self, percent: float) -> float:
+        """Returns the dollar value of a given % of the portfolio's cash on hand
+
+        Args:
+            percent (float): Percent of cash on hand
+
+        Returns:
+            float: dollar value of % of portfolio
+        """
+        return self._holdings['cash'] * percent
 
     def trigger_order(self, event: StrategyEvent) -> NoReturn:
         """Takes a signal event and applies portfolio logic
@@ -62,8 +74,8 @@ class Portfolio:
         else:
             raise ValueError('event direction must be either "BUY" or "SELL"')
 
-        current_quantity = self._quantities.get(event.ticker, 0)
-        self._quantities[
+        current_quantity = self._positions.get(event.ticker, 0)
+        self._positions[
             event.ticker] = current_quantity + direction * event.quantity
 
         current_holding = self._holdings.get(event.ticker, 0)
@@ -77,7 +89,7 @@ class Portfolio:
 
         logger.info(
             "%s -- Current quantity: %i, Current holding: %f, Current cash: %f, Current commission: %f, Current slippage: %f"
-            % (event.ticker, self._quantities[event.ticker],
+            % (event.ticker, self._positions[event.ticker],
                self._holdings[event.ticker], self._holdings['cash'],
                self._holdings['commission'], self._holdings['slippage']))
 
