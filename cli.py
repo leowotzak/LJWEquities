@@ -4,6 +4,7 @@ import operator
 
 from ljwtrader.strategy import XDayHigh
 from ljwtrader.system import TradingSystem
+from ljwtrader.data import Backtest
 
 parser = argparse.ArgumentParser(
     description="LJWE quantitative trading system",
@@ -59,4 +60,7 @@ parser.add_argument('-b',
 if __name__ == '__main__':
     args = parser.parse_args()
     strat = XDayHigh('AAPL', 10, operator.lt, 130.0)
+    back = Backtest()
+    sys = TradingSystem()
     sys.add_position(('AAPL', [strat]), 'long')
+    sys.run_backtest(back)
