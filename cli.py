@@ -59,6 +59,4 @@ parser.add_argument('-b',
 if __name__ == '__main__':
     args = parser.parse_args()
     strat = XDayHigh('AAPL', 10, operator.lt, 130.0)
-    sys = TradingSystem(args.start, args.end, args.frequency, args.vendor, long=[('AAPL', strat)])
-    sys.run_backtest()
-
+    sys.add_position(('AAPL', [strat]), 'long')

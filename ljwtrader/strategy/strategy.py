@@ -16,23 +16,12 @@ class Strategy:
                  short=None):
         self.queue = queue
         self.data_handler = data_handler
+        self.directions = {}
         self.positions = {'long': {}, 'short': {}}
 
-        for tup in long:
-            self.positions['long'].update({tup[0]: []})
-
-        if short is not None:
-            for tup in short:
-                self.positions['short'].update({tup[0]: []})
-
-        for tup in long:
-            self.positions['long'][tup[0]].append(tup[1])
-
-        if short is not None:
-            for tup in short:
-                self.positions['short'][tup[0]].append(tup[1])
-
-        self.directions = {}
+    def add_indicator_to_strategy(self, ticker: str, indicators: Sequence[Callable], direction: str):
+        """Adds and indicator's calculations to be executed on market data"""
+        self.positions[direction][ticker] = indicators
 
     def add_strategy_event_to_queue(self, ticker, direction,
                                     event: MarketEvent):

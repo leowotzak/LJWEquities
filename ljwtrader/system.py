@@ -79,6 +79,18 @@ class TradingSystem:
         self._event_handler.strategy = self._strategy
         self._event_handler.portfolio = self._portfolio
         self._event_handler.broker = self._broker
+    
+    def add_position(self, indicator: tuple, direction: str):
+        """Adds an indicator for the trading system's calculations"""
+        if direction == 'long':
+            self._strategy.add_indicator_to_strategy(indicator[0], indicator[1], direction)
+        elif direction == 'short':
+            self._strategy.add_indicator_to_strategy(indicator[0], indicator[1], direction)
+        else:
+            e = ValueError('Direction must be either "long" or "short"')
+            logger.error(e)
+
+        self._data_handler.add_symbol_to_data_handler(indicator[0])
 
     def run_backtest(self):
         logger.info('Initiating backtest')
