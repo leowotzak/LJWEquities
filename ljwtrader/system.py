@@ -28,47 +28,19 @@ class TradingSystem:
     def __init__(self, long: Sequence[tuple] = [], short: Sequence[tuple] = [], backtest: Backtest = None):
         """Arguments supplied to the TradingSystem constructor by interface"""
 
-        Args:
-            symbols (List[AnyStr]): Collection of symbols that the system should track
-            start_date (datetime): Beginning date of analysis       # ? This is backtest specific
-            end_date (datetime): End date of analysis               # ? This is backtest specific
-            frequency (str): Frequency of the bar data
-            vendor (str): Data vendor to be used for the backtest   # ? This is backtest specific
-        """
-        self.symbols = []
+        self.queue = Queue()
+        self._broker = InteractiveBrokers(self.queue)
+        self._event_handler = EventHandler(self.queue)
 
-        for _, indicator in long:
-            self.symbols.append(indicator.args[0])
+        if backtest:
+            backest.queue = self.queue
+            backtest.process_events: Callable = self._event_handler.process_events
 
-        if short is not None:
-            for _, indicator in short:
-                self.symbols.append(indicator.args[0])
+        self._data_handler = DataHandler()
 
-        self.start_date = start_date
-        self.end_date = end_date
-        self.frequency = frequency
-        self.vendor = vendor
-        self._queue = Queue()
+        self._strategy = Strategy(self.queue, self._data_handler, long=long, short=short)
 
-        logger.info(
-            f"Symbols: {self.symbols}, Start Date: {self.start_date}, End Date: {self.end_date}, Frequency: {self.frequency}, Vendor: {self.vendor}"
-        )
-
-        self._broker = InteractiveBrokers(self._queue)
-
-        self._event_handler = EventHandler(self._queue)
-
-        self._data_handler = DataHandler(self.symbols, self._queue,
-                                         self.start_date, self.end_date,
-                                         self.frequency, self.vendor,
-                                         self._event_handler.process_events)
-
-        self._strategy = Strategy(self._queue,
-                                  self._data_handler,
-                                  long=long,
-                                  short=short)
-
-        self._portfolio = Portfolio(self._queue, self._data_handler)
+        self._portfolio = Portfolio(self.queue, self._data_handler)
 
         # TODO: This seems kinda sloppy tbh, goes along with how long and shorts are issued from strategy
         self._event_handler.strategy = self._strategy
@@ -87,6 +59,10 @@ class TradingSystem:
 
         self._data_handler.add_symbol_to_data_handler(indicator[0])
 
-    def run_backtest(self):
+    def run_backtest(self, backtest: Backtest):
         logger.info('Initiating backtest')
-        self._data_handler.start_backtest()
+        backtest.symbols = self._data_handler.symbols
+        backtest.queue = self.queue
+        backtest.process_events_func = self._event_handler.process_events
+        backtest.latest_symbol_data = self._data_handler.latest_symbol_data
+        backtest.start_backtest()
