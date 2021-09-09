@@ -25,10 +25,10 @@ class TradingSystem:
     """
 
     def __init__(self,
-                 start_date: datetime,
-                 end_date: datetime,
                  frequency: AnyStr,
                  vendor: AnyStr,
+                 start_date: datetime = datetime.today() - timedelta(days=365),
+                 end_date: datetime = datetime.today() - timedelta(days=1),
                  long: Sequence[tuple] = None,
                  short: Sequence[tuple] = None):
         """Arguments supplied to the TradingSystem constructor by interface

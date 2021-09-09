@@ -24,14 +24,12 @@ parser.add_argument('-s',
                     '--start',
                     type=lambda s: datetime.datetime.strptime(s, '%Y-%m-%d'),
                     nargs='?',
-                    default='2021-01-01',
                     help='First day of analysis'),
 
 parser.add_argument('-e',
                     '--end',
                     type=lambda s: datetime.datetime.strptime(s, '%Y-%m-%d'),
                     nargs='?',
-                    default='2020-01-01',
                     help='Last day of analysis'),
 
 parser.add_argument(
