@@ -3,11 +3,11 @@ import operator
 from datetime import datetime, timedelta
 from typing import Sequence, List, AnyStr
 
-from .datahandler import DataHandler
-from .eventhandler import EventHandler
-from .broker import InteractiveBrokers
-from .portfolio import Portfolio
-from .strategy import Strategy
+from ljwtrader.datahandler import DataHandler
+from ljwtrader.eventhandler import EventHandler
+from ljwtrader.broker import InteractiveBrokers
+from ljwtrader.portfolio import Portfolio
+from ljwtrader.strategy import Strategy
 
 import logging
 
