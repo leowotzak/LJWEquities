@@ -27,36 +27,15 @@ class Portfolio:
         self._historical_holdings = {}
 
     def get_percent_of_cash_holdings(self, percent: float) -> float:
-        """Returns the dollar value of a given % of the portfolio's cash on hand
-
-        Args:
-            percent (float): Percent of cash on hand
-
-        Returns:
-            float: dollar value of % of portfolio
-        """
+        """Returns the dollar value of a given % of the portfolio's cash on hand"""
         return self._holdings['cash'] * percent
 
     def trigger_order(self, event: StrategyEvent) -> NoReturn:
-        """Takes a signal event and applies portfolio logic
+        """Takes a signal event and applies portfolio logic"""
+        self._place_order(event)
 
-        Args:
-            event (Event): SignalEvent containing information on trades to place
-
-        Returns:
-            NoReturn:
-        """
-        self.place_order(event)
-
-    def place_order(self, event: StrategyEvent) -> NoReturn:
-        """Generates an OrderEvent and places it on the queue
-
-        Args:
-            event (Event): Contains details regarding what to purchase #? and how much?
-
-        Returns:
-            NoReturn: 
-        """
+    def _place_order(self, event: StrategyEvent) -> NoReturn:
+        """Generates an OrderEvent and places it on the queue"""
         new_event = OrderEvent(event.ticker, event.datetime, event.strategy_id,
                                event.direction, 50.0, 1)
         self._queue.put(new_event)
