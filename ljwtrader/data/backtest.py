@@ -49,17 +49,16 @@ class Backtest:
             self._continue_backtest = False
         else:
             for bar in map(convert_bar, bar_data.iterrows()):
-
-                self.queue.put(MarketEvent(bar['ticker'], bar['timestamp']))
+                ticker = bar['ticker']
+                self.queue.put(MarketEvent(bar['ticker'], timestamp))
 
                 try:
-                    self.latest_symbol_data[bar['ticker']]
+                    self.latest_symbol_data[ticker]
                 except KeyError as e:
                     logger.error(e)
-                    self.latest_symbol_data[bar['ticker']] = {}
+                    self.latest_symbol_data[ticker] = {}
                 finally:
-                    ticker_data = self.latest_symbol_data[
-                        bar['ticker']][timestamp] = bar
+                    ticker_data = self.latest_symbol_data[ticker][timestamp] = bar
 
     def start_backtest(self) -> NoReturn:
         """Calls the datahandler and eventhandler repeatedly until datahandler is empty"""
