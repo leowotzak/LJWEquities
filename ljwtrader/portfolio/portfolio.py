@@ -78,12 +78,6 @@ class Portfolio:
                self._holdings[event.ticker], self._holdings['cash'],
                self._holdings['commission'], self._holdings['slippage']))
 
-    def update_holdings_from_market(self, event: Event) -> NoReturn:
-        """Updates the dollar amounts of the portfolio in response to a change in market prices
-
-        Args:
-            event (Event): MarketEvent pertaining to the updated asset
-
-        Returns:
-            NoReturn: 
-        """
+    def update_holdings_from_market(self):
+        """Updates the dollar amounts of the portfolio in response to a change in market prices"""
+        
