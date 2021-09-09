@@ -19,7 +19,9 @@ class Strategy:
         self.directions = {}
         self.positions = {'long': {}, 'short': {}}
 
-    def add_indicator_to_strategy(self, ticker: str, indicators: Sequence[Callable], direction: str):
+    def add_indicator_to_strategy(self, ticker: str,
+                                  indicators: Sequence[Callable],
+                                  direction: str):
         """Adds and indicator's calculations to be executed on market data"""
         self.positions[direction][ticker] = indicators
 

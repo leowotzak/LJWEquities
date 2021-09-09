@@ -15,13 +15,14 @@ class Portfolio:
     ignore them in favor of some other over-arching portfolio strategy. The portfolio should also 
     keep track of any rebalancing and issue orders to achieve certain targets.
     """
+
     def __init__(self, queue, data_handler):
         self._queue = queue
         self.data_handler = data_handler
         self._positions = {}
         self._holdings = {'cash': 100000, 'commission': 0, 'slippage': 0}
 
-        # ? Should these be lists or dicts? they're going to be converted to 
+        # ? Should these be lists or dicts? they're going to be converted to
         # ? DataFrames for pyfolio
         self._historical_positions = {}
         self._historical_holdings = {}
@@ -43,7 +44,7 @@ class Portfolio:
     def _update_historicals(self, timestamp: datetime) -> NoReturn:
         """Stores current portfolio values in historicals dictionaries"""
 
-        # ! I need to ensure that the portfolios arent duplicated for each date 
+        # ! I need to ensure that the portfolios arent duplicated for each date
         # ! by multiple market events
 
         self._historical_positions[timestamp] = self._positions.copy()

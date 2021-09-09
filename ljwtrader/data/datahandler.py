@@ -16,6 +16,7 @@ def convert_bar(row):
 
 class DataHandler:
     """Object that handles all data access for other system components"""
+
     def __init__(self):
         self.symbols = []
         self.latest_symbol_data = {}
@@ -25,7 +26,7 @@ class DataHandler:
         # * Retrieves the bars for a given ticker's category over the # of specified days
 
         latest_data = self.latest_symbol_data.get(ticker, {}).copy()
-        
+
         try:
             arr = [latest_data.popitem()[1][category] for _ in range(num_days)]
         except KeyError as e:
@@ -36,7 +37,7 @@ class DataHandler:
         """Adds a symbol to be tracked by data sources"""
         # TODO: Should add validation for symbols in DB
         self.symbols.append(ticker)
-        
+
     # * Convenience methods
     # * Used as the building blocks for indicators, positions, and strategies
 
@@ -61,5 +62,5 @@ class DataHandler:
         return self._get_latest_symbol_data(ticker, 'volume', num_days)
 
     def get_latest_pct_change(self, ticker: str, num_days: int) -> np.ndarray:
-        arr = self._get_latest_symbol_data(ticker, 'adj_close_price', num_days) 
+        arr = self._get_latest_symbol_data(ticker, 'adj_close_price', num_days)
         return np.diff(arr) / arr[1:]

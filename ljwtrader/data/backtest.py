@@ -23,7 +23,13 @@ def convert_bar(row):
 class Backtest:
     """Object that handles all data access for other system components"""
 
-    def __init__(self, start_date: datetime = datetime.today() - timedelta(days=365), end_date: datetime = datetime.today() - timedelta(days=1), frequency: str = '1d', vendor: str = 'av',):
+    def __init__(
+        self,
+        start_date: datetime = datetime.today() - timedelta(days=365),
+        end_date: datetime = datetime.today() - timedelta(days=1),
+        frequency: str = '1d',
+        vendor: str = 'av',
+    ):
 
         self._start_date = start_date
         self._end_date = end_date
@@ -44,17 +50,16 @@ class Backtest:
         else:
             for bar in map(convert_bar, bar_data.iterrows()):
 
-                
                 self.queue.put(MarketEvent(bar['ticker'], bar['timestamp']))
-                
+
                 try:
                     self.latest_symbol_data[bar['ticker']]
                 except KeyError as e:
                     logger.error(e)
                     self.latest_symbol_data[bar['ticker']] = {}
                 finally:
-                    ticker_data = self.latest_symbol_data[bar['ticker']][timestamp] = bar
-
+                    ticker_data = self.latest_symbol_data[
+                        bar['ticker']][timestamp] = bar
 
     def start_backtest(self) -> NoReturn:
         """Calls the datahandler and eventhandler repeatedly until datahandler is empty
@@ -64,10 +69,10 @@ class Backtest:
         """
         # TODO: Should rename this, I think it was tuple because when iterated it comes out as a (index, row)
         self.data = (tup for tup in pd.read_sql(
-                    "SELECT * FROM symbols JOIN daily_bar_data ON symbols.symbol_id=daily_bar_data.symbol_id WHERE symbols.ticker IN ('%s')"
-                    % "', '".join(self.symbols),
-                    sqlite3.connect('app.db'),
-                    index_col='timestamp').sort_index().groupby(level=0))
+            "SELECT * FROM symbols JOIN daily_bar_data ON symbols.symbol_id=daily_bar_data.symbol_id WHERE symbols.ticker IN ('%s')"
+            % "', '".join(self.symbols),
+            sqlite3.connect('app.db'),
+            index_col='timestamp').sort_index().groupby(level=0))
 
         self._continue_backtest = True
         while self._continue_backtest:

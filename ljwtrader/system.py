@@ -25,8 +25,10 @@ class TradingSystem:
     applied in this class, which acts as a unifier between all of the system components.
     """
 
-    def __init__(self, long: Sequence[tuple] = [], short: Sequence[tuple] = [], backtest: Backtest = None):
-        """Arguments supplied to the TradingSystem constructor by interface"""
+    def __init__(self,
+                 long: Sequence[tuple] = [],
+                 short: Sequence[tuple] = [],
+                 backtest: Backtest = None):
 
         self.queue = Queue()
         self._broker = InteractiveBrokers(self.queue)
@@ -38,7 +40,10 @@ class TradingSystem:
 
         self._data_handler = DataHandler()
 
-        self._strategy = Strategy(self.queue, self._data_handler, long=long, short=short)
+        self._strategy = Strategy(self.queue,
+                                  self._data_handler,
+                                  long=long,
+                                  short=short)
 
         self._portfolio = Portfolio(self.queue, self._data_handler)
 
@@ -46,13 +51,15 @@ class TradingSystem:
         self._event_handler.strategy = self._strategy
         self._event_handler.portfolio = self._portfolio
         self._event_handler.broker = self._broker
-    
+
     def add_position(self, indicator: tuple, direction: str):
         """Adds an indicator for the trading system's calculations"""
         if direction == 'long':
-            self._strategy.add_indicator_to_strategy(indicator[0], indicator[1], direction)
+            self._strategy.add_indicator_to_strategy(indicator[0], indicator[1],
+                                                     direction)
         elif direction == 'short':
-            self._strategy.add_indicator_to_strategy(indicator[0], indicator[1], direction)
+            self._strategy.add_indicator_to_strategy(indicator[0], indicator[1],
+                                                     direction)
         else:
             e = ValueError('Direction must be either "long" or "short"')
             logger.error(e)
