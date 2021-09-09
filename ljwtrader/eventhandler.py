@@ -54,5 +54,5 @@ class EventHandler:
             except KeyError as e:
                 logger.error(e)
             else:
-                logger.info(f"Handling {event.event_type} event")
+                logger.debug(f"Handling {event.event_type} event")
                 event_handler(event)
