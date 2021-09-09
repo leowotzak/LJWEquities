@@ -3,7 +3,7 @@ import operator
 from datetime import datetime, timedelta
 from typing import Sequence, List, AnyStr
 
-from ljwtrader.datahandler import DataHandler
+from ljwtrader.data import DataHandler
 from ljwtrader.eventhandler import EventHandler
 from ljwtrader.broker import InteractiveBrokers
 from ljwtrader.portfolio import Portfolio

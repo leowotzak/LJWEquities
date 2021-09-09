@@ -4,7 +4,7 @@ from functools import partial
 
 import numpy as np
 
-from ljwtrader.datahandler import DataHandler
+from ljwtrader.data import DataHandler
 
 logger = logging.getLogger(__name__)
 
