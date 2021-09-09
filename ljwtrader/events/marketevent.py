@@ -13,4 +13,5 @@ class MarketEvent(Event):
             ticker (AnyStr): The ticker, symbol or identifier of the underlying asset
             time (datetime): The datetime in which the event occurred
         """
+        # TODO: Add price so that slippage can be calculated
         super().__init__('MARKET', ticker, time)
