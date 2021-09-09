@@ -1,7 +1,7 @@
 from queue import Queue
 import operator
 from datetime import datetime, timedelta
-from typing import Sequence, List, AnyStr
+from typing import Sequence, Callable, List, AnyStr
 
 from ljwtrader.data import DataHandler
 from ljwtrader.data import Backtest
@@ -25,14 +25,8 @@ class TradingSystem:
     applied in this class, which acts as a unifier between all of the system components.
     """
 
-    def __init__(self,
-                 frequency: AnyStr,
-                 vendor: AnyStr,
-                 start_date: datetime = datetime.today() - timedelta(days=365),
-                 end_date: datetime = datetime.today() - timedelta(days=1),
-                 long: Sequence[tuple] = None,
-                 short: Sequence[tuple] = None):
-        """Arguments supplied to the TradingSystem constructor by interface
+    def __init__(self, long: Sequence[tuple] = [], short: Sequence[tuple] = [], backtest: Backtest = None):
+        """Arguments supplied to the TradingSystem constructor by interface"""
 
         Args:
             symbols (List[AnyStr]): Collection of symbols that the system should track
