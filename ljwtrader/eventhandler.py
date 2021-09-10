@@ -20,33 +20,19 @@ class EventHandler:
         self.portfolio: Portfolio = None
         self.broker: InteractiveBrokers = None
 
-    def _handle_market(self, event: MarketEvent) -> NoReturn:
+    def _handle_market(self, event: MarketEvent):
         self.strategy.check_all(event)
 
-    def _handle_strategy(self, event: StrategyEvent) -> NoReturn:
+    def _handle_strategy(self, event: StrategyEvent):
         self.portfolio.trigger_order(event)
 
-    def _handle_order(self, event: OrderEvent) -> NoReturn:
+    def _handle_order(self, event: OrderEvent):
         self.broker.generate_fill_order(event)
 
-    def _handle_fill(self, event: FillEvent) -> NoReturn:
+    def _handle_fill(self, event: FillEvent):
         self.portfolio.update_holdings_from_fill(event)
 
-    def process_events(self) -> NoReturn:
-        """Pops each event in the queue and assigns it to the proper handler
-
-        Currently handles event types: MarketEvent, StrategyEvent
-
-        Raises:
-            e (KeyError): The type of the given event is not in the event map, i.e. does not exist
-        """
-        EVENT_MAP: Mapping[Event, Callable] = {
-            'MARKET': self._handle_market,
-            'STRATEGY': self._handle_strategy,
-            'ORDER': self._handle_order,
-            'FILL': self._handle_fill,
-        }
-
+    def process_events(self):
         while not self._queue.empty():
             event = self._queue.get()
             try:
