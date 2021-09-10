@@ -1,16 +1,16 @@
-from queue import Queue
+import logging
 import operator
 from datetime import datetime, timedelta
-from typing import Sequence, Callable, List, AnyStr
+from queue import Queue
+from typing import AnyStr, Callable, List, Sequence
 
-from ljwtrader.data import DataHandler
-from ljwtrader.data import Backtest
-from ljwtrader.eventhandler import EventHandler
 from ljwtrader.broker import InteractiveBrokers
+from ljwtrader.data import Backtest, DataHandler
+from ljwtrader.eventhandler import EventHandler
 from ljwtrader.portfolio import Portfolio
 from ljwtrader.strategy import Strategy
 
-import logging
+# TODO: Need to create better logging & log formatting
 
 logging.basicConfig(
     filename='ljwtrader.log',
@@ -87,3 +87,4 @@ class TradingSystem:
         backtest.process_events_func = self._event_handler.process_events
         backtest.latest_symbol_data = self._data_handler.latest_symbol_data
         backtest.start_backtest()
+        test = self._portfolio.generate_historical_portfolio_df()
