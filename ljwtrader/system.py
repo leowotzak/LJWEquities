@@ -21,8 +21,22 @@ logger = logging.getLogger(__name__)
 
 class TradingSystem:
     """
-    Object that serves to govern the entire trading logic process. All user input should be 
-    applied in this class, which acts as a unifier between all of the system components.
+    Object that serves as an interface to the components of the trading system.
+
+    The TradingSystem initializes all system components as well as the system-wide queue.
+    All user input should be applied in this class, which acts as a unifier between 
+    all of the system components. The system is composed of several components, including: 
+
+        1) data handler
+        2) event handler
+        3) strategy
+        4) portfolio
+        5) broker
+
+        -- For a more detailed explanation of each component, see their docstrings.
+
+    In addition, the trading system exposes methods that allow users to use the system.
+    Users are able to add positions to the system and launch backtests.
     """
 
     def __init__(self,

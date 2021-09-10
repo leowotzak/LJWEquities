@@ -15,7 +15,16 @@ def convert_bar(row):
 
 
 class DataHandler:
-    """Object that handles all data access for other system components"""
+    """
+    The Data Handler object is a crucial component of the trading system. At a high level, 
+    the Data Handler serves as an interface for the trading system to interact with data 
+    of different forms and varieties (ex. historical bar data, stream data). Regardless of 
+    the data source, the Data Handler allows the trading system to retrieve the most recent 
+    tracked data, assuming the data is separated at regular intervals, defined as the 
+    frequency of the Data Handler. In addition, the Data Handler should be able to generate 
+    Market Events for the trading system to react to in response to both the next bar of a 
+    backtest and the next bar of a live-streamed data source.
+    """
 
     def __init__(self):
         self.symbols = []
@@ -34,7 +43,11 @@ class DataHandler:
         return np.array(arr)
 
     def add_symbol_to_data_handler(self, ticker: str):
-        """Adds a symbol to be tracked by data sources"""
+        """Adds a symbol to be tracked by data sources
+
+        Args:
+            ticker (str): ticker of symbol to track with data handler
+        """
         # TODO: Should add validation for symbols in DB
         self.symbols.append(ticker)
 

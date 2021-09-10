@@ -12,6 +12,9 @@ logger = logging.getLogger(__name__)
 class EventHandler:
     """
     Object that serves to route events to the proper system component based on their type
+
+    The event handler consists of a collection of event handlers, an event map that 
+    maps each event type to the proper handler, and process_events() method.
     """
 
     def __init__(self, queue: Sequence[Event]):
@@ -33,6 +36,7 @@ class EventHandler:
         self.portfolio.update_holdings_from_fill(event)
 
     def process_events(self):
+        """Pops each event in the queue and directs it to the proper handler"""
         while not self._queue.empty():
             event = self._queue.get()
             try:

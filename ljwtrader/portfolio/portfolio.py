@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 class Portfolio:
     """
     Responsible for handling and implementing all portfolio logic for the trading system. 
+
     At a high level, the portfolio receives signals from all of the strategies that constitute
     it. The portfolio can then decide whether to follow through with these strategies, or it can 
     ignore them in favor of some other over-arching portfolio strategy. The portfolio should also 
@@ -19,6 +20,11 @@ class Portfolio:
     """
 
     def __init__(self, queue: Queue, data_handler: DataHandler):
+        """
+        Arguments:
+            queue {Queue} -- System queue to place events on
+            data_handler {DataHandler} -- System data handler to source data from
+        """
         self._queue = queue
         self.data_handler = data_handler
         self._positions = {}
