@@ -37,6 +37,14 @@ class EventHandler:
 
     def process_events(self):
         """Pops each event in the queue and directs it to the proper handler"""
+
+        EVENT_MAP: Mapping[Event, Callable] = {
+            'MARKET': self._handle_market,
+            'STRATEGY': self._handle_strategy,
+            'ORDER': self._handle_order,
+            'FILL': self._handle_fill,
+        }
+
         while not self._queue.empty():
             event = self._queue.get()
             try:
