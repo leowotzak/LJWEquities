@@ -1,14 +1,25 @@
-from typing import AnyStr
 from datetime import datetime
+from typing import AnyStr
 
 from .event import Event
 
 
 class OrderEvent(Event):
-    """Created in response to price changes in underlying assets"""
+    """
+    Event type created to change the current state of portfolio holdings
+
+    Order events are created either after a signal event has successfully
+    passed any portfolio-level logic, or a portfolio-level event has
+    occurred, such as a rebalancing or reallocation.
+    """
 
     def __init__(self, ticker: AnyStr, time: datetime, strategy_id: str,
                  direction: str, price: float, quantity: int):
+        """
+        Arguments:
+            price {float} -- Price of the asset that triggered the event
+            quantity {int} -- Amount of the desired asset to buy or sell
+        """
         super().__init__('ORDER', ticker, time)
         self.strategy_id = strategy_id
         self.direction = direction

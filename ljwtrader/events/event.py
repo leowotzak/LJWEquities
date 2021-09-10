@@ -1,17 +1,24 @@
-from typing import AnyStr
-from datetime import datetime
-
 import logging
+from datetime import datetime
+from typing import AnyStr
 
 logger = logging.getLogger(__name__)
 
 
 class Event:
-    """Event is base class providing an interface for all subsequent (inherited) events, that will trigger further
-    events in the trading infrastructure.
+    """
+    Base class for all subsequent (inherited) events that provides some convenience methods
+
+    Currently, Event only exposes __str__ and __repr__ methods for its children
     """
 
     def __init__(self, event_type: AnyStr, ticker: AnyStr, datetime: datetime):
+        """
+        Arguments:
+            event_type {AnyStr} -- Context in which event was generated in (i.e. Market)
+            ticker {AnyStr} -- Ticker of the asset that generated the event
+            datetime {datetime} -- Timestamp of the event instance
+        """
         self.event_type = event_type
         self.ticker = ticker
         self.datetime = datetime
