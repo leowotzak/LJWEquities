@@ -90,4 +90,25 @@ class Portfolio:
         """Updates the dollar amounts of the portfolio in response to a change in market prices"""
         self._historical_positions[dt] = self._positions.copy()
         self._historical_holdings[dt] = self._holdings.copy()
-        
+
+    def generate_historical_portfolio_df(self) -> pd.DataFrame:
+        """
+        Produces a dataframe containing the historical portfolio values
+
+        Called at the end of a backtest or live trading session so that 
+        results can be summarized and visualized
+
+        :return: Historical quantities, holdings, cash, commission, and slippage 
+        for the trading session duration
+        :rtype: pd.DataFrame
+        """
+        """
+        TODO Align the lengths of the positions and holdings dataframes
+        ! The positions frame is longer than the holdings b/c of the incomplete lookback periods
+        ! at the start of analysis
+        """
+
+        # // positions = pd.DataFrame.from_dict(self._historical_positions, orient='index')
+        holdings = pd.DataFrame.from_dict(self._historical_holdings,
+                                          orient='index')
+        return holdings
