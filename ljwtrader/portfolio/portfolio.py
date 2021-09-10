@@ -1,8 +1,10 @@
 import logging
 from typing import NoReturn
 from datetime import datetime
+from queue import Queue
 
 from ljwtrader.events import Event, StrategyEvent, OrderEvent, FillEvent
+from ljwtrader.data import DataHandler
 
 logger = logging.getLogger(__name__)
 
@@ -16,7 +18,7 @@ class Portfolio:
     keep track of any rebalancing and issue orders to achieve certain targets.
     """
 
-    def __init__(self, queue, data_handler):
+    def __init__(self, queue: Queue, data_handler: DataHandler):
         self._queue = queue
         self.data_handler = data_handler
         self._positions = {}
