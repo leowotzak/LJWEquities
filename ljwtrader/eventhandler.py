@@ -19,6 +19,7 @@ class EventHandler:
 
     def __init__(self, queue: Sequence[Event]):
         self._queue = queue
+        self._most_recent_event: Event = None
         self.strategy: Strategy = None
         self.portfolio: Portfolio = None
         self.broker: InteractiveBrokers = None
@@ -53,4 +54,9 @@ class EventHandler:
                 logger.error(e)
             else:
                 logger.debug(f"Handling {event.event_type} event")
+                self._most_recent_event = event.datetime
                 event_handler(event)
+
+        # HACK Figure out a better way to pass the current analysis date to the portfolio
+        # ! Shouldn't rely on whatever is left over in the event to determine the timestamp
+        self.portfolio.update_holdings_after_bar(self._most_recent_event)
