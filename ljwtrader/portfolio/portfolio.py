@@ -1,10 +1,12 @@
 import logging
-from typing import NoReturn
 from datetime import datetime
 from queue import Queue
+from typing import NoReturn
 
-from ljwtrader.events import Event, StrategyEvent, OrderEvent, FillEvent
+import pandas as pd
+
 from ljwtrader.data import DataHandler
+from ljwtrader.events import Event, FillEvent, OrderEvent, StrategyEvent
 
 logger = logging.getLogger(__name__)
 
