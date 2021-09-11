@@ -3,11 +3,7 @@
 
 ## What is it?
 
----
-
 ## How to install
-
----
 
 Clone the repository or download the project and navigate to the project directory
 
@@ -38,8 +34,6 @@ After setting up the environment, installing the library is as easy as running t
 After the installation is complete, all of the project's required dependencies should be installed!
 
 ## How to Use
-
----
 
 The library functions as any typical python library. The primary trading system interface class is the `TradingSystem`, through which all other library functions flow. This can be done by running the following commands:
 
@@ -77,8 +71,6 @@ results = sys.run_backtest(bt)
 The `run_backtest()` method returns the results of the backtest as a dataframe
 
 ## Dependencies
-
----
 
 * NumPy -- ([Link](https://numpy.org/))
 * pandas -- ([Link](https://pandas.pydata.org/))
