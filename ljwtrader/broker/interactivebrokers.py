@@ -13,9 +13,9 @@ class InteractiveBrokers(Brokerage):
         self._queue = queue
         self.COMMISSION_PER_SHARE_FEE = .0075
         self.MIN_TRADE_VALUE = 1.0
-        self.MAX_TRADE_VALUE = .01  # 1% of total trade value
-        self.TXN_FEE = .0000051  # Transaction fees
-        self.FINRA_PER_SHARE_FEE = .000119  # FINRA fees
+        self.MAX_TRADE_VALUE = .01     # 1% of total trade value
+        self.TXN_FEE = .0000051     # Transaction fees
+        self.FINRA_PER_SHARE_FEE = .000119     # FINRA fees
         self.MAX_FINRA_FEE = 5.95
 
     def generate_fill_order(self, order_event: OrderEvent) -> NoReturn:
@@ -29,8 +29,9 @@ class InteractiveBrokers(Brokerage):
         new_event.slippage = self.calculate_slippage(order_event, new_event)
         self._queue.put(new_event)
 
-    def calculate_slippage(self, order_event: OrderEvent,
-                           fill_event: FillEvent) -> float: # * This is a static method
+    def calculate_slippage(
+            self, order_event: OrderEvent,
+            fill_event: FillEvent) -> float:     # * This is a static method
 
         order_value = order_event.quantity * order_event.price
         fill_value = fill_event.quantity * fill_event.price

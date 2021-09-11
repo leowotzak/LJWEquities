@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 def convert_bar(row):
-    index, data = row  #* These are the fields the system watches
+    index, data = row     #* These are the fields the system watches
     output_dict = dict((k, v)
                        for k, v in data.to_dict().items()
                        if k in ['ticker', 'adj_close_price', 'high_price'])
@@ -58,13 +58,14 @@ class Backtest:
                     logger.error(e)
                     self.latest_symbol_data[ticker] = {}
                 finally:
-                    ticker_data = self.latest_symbol_data[ticker][timestamp] = bar
+                    ticker_data = self.latest_symbol_data[ticker][
+                        timestamp] = bar
 
     def start_backtest(self) -> NoReturn:
         """Calls the datahandler and eventhandler repeatedly until datahandler is empty"""
 
         # TODO: Should rename this, I think it was tuple because when iterated it comes out as a (index, row)
-        
+
         self.data = (tup for tup in pd.read_sql(
             "SELECT * FROM symbols JOIN daily_bar_data ON symbols.symbol_id=daily_bar_data.symbol_id WHERE symbols.ticker IN ('%s')"
             % "', '".join(self.symbols),

@@ -24,6 +24,7 @@ def indicator(func: Callable) -> Callable:
     def wrapper(ticker: str, N: int, operator: Callable,
                 value: Any) -> Callable:
         return partial(func, ticker, N, operator, value)
+
     return wrapper
 
 
