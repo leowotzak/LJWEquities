@@ -11,4 +11,6 @@ if __name__ == '__main__':
     back = Backtest()
     sys = TradingSystem()
     sys.add_position(('AAPL', [strat]), 'long')
-    sys.run_backtest(back)
+    res = sys.run_backtest(back)
+
+

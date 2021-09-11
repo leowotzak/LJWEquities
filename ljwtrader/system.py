@@ -87,4 +87,4 @@ class TradingSystem:
         backtest.process_events_func = self._event_handler.process_events
         backtest.latest_symbol_data = self._data_handler.latest_symbol_data
         backtest.start_backtest()
-        test = self._portfolio.generate_historical_portfolio_df()
+        return self._portfolio.generate_historical_portfolio_df()
