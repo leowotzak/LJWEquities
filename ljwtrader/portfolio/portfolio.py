@@ -51,16 +51,6 @@ class Portfolio:
                                event.direction, 50.0, 1)
         self._queue.put(new_event)
 
-    # TODO Remove this function since it was replaced by public function below
-    def _update_historicals(self, timestamp: datetime) -> NoReturn:
-        """Stores current portfolio values in historicals dictionaries"""
-
-        # //  I need to ensure that the portfolios aren't duplicated for each date
-        # // by multiple market events
-
-        self._historical_positions[timestamp] = self._positions.copy()
-        self._historical_holdings[timestamp] = self._holdings.copy()
-
     def update_holdings_from_fill(self, event: FillEvent) -> NoReturn:
         """Takes an FillEvent and updates the share/contract amounts & dollar amounts of the portfolio"""
         if event.direction == 'BUY':
