@@ -11,21 +11,29 @@
 
 Clone the repository or download the project and navigate to the project directory
 
-For organizational purposes I would recommend creating a virtual environment to hold the project's dependencies by running the command:
+For organizational purposes, it is recommended that one create a virtual environment to hold the project's dependencies by running the command:
 
-`python -m venv venv`
+### MacOS
 
-The environment can then be activated by running the following command on MacOS:
+```bash
+python -m venv venv
 
-`source venv/bin/activate`
+source venv/bin/activate
 
-or on Windows:
+python -m setup.py install
+```
 
-`.\venv\Scripts\activate`
+### Windows 
+```bash
+python -m venv venv
 
-After setting up the environment, installing the library is as easy as running the command:
+.\venv\Scripts\activate
 
-`python -m setup.py install`
+python -m setup.py install
+```
+
+After setting up the environment, installing the library is as easy as running the `setup.py` file
+
 
 After the installation is complete, all of the project's required dependencies should be installed!
 
@@ -80,7 +88,5 @@ The `run_backtest()` method returns the results of the backtest as a dataframe
 * alpha_vantage -- ([Link](https://github.com/RomelTorres/alpha_vantage))
   
 ## License
-
----
 
 [MIT](https://github.com/leowotzak/LJWEquities/blob/8033a1e36a4138ef5d76099caa45bfa8fd70fdb2/LICENSE)
