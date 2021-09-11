@@ -42,6 +42,7 @@ setup(
         'python-dotenv',
         'numpy',
         'pandas',
+        'pyfolio',
         'sqlalchemy',
         'alembic',
         'alpha_vantage'

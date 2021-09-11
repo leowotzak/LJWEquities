@@ -1,5 +1,7 @@
 import operator
 
+import pyfolio as pf
+
 from ljwtrader.strategy import XDayHigh
 from ljwtrader.system import TradingSystem
 from ljwtrader.data import Backtest
