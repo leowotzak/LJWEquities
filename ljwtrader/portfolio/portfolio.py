@@ -27,6 +27,9 @@ class Portfolio:
             queue {Queue} -- System queue to place events on
             data_handler {DataHandler} -- System data handler to source data from
         """
+
+        # TODO: Properly document using sphinx
+
         self._queue = queue
         self.data_handler = data_handler
         self._positions = {}
@@ -102,12 +105,9 @@ class Portfolio:
         for the trading session duration
         :rtype: pd.DataFrame
         """
-        """
-        TODO Align the lengths of the positions and holdings dataframes
-        ! The positions frame is longer than the holdings b/c of the incomplete lookback periods
-        ! at the start of analysis
-        """
-
+        # TODO Align the lengths of the positions and holdings dataframes
+        # + The positions frame is longer than the holdings b/c of the incomplete lookback periods
+        # + at the start of analysis
         # // positions = pd.DataFrame.from_dict(self._historical_positions, orient='index')
         holdings = pd.DataFrame.from_dict(self._historical_holdings,
                                           orient='index')

@@ -30,7 +30,8 @@ class InteractiveBrokers(Brokerage):
         self._queue.put(new_event)
 
     def calculate_slippage(self, order_event: OrderEvent,
-                           fill_event: FillEvent) -> float:
+                           fill_event: FillEvent) -> float: # * This is a static method
+
         order_value = order_event.quantity * order_event.price
         fill_value = fill_event.quantity * fill_event.price
         slippage = fill_value - order_value

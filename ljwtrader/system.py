@@ -4,6 +4,8 @@ from datetime import datetime, timedelta
 from queue import Queue
 from typing import AnyStr, Callable, List, Sequence
 
+from pandas import DataFrame
+
 from ljwtrader.broker import InteractiveBrokers
 from ljwtrader.data import Backtest, DataHandler
 from ljwtrader.eventhandler import EventHandler
@@ -43,6 +45,16 @@ class TradingSystem:
                  long: Sequence[tuple] = [],
                  short: Sequence[tuple] = [],
                  backtest: Backtest = None):
+        """
+        :param long: List of ticker-indicator pairs that should be long when true, defaults to []
+        :type long: Sequence[tuple], optional
+
+        :param short: List of ticker-indicator pairs that should be short when true, defaults to []
+        :type short: Sequence[tuple], optional
+
+        :param backtest: Details for the desired backtest to run, defaults to None
+        :type backtest: Backtest, optional
+        """
 
         self.queue = Queue()
         self._broker = InteractiveBrokers(self.queue)
@@ -67,7 +79,17 @@ class TradingSystem:
         self._event_handler.broker = self._broker
 
     def add_position(self, indicator: tuple, direction: str):
-        """Adds an indicator for the trading system's calculations"""
+        """
+        Adds an indicator for the trading system's calculations
+
+        Positions added to the system will be considered by the system when issuing
+        signals
+
+        :param indicator: Ticker-indicator pair to add to system
+        :type indicator: tuple
+        :param direction: Which direction the strategy should go while true
+        :type direction: str
+        """
         if direction == 'long':
             self._strategy.add_indicator_to_strategy(indicator[0], indicator[1],
                                                      direction)
@@ -80,7 +102,18 @@ class TradingSystem:
 
         self._data_handler.add_symbol_to_data_handler(indicator[0])
 
-    def run_backtest(self, backtest: Backtest):
+    def run_backtest(self, backtest: Backtest) -> DataFrame:
+        """
+        Initiates a backtest with the provided details using the current system positions
+
+        Attaches the given backtest to the trading system then executes all current
+        system positions on the data
+
+        :param backtest: Details of desired backtest, i.e start date, frequency etc...
+        :type backtest: Backtest
+        :return: Results of the backtest prepped for display
+        :rtype: DataFrame
+        """
         logger.info('Initiating backtest')
         backtest.symbols = self._data_handler.symbols
         backtest.queue = self.queue

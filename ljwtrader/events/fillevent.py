@@ -25,12 +25,24 @@ class FillEvent(Event):
                  commission: float = 0,
                  slippage: float = 0.0):
         """
-        Arguments:
-            price {float} -- Price of the fulfilled order
-            quantity {int} -- Amount of the asset fulfilled by the order
-            commission {float} -- Total commission of the executed trade
-            slippage {float} -- Slippage of the executed trade
+        :param ticker: [description]
+        :type ticker: AnyStr
+        :param time: [description]
+        :type time: datetime
+        :param strategy_id: [description]
+        :type strategy_id: str
+        :param direction: [description]
+        :type direction: str
+        :param price: Price of the fulfilled order
+        :type price: float
+        :param quantity: Amount of the asset fulfilled by the order
+        :type quantity: int
+        :param commission: Total commission of the executed trade, defaults to 0
+        :type commission: float, optional
+        :param slippage: Slippage of the executed trade, defaults to 0.0
+        :type slippage: float, optional
         """
+
         super().__init__('FILL', ticker, time)
         self.strategy_id = strategy_id
         self.direction = direction

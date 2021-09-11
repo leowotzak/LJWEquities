@@ -14,11 +14,14 @@ class Event:
 
     def __init__(self, event_type: AnyStr, ticker: AnyStr, datetime: datetime):
         """
-        Arguments:
-            event_type {AnyStr} -- Context in which event was generated in (i.e. Market)
-            ticker {AnyStr} -- Ticker of the asset that generated the event
-            datetime {datetime} -- Timestamp of the event instance
+        :param event_type: Context in which event was generated in (i.e. Market)
+        :type event_type: AnyStr
+        :param ticker: Ticker of the asset that generated the event
+        :type ticker: AnyStr
+        :param datetime: Timestamp of the event instance
+        :type datetime: datetime
         """
+
         self.event_type = event_type
         self.ticker = ticker
         self.datetime = datetime

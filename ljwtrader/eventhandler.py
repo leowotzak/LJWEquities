@@ -37,7 +37,14 @@ class EventHandler:
         self.portfolio.update_holdings_from_fill(event)
 
     def process_events(self):
-        """Pops each event in the queue and directs it to the proper handler"""
+        """
+        Pops each event in the queue and directs it to the proper handler
+
+        Event types are looked up and used as keys to a premade event map,
+        if no handler is found an error is logged
+
+        :raises KeyError: Unknown event type, no handler exists
+        """
 
         EVENT_MAP: Mapping[Event, Callable] = {
             'MARKET': self._handle_market,
