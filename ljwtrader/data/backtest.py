@@ -3,10 +3,12 @@ import sqlite3
 from datetime import datetime, timedelta
 from typing import AnyStr, Callable, Generator, List, NoReturn, Sequence
 
-import pandas as pd
 import numpy as np
+import pandas as pd
+
+from ljwtrader.events import Event, MarketEvent
+
 from .models import DailyBar, Symbols
-from ljwtrader.events import MarketEvent, Event
 
 logger = logging.getLogger(__name__)
 

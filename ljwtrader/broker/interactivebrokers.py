@@ -1,8 +1,8 @@
 import logging
-from typing import Sequence, NoReturn
+from typing import NoReturn, Sequence
 
 from ljwtrader.broker.brokerage import Brokerage
-from ljwtrader.events import Event, OrderEvent, FillEvent
+from ljwtrader.events import Event, FillEvent, OrderEvent
 
 logger = logging.getLogger(__name__)
 

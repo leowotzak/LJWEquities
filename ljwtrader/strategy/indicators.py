@@ -1,6 +1,6 @@
 import logging
-from typing import Callable, Any
 from functools import partial
+from typing import Any, Callable
 
 import numpy as np
 

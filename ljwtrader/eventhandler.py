@@ -1,10 +1,11 @@
 import logging
-from typing import Callable, NoReturn, Mapping, Sequence
+from typing import Callable, Mapping, NoReturn, Sequence
 
-from ljwtrader.strategy import Strategy
-from ljwtrader.portfolio import Portfolio
-from ljwtrader.events import Event, MarketEvent, StrategyEvent, OrderEvent, FillEvent
 from ljwtrader.broker import InteractiveBrokers
+from ljwtrader.events import (Event, FillEvent, MarketEvent, OrderEvent,
+                              StrategyEvent)
+from ljwtrader.portfolio import Portfolio
+from ljwtrader.strategy import Strategy
 
 logger = logging.getLogger(__name__)
 

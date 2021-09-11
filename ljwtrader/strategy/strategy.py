@@ -1,8 +1,8 @@
 import logging
-from typing import Callable, Any, List, Sequence
+from typing import Any, Callable, List, Sequence
 
-from ljwtrader.events import Event, StrategyEvent, MarketEvent
 from ljwtrader.data import DataHandler
+from ljwtrader.events import Event, MarketEvent, StrategyEvent
 
 logger = logging.getLogger(__name__)
 

@@ -2,13 +2,14 @@ import os
 from datetime import datetime
 from typing import AnyStr, NoReturn
 
-from .models import (Symbols, DailyBar, WeeklyBar, MonthlyBar, SixtyMinuteBar,
-                     ThirtyMinuteBar, FifteenMinuteBar, FiveMinuteBar,
-                     OneMinuteBar)
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from alpha_vantage.timeseries import TimeSeries
 from dotenv import load_dotenv
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+from .models import (DailyBar, FifteenMinuteBar, FiveMinuteBar, MonthlyBar,
+                     OneMinuteBar, SixtyMinuteBar, Symbols, ThirtyMinuteBar,
+                     WeeklyBar)
 
 engine = create_engine('sqlite+pysqlite:///app.db', echo=True, future=True)
 Session = sessionmaker(engine)
