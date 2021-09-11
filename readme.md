@@ -83,4 +83,4 @@ The `run_backtest()` method returns the results of the backtest as a dataframe
 
 ---
 
-[MIT](#)
+[MIT](https://github.com/leowotzak/LJWEquities/blob/8033a1e36a4138ef5d76099caa45bfa8fd70fdb2/LICENSE)
