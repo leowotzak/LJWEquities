@@ -1,37 +1,47 @@
 
-# LJWE: an algorithmic and quantitative analysis library
+# **LJWE**: *an algorithmic and quantitative analysis library*
 
 ## What is it?
 
----
+**LJWE** is an algorithmic and quantitative analysis library built to aid finance professionals with the analysis, underwriting, and execution of algorithmic and quantitative trading strategies. The library provides a data handler interface to handle multiple data sources and comes equipped with a lightweight back testing/calculation engine that takes these data sources and simulates historical trades with a provided set of parameters. Results are outputted as a dataframe and visualized through [pyfolio](https://github.com/quantopian/pyfolio) for strategy-level analysis
+
+## Main Features
+
+- Run quantitative analytics on certain assets
+- Ability to easily create and implement trading algorithms
+- Ability to apply overarching portfolio-level logic to groups of trading algorithms
+- Lightweight back testing engine
+- Live trading capabilities
+- Advanced portfolio analytics from [pyfolio](https://github.com/quantopian/pyfolio)
+- Database setup and management
 
 ## How to install
 
----
-
 Clone the repository or download the project and navigate to the project directory
 
-For organizational purposes I would recommend creating a virtual environment to hold the project's dependencies by running the command:
+For organizational purposes I would recommend creating a virtual environment to hold the project's dependencies by running the following commands on **_MacOS_**:
 
-`python -m venv venv`
+```bash
+python -m venv venv
+source venv/bin/activate
+```
 
-The environment can then be activated by running the following command on MacOS:
+or on **_Windows_**:
 
-`source venv/bin/activate`
-
-or on Windows:
-
-`.\venv\Scripts\activate`
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+```
 
 After setting up the environment, installing the library is as easy as running the command:
 
-`python -m setup.py install`
+```bash
+python -m setup.py install
+```
 
 After the installation is complete, all of the project's required dependencies should be installed!
 
 ## How to Use
-
----
 
 The library functions as any typical python library. The primary trading system interface class is the `TradingSystem`, through which all other library functions flow. This can be done by running the following commands:
 
@@ -70,17 +80,13 @@ The `run_backtest()` method returns the results of the backtest as a dataframe
 
 ## Dependencies
 
----
-
-* NumPy -- ([Link](https://numpy.org/))
-* pandas -- ([Link](https://pandas.pydata.org/))
-* SQLAlchemy -- ([Link](https://www.sqlalchemy.org/))
-* Alembic -- ([Link](https://alembic.sqlalchemy.org/en/latest/))
-* pyfolio -- ([Link](https://github.com/quantopian/pyfolio))
-* alpha_vantage -- ([Link](https://github.com/RomelTorres/alpha_vantage))
+- __*NumPy*__ -- ([Link](https://numpy.org/))
+- __*pandas*__ -- ([Link](https://pandas.pydata.org/))
+- __*SQLAlchemy*__ -- ([Link](https://www.sqlalchemy.org/))
+- __*Alembic*__ -- ([Link](https://alembic.sqlalchemy.org/en/latest/))
+- __*pyfolio*__ -- ([Link](https://github.com/quantopian/pyfolio))
+- __*alpha_vantage*__ -- ([Link](https://github.com/RomelTorres/alpha_vantage))
   
 ## License
 
----
-
-[MIT](https://github.com/leowotzak/LJWEquities/blob/8033a1e36a4138ef5d76099caa45bfa8fd70fdb2/LICENSE)
+[**MIT**](https://github.com/leowotzak/LJWEquities/blob/8033a1e36a4138ef5d76099caa45bfa8fd70fdb2/LICENSE)
