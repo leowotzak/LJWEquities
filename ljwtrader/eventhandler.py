@@ -19,7 +19,7 @@ class EventHandler:
     """
 
     def __init__(self, queue: Sequence[Event]):
-        self._queue = queue
+        self.queue = queue
         self._most_recent_event: Event = None
         self.strategy: Strategy = None
         self.portfolio: Portfolio = None
@@ -54,8 +54,8 @@ class EventHandler:
             'FILL': self._handle_fill,
         }
 
-        while not self._queue.empty():
-            event = self._queue.get()
+        while not self.queue.empty():
+            event = self.queue.get()
             try:
                 event_handler = EVENT_MAP[event.event_type]
             except KeyError as e:
