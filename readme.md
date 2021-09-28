@@ -1,6 +1,12 @@
 
 # **LJWE**: *an algorithmic and quantitative analysis library*
 
+Website: [leojwotzak.com](https://leojwotzak.com/)
+
+[Additional Information (Wiki)](https://github.com/leowotzak/LJWEquities/wiki)
+
+[API / Documentation](#)
+
 ## What is it?
 
 **LJWE** is an algorithmic and quantitative analysis library built to aid finance professionals with the analysis, underwriting, and execution of algorithmic and quantitative trading strategies. The library provides a data handler interface to handle multiple data sources and comes equipped with a lightweight back testing/calculation engine that takes these data sources and simulates historical trades with a provided set of parameters. Results are outputted as a dataframe and visualized through [pyfolio](https://github.com/quantopian/pyfolio) for strategy-level analysis
