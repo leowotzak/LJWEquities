@@ -10,7 +10,7 @@ from ljwtrader.broker import InteractiveBrokers
 from ljwtrader.data import Backtest, DataHandler
 from ljwtrader.eventhandler import EventHandler
 from ljwtrader.portfolio import Portfolio
-from ljwtrader.strategy import Strategy
+from ljwtrader.strategy import Strategy, Position
 
 # TODO: Need to create better logging & log formatting
 
@@ -67,9 +67,7 @@ class TradingSystem:
         self._data_handler = DataHandler()
 
         self._strategy = Strategy(self.queue,
-                                  self._data_handler,
-                                  long=long,
-                                  short=short)
+                                  self._data_handler)
 
         self._portfolio = Portfolio(self.queue, self._data_handler)
 
@@ -78,9 +76,15 @@ class TradingSystem:
         self._event_handler.portfolio = self._portfolio
         self._event_handler.broker = self._broker
 
+    def add_position(self, *positions):
         for position in positions:
+            try:
+                # FIXME These should either both pass the entire position
+                self._strategy.add_position_to_strategy(position)
+                self._data_handler.add_symbol_to_data_handler(position.indicator.args)
+            except AttributeError as e:
+                logger.error(e)
 
-        self._data_handler.add_symbol_to_data_handler(indicator[0])
 
     def run_backtest(self, backtest: Backtest) -> DataFrame:
         """
@@ -95,7 +99,6 @@ class TradingSystem:
         :rtype: DataFrame
         """
         logger.info('Initiating backtest')
-        backtest.symbols = self._data_handler.symbols
         backtest.queue = self.queue
         backtest.process_events_func = self._event_handler.process_events
         backtest.latest_symbol_data = self._data_handler.latest_symbol_data
