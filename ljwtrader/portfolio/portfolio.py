@@ -11,6 +11,9 @@ from ljwtrader.portfolio.ordersizer import OrderSizer, PercentPortfolioValue
 
 logger = logging.getLogger(__name__)
 
+DEFAULT_ORDER_SIZER_PERCENT = .1
+DEFAULT_STARTING_CASH = 100_000
+
 
 class Portfolio:
     """
@@ -28,7 +31,7 @@ class Portfolio:
         self._queue = queue
         self.data_handler = data_handler
         self._positions = {}
-        self._holdings = {'cash': 100000, 'commission': 0, 'slippage': 0}
+        self._holdings = {'cash': DEFAULT_STARTING_CASH, 'commission': 0, 'slippage': 0}
         self._historical_positions = {}
         self._historical_holdings = {}
 
