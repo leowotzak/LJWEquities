@@ -44,7 +44,14 @@ class Portfolio:
                                event.direction, 50.0, 1)
         self._queue.put(new_event)
 
+    def _get_order_direction(self, event_direction: str) -> int:
 
+        # TODO This doesn't need to be a class method, can be static
+
+        if event_direction == 'BUY':
+            return 1
+        elif event_direction == 'SELL':
+            return -1
         else:
             raise ValueError('event direction must be either "BUY" or "SELL"')
 
