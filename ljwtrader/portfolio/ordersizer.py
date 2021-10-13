@@ -16,11 +16,16 @@ class FixedDollarValue(OrderSizer):
         return self.amount // price
 
 
+class PercentPortfolioValue(OrderSizer):
 
-class PercentPortfolioValue:
+    def __init__(self, portfolio, percent: float):
+        self.portfolio = portfolio
+        self.percent = percent
 
-    def __init__(self):
-        pass
+    # ? Can this be decoupled from the portfolio?
+
+    def size_order(self, price: float) -> int:
+        return self.portfolio.get_percent_of_cash_holdings(self.percent) // price
 
 
 class KelleyCriterion:
