@@ -25,7 +25,7 @@ class Portfolio:
     keep track of any rebalancing and issue orders to achieve certain targets.
     """
 
-    def __init__(self, queue: Queue, data_handler: DataHandler):
+    def __init__(self, queue: Queue, data_handler: DataHandler, order_sizer: OrderSizer = None):
         # TODO: Properly document using sphinx
 
         self._queue = queue
@@ -34,6 +34,8 @@ class Portfolio:
         self._holdings = {'cash': DEFAULT_STARTING_CASH, 'commission': 0, 'slippage': 0}
         self._historical_positions = {}
         self._historical_holdings = {}
+
+        self.order_sizer = 'temp' if order_sizer else PercentPortfolioValue(self, DEFAULT_ORDER_SIZER_PERCENT)
 
     def get_percent_of_cash_holdings(self, percent: float) -> float:
 
