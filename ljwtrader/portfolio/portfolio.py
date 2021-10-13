@@ -31,6 +31,8 @@ class Portfolio:
 
     def get_percent_of_cash_holdings(self, percent: float) -> float:
 
+        # ? Should this be a part of a @property getter/setter?
+
         return self._holdings['cash'] * percent
 
     def trigger_order(self, event: StrategyEvent) -> NoReturn:
@@ -71,10 +73,9 @@ class Portfolio:
         self._holdings['slippage'] += event.slippage
 
         logger.info(
-            "%s -- Current quantity: %i, Current holding: %f, Current cash: %f, Current commission: %f, Current slippage: %f"
-            % (event.ticker, self._positions[event.ticker],
-               self._holdings[event.ticker], self._holdings['cash'],
-               self._holdings['commission'], self._holdings['slippage']))
+            f"{event.ticker} -- {self._positions[event.ticker]=} {self._holdings[event.ticker]=} \
+            {self._holdings['cash']=} {self._holdings['commission']=} {self._holdings['slippage']=}"
+        )
 
     def update_holdings_after_bar(self, dt: datetime):
         self._historical_positions[dt] = self._positions.copy()
