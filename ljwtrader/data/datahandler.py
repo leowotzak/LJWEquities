@@ -42,14 +42,14 @@ class DataHandler:
             arr = []
         return np.array(arr)
 
-    def add_symbol_to_data_handler(self, ticker: str):
+    def add_symbol_to_data_handler(self, tickers: tuple[str]):
         """Adds a symbol to be tracked by data sources
 
         Args:
             ticker (str): ticker of symbol to track with data handler
         """
         # TODO: Should add validation for symbols in DB
-        self.symbols.append(ticker)
+        map(self.symbols.append, tickers)
 
     # * Convenience methods
     # * Used as the building blocks for indicators, positions, and strategies
