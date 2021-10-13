@@ -14,6 +14,6 @@ class MarketEvent(Event):
     after each event in the previous bar has been processed
     """
 
-    def __init__(self, ticker: AnyStr, time: datetime):
-        # TODO: Add price so that slippage can be calculated
+    def __init__(self, ticker: AnyStr, time: datetime, price: float):
         super().__init__('MARKET', ticker, time)
+        self.price = price

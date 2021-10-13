@@ -26,9 +26,9 @@ class Strategy:
     def add_strategy_event_to_queue(self, ticker, direction,
                                     event: MarketEvent):
 
-        # TODO Need to come up with an actual strategy_id
+        # TODO Need to come up with an actual strategy_id convention
 
-        new_event = StrategyEvent(ticker, event.datetime, 'deez', direction)
+        new_event = StrategyEvent(ticker, event.datetime, 'deez', direction, event.price)
         self.queue.put(new_event)
 
     def check_all(self, event: MarketEvent):

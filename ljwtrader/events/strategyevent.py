@@ -17,7 +17,7 @@ class StrategyEvent(Event):
     """
 
     def __init__(self, ticker: AnyStr, time: datetime, strategy_id: str,
-                 direction: str):
+                 direction: str, price: float):
         """
         :param direction: Either 'long' or 'short', indicating which direction the order should go
         :type direction: str
@@ -25,3 +25,4 @@ class StrategyEvent(Event):
         super().__init__('STRATEGY', ticker, time)
         self.strategy_id = strategy_id
         self.direction = direction
+        self.price = price
