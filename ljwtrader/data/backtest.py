@@ -37,7 +37,7 @@ class Backtest:
         self._end_date = end_date
         self._frequency = frequency
         self._vendor = vendor
-        self.symbols: List[str] = None
+        self.symbols = set()
         self.data = None
         self.queue = None
         self._continue_backtest = False
