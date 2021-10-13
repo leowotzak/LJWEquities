@@ -19,6 +19,9 @@ class InteractiveBrokers(Brokerage):
         self.MAX_FINRA_FEE = 5.95
 
     def generate_fill_order(self, order_event: OrderEvent) -> NoReturn:
+
+        # TODO make functions that generate all events/orders have consistent naming
+
         new_event = FillEvent(order_event.ticker,
                               order_event.datetime,
                               order_event.strategy_id,
@@ -30,6 +33,8 @@ class InteractiveBrokers(Brokerage):
         self._queue.put(new_event)
 
     def calculate_slippage(
+        # TODO: Shouldn't this be in portfolio? broker doesn't calc slippage does portfolio does
+
             self, order_event: OrderEvent,
             fill_event: FillEvent) -> float:     # * This is a static method
 
