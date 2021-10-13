@@ -6,8 +6,15 @@ class OrderSizer(ABC):
     def size_order(self):
         raise NotImplementedError
 
-    def __init__(self):
-        pass
+class FixedDollarValue(OrderSizer):
+
+    def __init__(self, portfolio, amount: float):
+        self.portfolio = portfolio
+        self.amount = amount
+
+    def size_order(self, price: float) -> int:
+        return self.amount // price
+
 
 
 class PercentPortfolioValue:
