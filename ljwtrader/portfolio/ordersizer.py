@@ -27,8 +27,9 @@ class PercentPortfolioValue(OrderSizer):
     def size_order(self, price: float) -> int:
         return self.portfolio.get_percent_of_cash_holdings(self.percent) // price
 
+class KelleyCriterion(OrderSizer):
 
-class KelleyCriterion:
+    # TODO Implement Kelley Criterion
 
     def __init__(self):
         pass
