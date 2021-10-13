@@ -78,27 +78,7 @@ class TradingSystem:
         self._event_handler.portfolio = self._portfolio
         self._event_handler.broker = self._broker
 
-    def add_position(self, indicator: tuple, direction: str):
-        """
-        Adds an indicator for the trading system's calculations
-
-        Positions added to the system will be considered by the system when issuing
-        signals
-
-        :param indicator: Ticker-indicator pair to add to system
-        :type indicator: tuple
-        :param direction: Which direction the strategy should go while true
-        :type direction: str
-        """
-        if direction == 'long':
-            self._strategy.add_indicator_to_strategy(indicator[0], indicator[1],
-                                                     direction)
-        elif direction == 'short':
-            self._strategy.add_indicator_to_strategy(indicator[0], indicator[1],
-                                                     direction)
-        else:
-            e = ValueError('Direction must be either "long" or "short"')
-            logger.error(e)
+        for position in positions:
 
         self._data_handler.add_symbol_to_data_handler(indicator[0])
 

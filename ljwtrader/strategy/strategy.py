@@ -46,12 +46,8 @@ class Strategy:
         """
         Checks all indicators in response to an update in market data
 
-        Goes through each long and each short position and checks the indicator with
-        updated data. If there is a change in state from either true -> false or vice
-        versa, a strategy event is generated
-
         :param event: Event that serves as the basis for any new strategy event
-        :type event: MarketEvent
+        :MarketEvent event:
         """
 
         for ticker, indicators in self.positions['long'].items():

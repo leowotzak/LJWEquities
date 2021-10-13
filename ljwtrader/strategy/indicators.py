@@ -10,14 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def indicator(func: Callable) -> Callable:
-    """Takes the raw array calculation for each indicator and initializes it for the datahandler
-
-    Args:
-        func (Callable): Calculation function for the given indicator
-
-    Returns:
-        Callable: Partially initialized indicator function
-    """
+    """Decorator function that allows indicators to be partially initialized prior to execution by trading system"""
 
     # TODO: Properly document
 

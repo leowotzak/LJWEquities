@@ -20,12 +20,6 @@ class Portfolio:
     """
 
     def __init__(self, queue: Queue, data_handler: DataHandler):
-        """
-        Arguments:
-            queue {Queue} -- System queue to place events on
-            data_handler {DataHandler} -- System data handler to source data from
-        """
-
         # TODO: Properly document using sphinx
 
         self._queue = queue
@@ -36,25 +30,21 @@ class Portfolio:
         self._historical_holdings = {}
 
     def get_percent_of_cash_holdings(self, percent: float) -> float:
-        """Returns the dollar value of a given % of the portfolio's cash on hand"""
+
         return self._holdings['cash'] * percent
 
     def trigger_order(self, event: StrategyEvent) -> NoReturn:
-        """Takes a signal event and applies portfolio logic"""
+        # * Currently serves as a wrapper function so that portfolio logic may be applied
         self._place_order(event)
 
     def _place_order(self, event: StrategyEvent) -> NoReturn:
-        """Generates an OrderEvent and places it on the queue"""
+        # TODO make functions that generate all events/orders have consistent naming
+
         new_event = OrderEvent(event.ticker, event.datetime, event.strategy_id,
                                event.direction, 50.0, 1)
         self._queue.put(new_event)
 
-    def update_holdings_from_fill(self, event: FillEvent) -> NoReturn:
-        """Takes an FillEvent and updates the share/contract amounts & dollar amounts of the portfolio"""
-        if event.direction == 'BUY':
-            direction = 1
-        elif event.direction == 'SELL':
-            direction = -1
+
         else:
             raise ValueError('event direction must be either "BUY" or "SELL"')
 
@@ -78,21 +68,10 @@ class Portfolio:
                self._holdings['commission'], self._holdings['slippage']))
 
     def update_holdings_after_bar(self, dt: datetime):
-        """Updates the dollar amounts of the portfolio in response to a change in market prices"""
         self._historical_positions[dt] = self._positions.copy()
         self._historical_holdings[dt] = self._holdings.copy()
 
     def generate_historical_portfolio_df(self) -> pd.DataFrame:
-        """
-        Produces a dataframe containing the historical portfolio values
-
-        Called at the end of a backtest or live trading session so that 
-        results can be summarized and visualized
-
-        :return: Historical quantities, holdings, cash, commission, and slippage 
-        for the trading session duration
-        :rtype: pd.DataFrame
-        """
         # TODO Align the lengths of the positions and holdings dataframes
         # + The positions frame is longer than the holdings b/c of the incomplete lookback periods
         # + at the start of analysis

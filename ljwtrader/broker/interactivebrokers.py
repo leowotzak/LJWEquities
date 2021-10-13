@@ -40,14 +40,6 @@ class InteractiveBrokers(Brokerage):
         return slippage
 
     def calculate_commission(self, order_event: OrderEvent) -> float:
-        """Calculates the commission for the order using the Interactive Brokers commission structure as a reference
-
-        Args:
-            order_event (OrderEvent): Event to calculate commission for
-
-        Returns:
-            float: Total commissions and fees for the given order
-        """
         per_share_commission = order_event.quantity * self.COMMISSION_PER_SHARE_FEE
         trade_value = order_event.quantity * order_event.price
 
