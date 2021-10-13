@@ -27,13 +27,15 @@ class Backtest:
 
     def __init__(
         self,
+        start_date: datetime = None,
+        end_date: datetime = None,
         # TODO Change these (below) to enumerations
         frequency: str = '1d',
         vendor: str = 'av',
     ):
 
-        self._start_date = start_date
-        self._end_date = end_date
+        self._start_date = start_date if start_date else datetime.today() - timedelta(days=365)
+        self._end_date = end_date if end_date else datetime.today() - timedelta(days=1)
         self._frequency = frequency
         self._vendor = vendor
         self.symbols = set()
