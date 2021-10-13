@@ -41,10 +41,7 @@ class TradingSystem:
     Users are able to add positions to the system and launch backtests.
     """
 
-    def __init__(self,
-                 long: Sequence[tuple] = [],
-                 short: Sequence[tuple] = [],
-                 backtest: Backtest = None):
+    def __init__(self, backtest: Backtest = None):
         """
         :param long: List of ticker-indicator pairs that should be long when true, defaults to []
         :type long: Sequence[tuple], optional
@@ -58,6 +55,8 @@ class TradingSystem:
 
         self.queue = Queue()
         self._broker = InteractiveBrokers(self.queue)
+
+        # ? Does the event handler need to be declared before the others?
         self._event_handler = EventHandler(self.queue)
 
         if backtest:

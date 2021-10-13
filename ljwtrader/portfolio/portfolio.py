@@ -75,14 +75,17 @@ class Portfolio:
         self._holdings[
             event.
             ticker] = current_holding + direction * event.quantity * event.price
+
         self._holdings['cash'] -= direction * event.quantity * event.price
         self._holdings['cash'] -= event.commission + event.slippage
         self._holdings['commission'] += event.commission
         self._holdings['slippage'] += event.slippage
 
+        # FIXME This isn't logging correctly from what I'm seeing on debugger
+
         logger.info(
-            f"{event.ticker} -- {self._positions[event.ticker]=} {self._holdings[event.ticker]=} \
-            {self._holdings['cash']=} {self._holdings['commission']=} {self._holdings['slippage']=}"
+            f"{event.ticker} -- {self._positions[event.ticker]} {self._holdings[event.ticker]} \
+            {self._holdings['cash']} {self._holdings['commission']} {self._holdings['slippage']}"
         )
 
     def update_holdings_after_bar(self, dt: datetime):

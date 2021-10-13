@@ -27,8 +27,7 @@ class Backtest:
 
     def __init__(
         self,
-        start_date: datetime = datetime.today() - timedelta(days=365),
-        end_date: datetime = datetime.today() - timedelta(days=1),
+        # TODO Change these (below) to enumerations
         frequency: str = '1d',
         vendor: str = 'av',
     ):
@@ -91,3 +90,4 @@ class Backtest:
         while self._continue_backtest:
             self._get_next_bar()
             self.process_events_func()
+            
