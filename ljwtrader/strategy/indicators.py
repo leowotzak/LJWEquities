@@ -20,6 +20,11 @@ def indicator(func: Callable) -> Callable:
     return wrapper
 
 
+def pct_change(arr: np.ndarray) -> np.ndarray:
+    """Converts an array of values into an array of the % change of values"""
+    return np.diff(arr) / arr[1:] * 100
+
+
 @indicator
 def XDayHigh(ticker: str, N: int, operator: Callable, value: Any,
              data_handler: DataHandler) -> bool:
