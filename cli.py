@@ -8,7 +8,9 @@ from ljwtrader.system import TradingSystem
 from ljwtrader.data import Backtest
 
 if __name__ == '__main__':
-    strat = XDayHigh('AAPL', 10, operator.lt, 130.0)
+
+    indicator1 = ZScore('AAPL', 'A', N_short=5, N_long=60, operator=operator.gt, value=1.0)
+    indicator2 = ZScore('AAPL', 'A', N_short=5, N_long=60, operator=operator.lt, value=-1.0)
     back = Backtest()
     sys = TradingSystem()
 
