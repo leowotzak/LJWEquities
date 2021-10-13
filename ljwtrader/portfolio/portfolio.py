@@ -3,6 +3,8 @@ from datetime import datetime
 from queue import Queue
 from typing import NoReturn
 
+import pandas as pd
+
 from ljwtrader.data import DataHandler
 from ljwtrader.events import Event, FillEvent, OrderEvent, StrategyEvent
 
