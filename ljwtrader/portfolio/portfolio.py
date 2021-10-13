@@ -7,6 +7,7 @@ import pandas as pd
 
 from ljwtrader.data import DataHandler
 from ljwtrader.events import Event, FillEvent, OrderEvent, StrategyEvent
+from ljwtrader.portfolio.ordersizer import OrderSizer, PercentPortfolioValue
 
 logger = logging.getLogger(__name__)
 
