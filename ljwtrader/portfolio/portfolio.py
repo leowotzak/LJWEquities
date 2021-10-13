@@ -47,9 +47,9 @@ class Portfolio:
 
     def _place_order(self, event: StrategyEvent) -> NoReturn:
         # TODO make functions that generate all events/orders have consistent naming
-
+        p = event.price
         new_event = OrderEvent(event.ticker, event.datetime, event.strategy_id,
-                               event.direction, 50.0, 1)
+                               event.direction, p, self.order_sizer.size_order(p))
         self._queue.put(new_event)
 
     def _get_order_direction(self, event_direction: str) -> int:

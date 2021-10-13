@@ -52,7 +52,7 @@ class Backtest:
         else:
             for bar in map(convert_bar, bar_data.iterrows()):
                 ticker = bar['ticker']
-                self.queue.put(MarketEvent(bar['ticker'], timestamp))
+                self.queue.put(MarketEvent(ticker, timestamp, bar['adj_close_price']))
 
                 try:
                     self.latest_symbol_data[ticker]
