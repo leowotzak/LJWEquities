@@ -13,26 +13,15 @@ class Strategy:
 
     def __init__(self,
                  queue: Sequence[Event],
-                 data_handler: DataHandler,
-                 long=None,
-                 short=None):
+                 data_handler: DataHandler):
         self.queue = queue
         self.data_handler = data_handler
-        self.directions = {}
-        self.positions = {'long': {}, 'short': {}}
+        self.positions = []
 
-    def add_indicator_to_strategy(self, ticker: str,
-                                  indicators: Sequence[Callable],
-                                  direction: str):
+    def add_position_to_strategy(self, *positions):
         """Adds and indicator's calculations to be executed on market data"""
-
-        # TODO: This should probably use some sort of validation
-
-        # + The ticker should be validated
-        # + So should the indicators, not sure how though since its a function
-        # + Direction can only be 'buy' and 'sell', and enum
-
-        self.positions[direction][ticker] = indicators
+        for position in positions:
+            self.positions.append(position)
 
     def add_strategy_event_to_queue(self, ticker, direction,
                                     event: MarketEvent):
@@ -49,28 +38,47 @@ class Strategy:
         :param event: Event that serves as the basis for any new strategy event
         :MarketEvent event:
         """
+        for position in self.positions:
+            direction = position.enter_position(self.data_handler)
 
-        for ticker, indicators in self.positions['long'].items():
+            if direction:
+                self.add_strategy_event_to_queue(position.ticker, direction, event)
+                continue
 
-            result = all(map(lambda func: func(self.data_handler), indicators))
-            prev_state = self.directions.get(ticker, False)
+            direction = position.exit_position(self.data_handler)
 
-            if result and not prev_state:
-                self.directions[ticker] = True
-                self.add_strategy_event_to_queue(ticker, 'BUY', event)
-            elif not result and prev_state:
-                self.directions[ticker] = False
-                self.add_strategy_event_to_queue(ticker, 'SELL', event)
+            if direction:
+                self.add_strategy_event_to_queue(position.ticker, direction, event)
 
-        for ticker, indicators in self.positions['short'].items():
 
-            result = all(map(lambda func: func(self.data_handler), indicators))
-            prev_state = self.directions.get(ticker, False)
 
-            if result and not prev_state:
-                prev_state = True
-                self.directions[ticker] = True
-                self.add_strategy_event_to_queue(ticker, 'SELL', event)
-            elif not result and prev_state:
-                self.directions[ticker] = False
-                self.add_strategy_event_to_queue(ticker, 'BUY', event)
+
+
+
+
+
+
+
+
+        #     result = all(map(lambda func: func(self.data_handler), indicators))
+        #     prev_state = self.directions.get(ticker, False)
+
+        #     if result and not prev_state:
+        #         self.directions[ticker] = True
+        #         self.add_strategy_event_to_queue(ticker, 'BUY', event)
+        #     elif not result and prev_state:
+        #         self.directions[ticker] = False
+        #         self.add_strategy_event_to_queue(ticker, 'SELL', event)
+
+        # for ticker, indicators in self.positions['short'].items():
+
+        #     result = all(map(lambda func: func(self.data_handler), indicators))
+        #     prev_state = self.directions.get(ticker, False)
+
+        #     if result and not prev_state:
+        #         prev_state = True
+        #         self.directions[ticker] = True
+        #         self.add_strategy_event_to_queue(ticker, 'SELL', event)
+        #     elif not result and prev_state:
+        #         self.directions[ticker] = False
+        #         self.add_strategy_event_to_queue(ticker, 'BUY', event)
