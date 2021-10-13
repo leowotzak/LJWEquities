@@ -63,6 +63,10 @@ class Backtest:
                     ticker_data = self.latest_symbol_data[ticker][
                         timestamp] = bar
 
+    def add_position_to_backtest(self, *positions):
+        for position in positions:
+            self.symbols.add(position.ticker)
+
     def start_backtest(self) -> NoReturn:
         """Calls the datahandler and eventhandler repeatedly until datahandler is empty"""
 

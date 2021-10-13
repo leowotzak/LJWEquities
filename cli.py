@@ -10,7 +10,7 @@ if __name__ == '__main__':
     strat = XDayHigh('AAPL', 10, operator.lt, 130.0)
     back = Backtest()
     sys = TradingSystem()
-    sys.add_position(('AAPL', [strat]), 'long')
+    back.add_position_to_backtest(pos1, pos2, pos3, pos4)
     res = sys.run_backtest(back)
 
 
