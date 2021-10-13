@@ -55,11 +55,13 @@ class Portfolio:
         else:
             raise ValueError('event direction must be either "BUY" or "SELL"')
 
+    def update_holdings_from_fill(self, event: FillEvent) -> NoReturn:
+        direction = self._get_order_direction(event.direction)
         current_quantity = self._positions.get(event.ticker, 0)
+        current_holding = self._holdings.get(event.ticker, 0)
+
         self._positions[
             event.ticker] = current_quantity + direction * event.quantity
-
-        current_holding = self._holdings.get(event.ticker, 0)
         self._holdings[
             event.
             ticker] = current_holding + direction * event.quantity * event.price
