@@ -1,8 +1,6 @@
 
 # **LJWE**: *an algorithmic and quantitative analysis library*
 
-Website: [leojwotzak.com](https://leojwotzak.com/)
-
 [Additional Information (Wiki)](https://github.com/leowotzak/LJWEquities/wiki)
 
 [API / Documentation](#)
