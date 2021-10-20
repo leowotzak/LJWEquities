@@ -18,10 +18,9 @@ class Strategy:
         self.data_handler = data_handler
         self.positions = []
 
-    def add_position_to_strategy(self, *positions):
+    def add_position_to_strategy(self, position):
         """Adds and indicator's calculations to be executed on market data"""
-        for position in positions:
-            self.positions.append(position)
+        self.positions.append(position)
 
     def add_strategy_event_to_queue(self, ticker, direction,
                                     event: MarketEvent):

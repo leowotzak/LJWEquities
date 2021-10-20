@@ -41,65 +41,47 @@ class TradingSystem:
     Users are able to add positions to the system and launch backtests.
     """
 
-    def __init__(self, backtest: Backtest = None):
-        """
-        :param long: List of ticker-indicator pairs that should be long when true, defaults to []
-        :type long: Sequence[tuple], optional
-
-        :param short: List of ticker-indicator pairs that should be short when true, defaults to []
-        :type short: Sequence[tuple], optional
-
-        :param backtest: Details for the desired backtest to run, defaults to None
-        :type backtest: Backtest, optional
-        """
-
+    def __init__(self):
         self.queue = Queue()
-        self._broker = InteractiveBrokers(self.queue)
-
-        # ? Does the event handler need to be declared before the others?
-        self._event_handler = EventHandler(self.queue)
-
-        if backtest:
-            backest.queue = self.queue
-            backtest.process_events: Callable = self._event_handler.process_events
-
         self._data_handler = DataHandler()
-
-        self._strategy = Strategy(self.queue,
-                                  self._data_handler)
-
+        self._strategy = Strategy(self.queue, self._data_handler)
         self._portfolio = Portfolio(self.queue, self._data_handler)
+        self._broker = InteractiveBrokers(self.queue)
+        self._event_handler = EventHandler(self.queue, self._strategy, self._portfolio, self._broker)
 
-        # TODO: This seems kinda sloppy tbh, goes along with how long and shorts are issued from strategy
-        self._event_handler.strategy = self._strategy
-        self._event_handler.portfolio = self._portfolio
-        self._event_handler.broker = self._broker
+    def _add_positions(self, *positions):
+        x = list(positions)
+        if x:
+            position = x.pop()
+            self._strategy.add_position_to_strategy(position)
+            self.data_handler.add_symbol_to_data_handler(position.ticker)
+            self._add_positions(*x)
+        else:
+            return 
+    
+    # def add_position(self, *positions):
 
-    def add_position(self, *positions):
-        for position in positions:
-            try:
-                # FIXME These should either both pass the entire position
-                self._strategy.add_position_to_strategy(position)
-                self._data_handler.add_symbol_to_data_handler(position.indicator.args)
-            except AttributeError as e:
-                logger.error(e)
+    #     # * Recursion candidate
+
+    #     for position in positions:
+    #         try:
+    #             # FIXME These should either both pass the entire position
+    #             self._strategy.add_position_to_strategy(position)
+    #             self._data_handler.add_symbol_to_data_handler(position.indicator.args)
+    #         except AttributeError as e:
+    #             logger.error(e)
 
 
-    def run_backtest(self, backtest: Backtest) -> DataFrame:
+    def run(self, config):
         """
         Initiates a backtest with the provided details using the current system positions
 
         Attaches the given backtest to the trading system then executes all current
         system positions on the data
-
-        :param backtest: Details of desired backtest, i.e start date, frequency etc...
-        :type backtest: Backtest
-        :return: Results of the backtest prepped for display
-        :rtype: DataFrame
         """
-        logger.info('Initiating backtest')
-        backtest.queue = self.queue
-        backtest.process_events_func = self._event_handler.process_events
-        backtest.latest_symbol_data = self._data_handler.latest_symbol_data
-        backtest.start_backtest()
-        return self._portfolio.generate_historical_portfolio_df()
+        if isinstance(config, Backtest):
+            logger.info('...Initiating backtest...')
+            config.bind_to_system(self.queue, self._data_handler, self._event_handler)
+            self._add_positions()
+            config.start_backtest()
+            return self._portfolio.generate_historical_portfolio_df()
