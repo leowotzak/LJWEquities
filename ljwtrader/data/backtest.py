@@ -27,6 +27,7 @@ class Backtest:
 
     def __init__(
         self,
+        *positions,
         start_date: datetime = None,
         end_date: datetime = None,
         # TODO Change these (below) to enumerations
@@ -42,7 +43,13 @@ class Backtest:
         self.data = None
         self.queue = None
         self._continue_backtest = False
-        self.process_events_func: Callable = None
+        self._data_handler = None
+        self._event_handler = None
+
+    def bind_to_system(self, queue, data_handler, event_handler):
+        self.queue = queue
+        self.data_handler = data_handler
+        self._event_handler = event_handler
 
     def _get_next_bar(self):
         # * Retrieves next bar from datahandler and places it on queue
