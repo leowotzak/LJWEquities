@@ -6,6 +6,7 @@ from typing import NoReturn
 import pandas as pd
 
 from ljwtrader.data import DataHandler
+from ljwtrader.utils import direction_to_integer
 from ljwtrader.events import Event, FillEvent, OrderEvent, StrategyEvent
 from ljwtrader.portfolio.ordersizer import OrderSizer, PercentPortfolioValue
 
@@ -52,7 +53,7 @@ class Portfolio:
         self.queue.put(new_event)
 
     def update_holdings_from_fill(self, event: FillEvent) -> NoReturn:
-        direction = self._get_order_direction(event.direction)
+        direction = direction_to_integer(event.direction)
         current_quantity = self._positions.get(event.ticker, 0)
         current_holding = self._holdings.get(event.ticker, 0)
 
