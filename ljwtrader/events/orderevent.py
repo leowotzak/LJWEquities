@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import AnyStr
 
-from .event import Event
+from .event import Event, EventType
 
 
 class OrderEvent(Event):
@@ -15,7 +15,7 @@ class OrderEvent(Event):
 
     def __init__(self, ticker: AnyStr, time: datetime, strategy_id: str,
                  direction: str, price: float, quantity: int):
-        super().__init__('ORDER', ticker, time)
+        super().__init__(EventType.ORDER, ticker, time)
         self.strategy_id = strategy_id
         self.direction = direction
         self.price = price

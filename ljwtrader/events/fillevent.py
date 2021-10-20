@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import AnyStr
 
-from .event import Event
+from .event import Event, EventType
 
 
 class FillEvent(Event):
@@ -24,7 +24,7 @@ class FillEvent(Event):
                  quantity: int,
                  commission: float = 0,
                  slippage: float = 0.0):
-        super().__init__('FILL', ticker, time)
+        super().__init__(EventType.FILL, ticker, time)
         self.strategy_id = strategy_id
         self.direction = direction
         self.price = price

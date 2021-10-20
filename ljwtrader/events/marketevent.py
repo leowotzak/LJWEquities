@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import AnyStr
 
-from .event import Event
+from .event import Event, EventType
 
 
 class MarketEvent(Event):
@@ -15,5 +15,5 @@ class MarketEvent(Event):
     """
 
     def __init__(self, ticker: AnyStr, time: datetime, price: float):
-        super().__init__('MARKET', ticker, time)
+        super().__init__(EventType.MARKET, ticker, time)
         self.price = price

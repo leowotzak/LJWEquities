@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import AnyStr
 
-from .event import Event
+from .event import Event, EventType
 
 
 class StrategyEvent(Event):
@@ -22,7 +22,7 @@ class StrategyEvent(Event):
         :param direction: Either 'long' or 'short', indicating which direction the order should go
         :type direction: str
         """
-        super().__init__('STRATEGY', ticker, time)
+        super().__init__(EventType.STRATEGY, ticker, time)
         self.strategy_id = strategy_id
         self.direction = direction
         self.price = price

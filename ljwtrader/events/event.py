@@ -1,8 +1,17 @@
 import logging
 from datetime import datetime
 from typing import AnyStr
+from dataclasses import dataclass
+from enum import Enum
 
 logger = logging.getLogger(__name__)
+
+
+class EventType(Enum):
+    MARKET = 1
+    STRATEGY = 2
+    ORDER = 3
+    FILL = 4
 
 
 class Event:
@@ -12,7 +21,7 @@ class Event:
     Currently, Event only exposes __str__ and __repr__ methods for its children
     """
 
-    def __init__(self, event_type: AnyStr, ticker: AnyStr, datetime: datetime):
+    def __init__(self, event_type: EventType, ticker: AnyStr, datetime: datetime):
         """
         :param event_type: Context in which event was generated in (i.e. Market)
         :type event_type: AnyStr
@@ -33,3 +42,10 @@ class Event:
     def __repr__(self) -> str:
         return ' -- '.join(
             [f'{key}: {value}' for key, value in self.__dict__.items()])
+
+@dataclass
+class Test:
+    event_type: Event
+    ticker: str
+    datetime: datetime
+
