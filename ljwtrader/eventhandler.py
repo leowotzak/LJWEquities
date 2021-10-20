@@ -66,4 +66,4 @@ class EventHandler:
 
         # HACK Figure out a better way to pass the current analysis date to the portfolio
         # ! Shouldn't rely on whatever is left over in the event to determine the timestamp
-        self.portfolio.update_holdings_after_bar(self._most_recent_event)
+        self.portfolio.update_holdings_from_market(event.datetime)
