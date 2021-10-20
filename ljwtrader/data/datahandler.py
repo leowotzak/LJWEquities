@@ -19,7 +19,7 @@ class DataHandler:
     """
 
     def __init__(self):
-        self.symbols = []
+        self.symbols = set()
         self.latest_symbol_data = {}
 
     def _get_latest_symbol_data(self, ticker: str, category: str,

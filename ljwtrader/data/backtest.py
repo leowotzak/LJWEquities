@@ -25,12 +25,11 @@ class Backtest:
         frequency: BarFrequency = BarFrequency.D,
         vendor: DataVendor = DataVendor.AV,
     ):
-
+        self.tickers = set([position.ticker for position in positions])
         self._start_date = start_date if start_date else datetime.today() - timedelta(days=365)
         self._end_date = end_date if end_date else datetime.today() - timedelta(days=1)
         self._frequency = frequency
         self._vendor = vendor
-        self.symbols = set()
         self.data = None
         self.queue = None
         self._continue_backtest = False
@@ -63,15 +62,11 @@ class Backtest:
                     ticker_data = self.data_handler.latest_symbol_data[ticker][
                         timestamp] = bar
 
-    def add_position_to_backtest(self, *positions):
-        for position in positions:
-            self.symbols.add(position.ticker)
-
     def start_backtest(self) -> NoReturn:
         """Calls the datahandler and eventhandler repeatedly until datahandler is empty"""
         self.data = ( tup for tup in  pd.read_sql(
             "SELECT * FROM symbols JOIN daily_bar_data ON symbols.symbol_id=daily_bar_data.symbol_id WHERE symbols.ticker IN ('%s')"
-            % "', '".join(self.symbols),
+            % "', '".join(self.tickers),
             sqlite3.connect('app.db'),
             index_col='timestamp').sort_index().groupby(level=0))
         
