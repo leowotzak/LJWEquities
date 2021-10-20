@@ -7,7 +7,7 @@ from typing import AnyStr, Callable, List, Sequence
 from pandas import DataFrame
 
 from ljwtrader.broker import InteractiveBrokers
-from ljwtrader.data import Backtest, DataHandler
+from ljwtrader.data import Backtest, Stream, DataHandler
 from ljwtrader.eventhandler import EventHandler
 from ljwtrader.portfolio import Portfolio
 from ljwtrader.strategy import Strategy, Position
@@ -85,3 +85,12 @@ class TradingSystem:
             self._add_positions()
             config.start_backtest()
             return self._portfolio.generate_historical_portfolio_df()
+
+        elif isinstance(config, Stream):
+            logger.info('...Initiating stream...')
+            return None
+        else:
+            raise TypeError("Input requires either a Stream or Backtest object")
+
+
+
