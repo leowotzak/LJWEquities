@@ -17,12 +17,12 @@ class EventHandler:
     maps each event type to the proper handler, and process_events() method.
     """
 
-    def __init__(self, queue: Sequence[Event]):
+    def __init__(self, queue: Sequence[Event], strategy: Strategy, portfolio: Portfolio, broker):
         self.queue = queue
         self._most_recent_event: Event = None
-        self.strategy: Strategy = None
-        self.portfolio: Portfolio = None
-        self.broker: InteractiveBrokers = None
+        self.strategy = strategy
+        self.portfolio = portfolio
+        self.broker = broker
 
     def _handle_market(self, event: MarketEvent):
         self.strategy.check_all(event)
