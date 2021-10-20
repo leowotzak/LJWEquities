@@ -2,6 +2,7 @@ __pycache__
 .DS_Store
 .vscode
 .ipynb_checkpoints
+.mypy_cache
 venv
 
 *.log
