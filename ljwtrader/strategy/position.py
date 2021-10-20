@@ -32,6 +32,9 @@ class Position:
             raise DIRECTION_ERROR
 
     def enter_position(self, data_handler: DataHandler) -> str:
+
+        # FIXME These type hints are wrong
+
         result = self.indicator(data_handler=data_handler)
         if self.current_direction == 'OUT' and result:
             self.current_direction = 'IN'
@@ -39,6 +42,9 @@ class Position:
         return
 
     def exit_position(self, data_handler: DataHandler) -> str:
+
+        # FIXME These type hints are wrong
+
         # * Defaults to whenever the indicator is false, but a separate indicator can be supplied as the exit condition
         exit_condition = self.exit_when(data_handler) if self.exit_when else not self.indicator(data_handler=data_handler)
         if self.current_direction == 'IN' and exit_condition:
