@@ -1,8 +1,7 @@
 import logging
 from typing import Callable, Mapping, NoReturn, Sequence
 
-from ljwtrader.broker import InteractiveBrokers
-from ljwtrader.events import (Event, FillEvent, MarketEvent, OrderEvent,
+from ljwtrader.events import (Event, EventType, FillEvent, MarketEvent, OrderEvent,
                               StrategyEvent)
 from ljwtrader.portfolio import Portfolio
 from ljwtrader.strategy import Strategy
@@ -29,10 +28,10 @@ class EventHandler:
         self.strategy.check_all(event)
 
     def _handle_strategy(self, event: StrategyEvent):
-        self.portfolio.trigger_order(event)
+        self.portfolio.process_signal_event(event)
 
     def _handle_order(self, event: OrderEvent):
-        self.broker.generate_fill_order(event)
+        self.broker.process_order_event(event)
 
     def _handle_fill(self, event: FillEvent):
         self.portfolio.update_holdings_from_fill(event)
@@ -47,11 +46,11 @@ class EventHandler:
         :raises KeyError: Unknown event type, no handler exists
         """
 
-        EVENT_MAP: Mapping[Event, Callable] = {
-            'MARKET': self._handle_market,
-            'STRATEGY': self._handle_strategy,
-            'ORDER': self._handle_order,
-            'FILL': self._handle_fill,
+        EVENT_MAP: Mapping[EventType, Callable] = {
+            EventType.MARKET: self._handle_market,
+            EventType.STRATEGY: self._handle_strategy,
+            EventType.ORDER: self._handle_order,
+            EventType.FILL: self._handle_fill,
         }
 
         while not self.queue.empty():

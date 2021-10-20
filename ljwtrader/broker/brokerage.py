@@ -13,7 +13,7 @@ class Brokerage(ABC):
     calculations and generate FillOrders that contain these calculations 
     """
 
-    def generate_fill_order(self, event: Event) -> Event:
+    def process_order_event(self, event: Event) -> Event:
         """Takes an OrderEvent and creates a FillEvent from its details
 
         Args:
@@ -23,7 +23,7 @@ class Brokerage(ABC):
             Event: FillEvent containing the executed order with fees, commission, and slippage
         """
         raise NotImplementedError(
-            f"{self.__class__} must have a generate_fill_order() method")
+            f"{self.__class__} must have a process_order_event() method")
 
     def calculate_slippage(self, order_event: OrderEvent,
                            fill_event: Event) -> float:

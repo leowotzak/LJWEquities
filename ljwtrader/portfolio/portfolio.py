@@ -41,27 +41,15 @@ class Portfolio:
 
         return self._holdings['cash'] * percent
 
-    def trigger_order(self, event: StrategyEvent) -> NoReturn:
+    def process_signal_event(self, event: StrategyEvent) -> NoReturn:
         # * Currently serves as a wrapper function so that portfolio logic may be applied
-        self._place_order(event)
+        self._process_signal_event(event)
 
-    def _place_order(self, event: StrategyEvent) -> NoReturn:
-        # TODO make functions that generate all events/orders have consistent naming
+    def _process_signal_event(self, event: StrategyEvent) -> NoReturn:
         p = event.price
         new_event = OrderEvent(event.ticker, event.datetime, event.strategy_id,
-                               event.direction, p, self.order_sizer.size_order(p))
-        self._queue.put(new_event)
-
-    def _get_order_direction(self, event_direction: str) -> int:
-
-        # TODO This doesn't need to be a class method, can be static
-
-        if event_direction == 'BUY':
-            return 1
-        elif event_direction == 'SELL':
-            return -1
-        else:
-            raise ValueError('event direction must be either "BUY" or "SELL"')
+                               event.direction, p, self._order_sizer.size_order(p))
+        self.queue.put(new_event)
 
     def update_holdings_from_fill(self, event: FillEvent) -> NoReturn:
         direction = self._get_order_direction(event.direction)
@@ -86,7 +74,7 @@ class Portfolio:
             {self._holdings['cash']} {self._holdings['commission']} {self._holdings['slippage']}"
         )
 
-    def update_holdings_after_bar(self, dt: datetime):
+    def update_holdings_from_market(self, dt: datetime):
         self._historical_positions[dt] = self._positions.copy()
         self._historical_holdings[dt] = self._holdings.copy()
 

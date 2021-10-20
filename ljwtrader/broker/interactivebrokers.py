@@ -18,10 +18,7 @@ class InteractiveBrokers(Brokerage):
         self.FINRA_PER_SHARE_FEE = .000119     # FINRA fees
         self.MAX_FINRA_FEE = 5.95
 
-    def generate_fill_order(self, order_event: OrderEvent) -> NoReturn:
-
-        # TODO make functions that generate all events/orders have consistent naming
-
+    def process_order_event(self, order_event: OrderEvent) -> NoReturn:
         new_event = FillEvent(order_event.ticker,
                               order_event.datetime,
                               order_event.strategy_id,
