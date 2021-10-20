@@ -10,6 +10,7 @@ from ljwtrader.events import Event, MarketEvent
 from ljwtrader.utils import convert_bar
 
 from .models import DailyBar, Symbols
+from .enums import DataVendor, BarFrequency
 
 logger = logging.getLogger(__name__)
 
@@ -21,9 +22,8 @@ class Backtest:
         *positions,
         start_date: datetime = None,
         end_date: datetime = None,
-        # TODO Change these (below) to enumerations
-        frequency: str = '1d',
-        vendor: str = 'av',
+        frequency: BarFrequency = BarFrequency.D,
+        vendor: DataVendor = DataVendor.AV,
     ):
 
         self._start_date = start_date if start_date else datetime.today() - timedelta(days=365)
