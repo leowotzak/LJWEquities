@@ -77,18 +77,6 @@ class Backtest:
 
     def start_backtest(self) -> NoReturn:
         """Calls the datahandler and eventhandler repeatedly until datahandler is empty"""
-
-        # TODO: Should rename this, I think it was tuple because when iterated it comes out as a (index, row)
-
-
-        # self.data = (tup for tup in pd.read_sql(
-        #     "SELECT * FROM symbols JOIN daily_bar_data ON symbols.symbol_id=daily_bar_data.symbol_id WHERE symbols.ticker IN ('%s')"
-        #     % "', '".join(self.symbols),
-        #     sqlite3.connect('app.db'),
-        #     index_col='timestamp').sort_index().groupby(level=0))
-
-
-
         self.data = ( tup for tup in  pd.read_sql(
             "SELECT * FROM symbols JOIN daily_bar_data ON symbols.symbol_id=daily_bar_data.symbol_id WHERE symbols.ticker IN ('%s')"
             % "', '".join(self.symbols),

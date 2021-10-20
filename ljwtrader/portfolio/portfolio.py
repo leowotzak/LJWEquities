@@ -26,9 +26,7 @@ class Portfolio:
     """
 
     def __init__(self, queue: Queue, data_handler: DataHandler, order_sizer: OrderSizer = None):
-        # TODO: Properly document using sphinx
-
-        self._queue = queue
+        self.queue = queue
         self.data_handler = data_handler
         self._positions = {}
         self._holdings = {'cash': DEFAULT_STARTING_CASH, 'commission': 0, 'slippage': 0}

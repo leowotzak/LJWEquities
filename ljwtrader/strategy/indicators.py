@@ -12,8 +12,6 @@ logger = logging.getLogger(__name__)
 def indicator(func: Callable) -> Callable:
     """Decorator function that allows indicators to be partially initialized prior to execution by trading system"""
 
-    # TODO: Properly document
-
     def wrapper(*args, **kwargs) -> Callable:
         return partial(func, *args, **kwargs)
 
