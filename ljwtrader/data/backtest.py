@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 
 from ljwtrader.events import Event, MarketEvent
+from ljwtrader.utils import convert_bar
 
 from .models import DailyBar, Symbols
 
@@ -52,13 +53,14 @@ class Backtest:
                 ticker = bar['ticker']
                 self.queue.put(MarketEvent(ticker, timestamp, bar['adj_close_price']))
 
+                # ! I think the try-except block isn't writing the new dictionary for empty key
                 try:
-                    self.latest_symbol_data[ticker]
+                    self.data_handler.latest_symbol_data[ticker]
                 except KeyError as e:
                     logger.error(e)
-                    self.latest_symbol_data[ticker] = {}
+                    self.data_handler.latest_symbol_data[ticker] = {}
                 finally:
-                    ticker_data = self.latest_symbol_data[ticker][
+                    ticker_data = self.data_handler.latest_symbol_data[ticker][
                         timestamp] = bar
 
     def add_position_to_backtest(self, *positions):
@@ -76,5 +78,5 @@ class Backtest:
         self._continue_backtest = True
         while self._continue_backtest:
             self._get_next_bar()
-            self.process_events_func()
+            self._event_handler.process_events()
             

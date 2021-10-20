@@ -1,5 +1,7 @@
 import logging
 
+from ljwtrader.utils import convert_bar
+
 import numpy as np
 
 logger = logging.getLogger(__name__)

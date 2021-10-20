@@ -33,8 +33,7 @@ class Portfolio:
         self._holdings = {'cash': DEFAULT_STARTING_CASH, 'commission': 0, 'slippage': 0}
         self._historical_positions = {}
         self._historical_holdings = {}
-
-        self.order_sizer = 'temp' if order_sizer else PercentPortfolioValue(self, DEFAULT_ORDER_SIZER_PERCENT)
+        self._order_sizer = 'temp' if order_sizer else PercentPortfolioValue(self, DEFAULT_ORDER_SIZER_PERCENT)
 
     def get_percent_of_cash_holdings(self, percent: float) -> float:
 
