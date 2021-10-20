@@ -1,3 +1,5 @@
+from ljwtrader.events import Event
+
 def direction_to_integer(event_direction: str) -> int:
     if event_direction == 'BUY':
         return 1
@@ -13,3 +15,13 @@ def convert_bar(row):
                        if k in ['ticker', 'adj_close_price', 'high_price'])
     output_dict['timestamp'] = index
     return output_dict
+
+def calculate_slippage(self, order_event: Event, fill_event: Event) -> float:
+
+    # TODO There needs to be a way to match order events and fill events to compare the assumptions
+
+    order_value = order_event.quantity * order_event.price
+    fill_value = fill_event.quantity * fill_event.price
+    slippage = fill_value - order_value
+    logger.info("Slippage: %f", slippage)
+    return slippage
